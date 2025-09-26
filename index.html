@@ -47,7 +47,83 @@
   </div>
 </section>
 
+<!-- PRODUCTS -->
+<section id="products" class="py-16 max-w-7xl mx-auto px-4">
+  <h3 class="text-3xl font-bold text-center mb-12">Featured Products</h3>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+   
+    <div class="bg-white shadow rounded p-4 text-center">
+      <img src="https://via.placeholder.com/300x200?text=Ceiling+Fan" alt="Ceiling Fan" class="mx-auto mb-4 rounded">
+      <h4 class="font-semibold mb-2">Ceiling Fan with LED</h4>
+      <p class="text-sm text-gray-600 mb-2">Energy-efficient ceiling fan with LED</p>
+      <p class="font-bold text-white mb-2">Rs. 4,999</p>
+      <button onclick="addToCart('Ceiling Fan with LED',4999)" class="bg-gradient-electric text-white px-4 py-2 rounded hover:shadow-electric">Add to Cart</button>
+    </div>
 
+    <div class="bg-white shadow rounded p-4 text-center">
+      <img src="Images/" alt="LED Bulb" class="mx-auto mb-4 rounded">
+      <h4 class="font-semibold mb-2">Smart LED Bulb 12W</h4>
+      <p class="text-sm text-gray-600 mb-2">Wi-Fi enabled smart bulb</p>
+      <p class="font-bold text-white mb-2">Rs. 299</p>
+      <button onclick="addToCart('Smart LED Bulb',299)" class="bg-gradient-electric text-white px-4 py-2 rounded hover:shadow-electric">Add to Cart</button>
+    </div>
+
+    <div class="bg-white shadow rounded p-4 text-center">
+      <img src="Images/blender-juice-machine.jpg" alt="Juicer Machine" class="mx-auto mb-4 rounded">
+      <h4 class="font-semibold mb-2">Professional Juicer</h4>
+      <p class="text-sm text-gray-600 mb-2">High-power juicer stainless steel</p>
+      <p class="font-bold text-white mb-2">Rs. 8,999</p>
+      <button onclick="addToCart('Professional Juicer',8999)" class="bg-gradient-electric text-white px-4 py-2 rounded hover:shadow-electric">Add to Cart</button>
+    </div>
+
+    <div class="bg-white shadow rounded p-4 text-center">
+      <img src="https://via.placeholder.com/300x200?text=Emergency+Light" alt="Emergency Light" class="mx-auto mb-4 rounded">
+      <h4 class="font-semibold mb-2">Portable Emergency Light</h4>
+      <p class="text-sm text-gray-600 mb-2">Long-lasting LED emergency light</p>
+      <p class="font-bold text-white mb-2">Rs. 1,299</p>
+      <button onclick="addToCart('Portable Emergency Light',1299)" class="bg-gradient-electric text-white px-4 py-2 rounded hover:shadow-electric">Add to Cart</button>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="py-16 bg-gray-100">
+  <div class="max-w-7xl mx-auto px-4">
+    <h3 class="text-3xl font-bold text-center mb-12">Our Services</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+      <div class="bg-white p-6 rounded shadow hover:shadow-lg">
+        <h4 class="font-semibold text-xl mb-2">Electrical Installation</h4>
+        <p class="text-gray-600">Certified electricians for home & business installations.</p>
+      </div>
+      <div class="bg-white p-6 rounded shadow hover:shadow-lg">
+        <h4 class="font-semibold text-xl mb-2">Repair & Maintenance</h4>
+        <p class="text-gray-600">Quick and reliable repair services for all appliances.</p>
+      </div>
+      <div class="bg-white p-6 rounded shadow hover:shadow-lg">
+        <h4 class="font-semibold text-xl mb-2">Consultation</h4>
+        <p class="text-gray-600">Expert advice on electrical solutions and energy efficiency.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="py-16 text-center">
+  <h3 class="text-3xl font-bold mb-4">Ready to Get Started?</h3>
+  <p class="text-gray-600 mb-6">Call us at +92 300 1234567 or email info@naeemelectronics.com</p>
+  <a href="tel:+923001234567" class="bg-gradient-electric text-white px-6 py-3 rounded hover:shadow-electric">Call Now</a>
+</section>
+
+
+<div id="cartSidebar" class="fixed top-0 right-0 w-80 bg-white shadow-lg h-full transform translate-x-full transition-transform duration-300 z-50 p-4 flex flex-col">
+  <div class="flex justify-between items-center mb-4">
+    <h4 class="text-xl font-bold">Your Cart</h4>
+    <button id="closeCart" class="text-gray-500 hover:text-red-500 text-2xl leading-none">&times;</button>
+  </div>
+  <ul id="cartItems" class="flex-1 overflow-y-auto mb-4 space-y-2"></ul>
+  <p class="font-semibold mb-4">Total: Rs. <span id="cartTotal">0</span></p>
+  <button onclick="checkout()" class="bg-gradient-electric text-white px-4 py-2 rounded hover:shadow-electric">Checkout</button>
+</div>
 
 
 <footer class="bg-gray-900 text-gray-300 text-center py-6 mt-10">
