@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Naeem Electronics – Appliances & Services</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .bg-gradient-electric-full{   
+      background: linear-gradient(90deg, #0b318392, #214c906f);
+    }
+    .bg-gradient-electric{
+        background: linear-gradient(90deg, #0b3183fd, #214c90);
+    }
+    .hover\:shadow-electric:hover {
+      box-shadow: 0 8px 20px rgba(37,99,235,0.4);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+<!-- HEADER -->
+<header class="bg-white shadow sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
+    <h1 class="text-2xl font-bold text-[#0b3183fd]">Naeem Electronics</h1>
+    <nav class="space-x-6 hidden md:block text-[#0b3183fd]">
+      <a href="#home" class="hover:text-[#e39b15]">Home</a>
+      <a href="#products" class="hover:text-[#e39b15]">Products</a>
+      <a href="#services" class="hover:text-[#e39b15]">Services</a>
+      <a href="#contact" class="hover:text-[#e39b15]">Contact</a>
+    </nav>
+    <button id="cartButton" class="relative bg-[#0b3183fd] text-white px-4 py-2 rounded hover:bg-[#e39b15]">
+      Cart
+      <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-xs rounded-full px-2 py-0.5">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="home" class=" text-white text-center bg-cover" style="background-image: url('Images/heroBg.jpg');">
+  <div class="bg-gradient-electric-full text-center py-56 bg-cover h-full w-full">
+    <h2 class="text-4xl md:text-6xl font-bold mb-4">Premium Electronics for Modern Living</h2>
+    <p class="max-w-2xl mx-auto mb-6 text-lg">
+      Shop high-quality appliances and get professional installation & maintenance services.
+    </p>
+    <a href="#products" class="bg-[#e39b15] text-white px-6 py-3 rounded font-semibold hover:bg-[#d89a14]">Shop Now</a>
+  </div>
+</section>
+
+
+
+
+<footer class="bg-gray-900 text-gray-300 text-center py-6 mt-10">
+  <p>&copy; 2024 Naeem Electronics. All rights reserved.</p>
+</footer>
+
+<script>
+  const cartButton = document.getElementById('cartButton');
+  const cartSidebar = document.getElementById('cartSidebar');
+  const cartItemsEl = document.getElementById('cartItems');
+  const cartTotalEl = document.getElementById('cartTotal');
+  const cartCountEl = document.getElementById('cartCount');
+  const closeCartBtn = document.getElementById('closeCart'); // New close button
+
+  let cart = [];
+
+  cartButton.addEventListener('click', () => {
+    cartSidebar.classList.toggle('translate-x-full');
+  });
+
+  
+  closeCartBtn.addEventListener('click', () => {
+    cartSidebar.classList.add('translate-x-full');
+  });
+
+  function addToCart(name, price) {
+    cart.push({name, price});
+    updateCart();
+  }
+
+  function updateCart() {
+    cartItemsEl.innerHTML = '';
+    let total = 0;
+    cart.forEach((item, index) => {
+      total += item.price;
+      const li = document.createElement('li');
+      li.className = 'flex justify-between items-center border-b pb-1';
+      li.innerHTML = `
+        <span>${item.name}</span>
+        <span>Rs. ${item.price}</span>
+        <button class="text-red-500 text-sm" onclick="removeFromCart(${index})">x</button>
+      `;
+      cartItemsEl.appendChild(li);
+    });
+    cartTotalEl.textContent = total;
+    cartCountEl.textContent = cart.length;
+  }
+
+  function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCart();
+  }
+
+  function checkout() {
+    alert('Thank you for your purchase!');
+    cart = [];
+    updateCart();
+    cartSidebar.classList.add('translate-x-full');
+  }
+</script>
+
+</body>
+</html>
