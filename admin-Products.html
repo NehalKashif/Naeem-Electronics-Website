@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Naeem Electronics Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .fade-in {animation: fadeIn .5s ease-in-out forwards; opacity:0;}
+    @keyframes fadeIn {to{opacity:1;}}
+    .bg-gradient-electric{
+        background: linear-gradient(90deg, #0b3183fd, #214c90);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased">
+  <!-- Topbar for mobile -->
+  <header class="bg-gradient-electric text-white flex justify-between items-center p-4 md:hidden">
+    <div class="text-xl font-bold">Naeem Electronics</div>
+    <button class="focus:outline-none">
+      <!-- Hamburger icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </header>
+
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="fixed md:static top-0 left-0 w-64 bg-gradient-electric text-white flex flex-col transform -translate-x-full md:translate-x-0 transition-transform duration-200 z-50">
+      <div class="p-6 text-2xl font-bold border-b border-white hidden md:block">Naeem Electronics</div>
+      <nav class="flex-1 p-4 space-y-2">
+        <a href="#home" class="block px-3 py-2 rounded hover:bg-blue-600">Home</a>
+        <a href="admin-Orders.html" class="block px-3 py-2 rounded hover:bg-blue-600">Orders</a>
+        <a href="ad" class="block px-3 py-2 rounded bg-blue-600">Products</a>
+        <a href="#settings" class="block px-3 py-2 rounded hover:bg-blue-600">Settings</a>
+      </nav>
+      <div class="p-4 border-t border-white text-sm">
+        <button class="bg-white text-blue-600 px-3 py-2 rounded hover:bg-red-100 w-full">Logout</button>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="flex-1 p-6 space-y-12 overflow-y-auto md:ml-20">
+      <!-- Products Section -->
+      <section id="products" class="fade-in">
+        <h2 class="text-2xl font-bold mb-4">Manage Products</h2>
+        <!-- Add Product Form -->
+        <form class=" grid-cols-1 sm:grid-cols-6 gap-3 bg-white p-4 rounded-lg shadow mb-6">
+          <input type="text" placeholder="Product name" class="px-3 py-2 border rounded">
+          <input type="number" placeholder="Price" class="px-3 py-2 border rounded">
+          <input type="text" placeholder="Description" class="px-3 py-2 border rounded">
+          <input type="number" placeholder="Discount" class="px-3 py-2 border rounded">
+          <input type="text" placeholder="Image URL" class="px-3 py-2 border rounded">
+          <button type="submit" class="bg-gradient-electric text-white px-4 py-2 rounded col-span-full sm:col-span-1">Add Product</button>
+        </form>
+        <!-- Products Table -->
+        <div class="overflow-x-auto bg-white rounded-lg shadow">
+          <table class="min-w-full divide-y divide-gray-200 text-sm">
+            <thead class="bg-gray-100">
+              <tr>
+                <th class="px-4 py-3 text-left font-semibold">Product Name</th>
+                <th class="px-4 py-3 text-left font-semibold">Price</th>
+                <th class="px-4 py-3 text-left font-semibold">Description</th>
+                <th class="px-4 py-3 text-left font-semibold">Discount</th>
+                <th class="px-4 py-3 text-left font-semibold">Image</th>
+                <th class="px-4 py-3 text-left font-semibold">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+              <tr>
+                <td class="px-4 py-3">LED Bulb</td>
+                <td class="px-4 py-3">Rs.299</td>
+                <td class="px-4 py-3">Energy saving bulb</td>
+                <td class="px-4 py-3">0%</td>
+                <td class="px-4 py-3"><img src="https://via.placeholder.com/200" class="h-12 w-12 object-cover rounded"></td>
+                <td class="px-4 py-3">
+                  <button class="px-2 py-1 bg-blue-500 text-white rounded text-xs mr-2">Update</button>
+                  <button class="px-2 py-1 bg-red-500 text-white rounded text-xs">Delete</button>
+                </td>
+              </tr>
+                <tr>
+                <td class="px-4 py-3">LED Bulb</td>
+                <td class="px-4 py-3">Rs. 8999</td>
+                <td class="px-4 py-3">Jucier Machine</td>
+                <td class="px-4 py-3">0%</td>
+                <td class="px-4 py-3"><img src="https://via.placeholder.com/200" class="h-12 w-12 object-cover rounded"></td>
+                <td class="px-4 py-3">
+                  <button class="px-2 py-1 bg-blue-500 text-white rounded text-xs mr-2">Update</button>
+                  <button class="px-2 py-1 bg-red-500 text-white rounded text-xs">Delete</button>
+                </td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3">Ceiling Fan</td>
+                <td class="px-4 py-3">4,999</td>
+                <td class="px-4 py-3">Cieling Fan fan</td>
+                <td class="px-4 py-3">10%</td>
+                <td class="px-4 py-3"><img src="https://via.placeholder.com/200" class="h-12 w-12 object-cover rounded"></td>
+                <td class="px-4 py-3">
+                  <button class="px-2 py-1 bg-blue-500 text-white rounded text-xs mr-2">Update</button>
+                  <button class="px-2 py-1 bg-red-500 text-white rounded text-xs">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+    <script>
+    // Sidebar toggle on mobile
+    const sidebar = document.getElementById('sidebar');
+    const menuBtn = document.getElementById('menuBtn');
+    menuBtn?.addEventListener('click', () => {
+      sidebar.classList.toggle('-translate-x-full');
+    });
+  </script>
+</body>
+</html>
