@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Naeem Electronics – Appliances & Services</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .bg-gradient-electric-full {   
+      background: linear-gradient(90deg, #0b318392, #214c906f);
+    }
+    .bg-gradient-electric {
+      background: linear-gradient(90deg, #0b3183fd, #214c90);
+    }
+    .hover\:shadow-electric:hover {
+      box-shadow: 0 8px 20px rgba(37,99,235,0.4);
+      background: linear-gradient(90deg, #0b3183fd, #214c90);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+<!-- Header -->
+<header class="bg-white shadow sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
+    <h1 class="text-xl sm:text-2xl font-bold text-[#0b3183fd]">Naeem Electronics</h1>
+    <nav class="space-x-4 sm:space-x-6 hidden md:block text-[#0b3183fd]">
+      <a href="index.html" class="hover:text-[#e39b15]">Home</a>
+      <a href="#products" class="hover:text-[#e39b15]">Products</a>
+      <a href="#services" class="hover:text-[#e39b15]">Services</a>
+      <a href="#contact" class="hover:text-[#e39b15]">Contact</a>
+      <a href="admin.html" class="hover:text-[#e39b15]">Admin Login</a>
+    </nav>
+    <button id="cartButton" class="relative bg-[#0b3183fd] text-white px-3 sm:px-4 py-2 rounded hover:bg-[#e39b15]">
+      Cart
+      <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-xs rounded-full px-2 py-0.5">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- Product Section -->
+<section class="ledBulb p-4 flex flex-col md:flex-row gap-6 max-w-7xl ">
+  <!-- Image -->
+  <div class="flex-1 flex justify-center md:justify-end">
+    <img src="Images/smart-led-bulb.png" class="rounded-xl w-full max-w-xs sm:max-w-sm md:max-w-md" alt="led-bulb">
+  </div>
+
+  <!-- Info -->
+  <div class="flex-1 space-y-4">
+    <h2 class="text-xl sm:text-2xl font-bold text-[#0b3183fd]">Smart LED Bulb 12W</h2>
+    <p class="text-gray-600 text-sm sm:text-base">Transform any room with vibrant lighting – control brightness, color, and scheduling straight from your smartphone or voice assistant.</p>
+    
+    <div class="description border-y-2 border-gray-200 p-2 space-y-3">
+      <h3 class="font-bold">Description</h3>
+      <p class="text-sm sm:text-base">The Smart LED Bulb 12W brings cutting-edge lighting technology into your home. Combining powerful 12-watt LED efficiency with full smart-home connectivity, it allows you to customize ambiance, save energy, and automate your lighting like never before. Simply screw it into any standard bulb socket, connect to your Wi-Fi network, and enjoy instant control through your phone or voice assistant.</p>
+    </div>
+
+    <div class="flex flex-wrap items-baseline gap-3">
+      <span class="text-2xl sm:text-3xl font-extrabold text-[#0b3183fd]">Rs. 299</span>
+      <span class="text-lg line-through text-gray-400">Rs. 399</span>
+      <span class="bg-green-100 text-green-700 text-xs sm:text-sm font-semibold px-2 py-1 rounded-full">25% OFF</span>
+    </div>
+    <p class="text-xs sm:text-sm text-gray-500">Inclusive of all taxes • Free delivery above Rs. 2,000</p>
+
+    <!-- Quantity Selector -->
+    <div class="mt-6">
+      <h3 class="text-sm font-medium text-gray-700 mb-2">Select Quantity</h3>
+      <div class="flex items-center w-40 border rounded-lg overflow-hidden shadow-sm">
+        <button id="decQty" class="px-4 py-2 text-lg font-bold text-gray-700 hover:bg-gray-100" aria-label="Decrease quantity">−</button>
+        <input id="qtyInput" type="number" min="1" value="1" class="w-16 text-center py-2 outline-none border-x text-gray-700" />
+        <button id="incQty" class="px-4 py-2 text-lg font-bold text-gray-700 hover:bg-gray-100" aria-label="Increase quantity">+</button>
+      </div>
+      <p id="qtyDisplay" class="text-sm text-gray-500 mt-1">Quantity: 1</p>
+    </div>
+
+    <!-- Buttons -->
+    <div class="mt-6 flex flex-col sm:flex-row gap-4">
+      <button onclick="addToCart('Smart LED Bulb 12W', 299 * parseInt(qtyInput.value))" class="flex-1 bg-[#0b3183fd] text-white px-6 py-3 rounded hover:bg-[#e39b15]">Add to Cart</button>
+      <button class="flex-1 bg-gray-200 text-gray-700 px-6 py-3 rounded hover:bg-gray-300">Buy Now</button>
+    </div>
+  </div>
+</section>
+
+<!-- Customer Reviews Section -->
+<div class="mt-10 w-full p-4 max-w-7xl mx-auto border-y-2 border-gray-200 p-2">
+  <h3 class="text-xl sm:text-2xl font-bold text-[#0b3183fd] mb-4">Customer Reviews</h3>
+
+  <!-- Review 1 -->
+  <div class="bg-white border rounded-lg p-4 mb-4 shadow-sm">
+    <div class="flex items-center justify-between mb-2">
+      <h4 class="font-semibold text-gray-800">Ali Khan</h4>
+      <div class="flex text-yellow-400">
+        ★★★★☆
+      </div>
+    </div>
+    <p class="text-gray-600 text-sm sm:text-base">
+      Excellent bulb! Bright and energy-saving. I love controlling the colors from my phone.
+    </p>
+  </div>
+
+  <!-- Review 2 -->
+  <div class="bg-white border rounded-lg p-4 mb-4 shadow-sm">
+    <div class="flex items-center justify-between mb-2">
+      <h4 class="font-semibold text-gray-800">Sara Ahmed</h4>
+      <div class="flex text-yellow-400">
+        ★★★★★
+      </div>
+    </div>
+    <p class="text-gray-600 text-sm sm:text-base">
+      Very easy to install and connects instantly to Wi-Fi. The scheduling feature is a game changer.
+    </p>
+  </div>
+
+  <!-- Review 3 -->
+  <div class="bg-white border rounded-lg p-4 mb-4 shadow-sm">
+    <div class="flex items-center justify-between mb-2">
+      <h4 class="font-semibold text-gray-800">Hamza Qureshi</h4>
+      <div class="flex text-yellow-400">
+        ★★★★☆
+      </div>
+    </div>
+    <p class="text-gray-600 text-sm sm:text-base">
+      Good quality and nice brightness. Would recommend to anyone upgrading their home lighting.
+    </p>
+  </div>
+</div>
+
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-gray-300 mt-10">
+  <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+    <!-- About Us -->
+    <div>
+      <h4 class="text-white text-lg font-semibold mb-4">About Naeem Electronics</h4>
+      <p class="text-gray-400 text-sm leading-relaxed">
+        We are your trusted partner for premium home appliances, smart electronics, and professional installation services. 
+        Our goal is to deliver quality products and exceptional customer care.
+      </p>
+    </div>
+
+    <!-- Quick Links -->
+    <div>
+      <h4 class="text-white text-lg font-semibold mb-4">Quick Links</h4>
+      <ul class="space-y-2 text-gray-400 text-sm">
+        <li><a href="#home" class="hover:text-[#e39b15]">Home</a></li>
+        <li><a href="#products" class="hover:text-[#e39b15]">Products</a></li>
+        <li><a href="#services" class="hover:text-[#e39b15]">Services</a></li>
+        <li><a href="#contact" class="hover:text-[#e39b15]">Contact</a></li>
+        <li><a href="admin.html" class="hover:text-[#e39b15]">Admin Login</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact Info -->
+    <div>
+      <h4 class="text-white text-lg font-semibold mb-4">Contact Us</h4>
+      <ul class="space-y-2 text-gray-400 text-sm">
+        <li><span class="font-semibold">Phone:</span> <a href="tel:+923224768011" class="hover:text-[#e39b15]">+92 300 1234567</a></li>
+        <li><span class="font-semibold">Email:</span> <a href="mailto:info@naeemelectronics.com" class="hover:text-[#e39b15]">info@naeemelectronics.com</a></li>
+        <li><span class="font-semibold">Address:</span>Rachna town ,Ferozwala, Sheikhupura, Pakistan</li>
+        <li><span class="font-semibold">Hours:</span> Mon – Thurs, Sat: 9:00 AM – 9:00 PM</li>
+      </ul>
+    </div>
+
+    <!-- Social Media -->
+    <div>
+      <h4 class="text-white text-lg font-semibold mb-4">Follow Us</h4>
+      <p class="text-gray-400 text-sm mb-3">Stay connected through our social channels:</p>
+      <div class="flex space-x-4">
+        <a href="#" class="hover:text-[#e39b15]" aria-label="Facebook">
+          <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M22 12a10 10 0 10-11.5 9.9v-7h-2v-3h2v-2c0-2 1.2-3.1 3-3.1.9 0 1.8.1 1.8.1v2h-1c-1 0-1.3.6-1.3 1.2v1.8h2.6l-.4 3h-2.2v7A10 10 0 0022 12z"/></svg>
+        </a>
+        <a href="#" class="hover:text-[#e39b15]" aria-label="Twitter">
+          <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.5.6-2.33.7a4.1 4.1 0 001.8-2.27 8.4 8.4 0 01-2.6 1 4.16 4.16 0 00-7.1 3.8A11.8 11.8 0 013 4.7a4.1 4.1 0 001.3 5.5 4.06 4.06 0 01-1.9-.5v.1a4.15 4.15 0 003.3 4 4.1 4.1 0 01-1.9.1 4.15 4.15 0 003.9 2.9 8.36 8.36 0 01-5.2 1.8A8.53 8.53 0 012 19a11.78 11.78 0 006.3 1.8c7.6 0 11.8-6.3 11.8-11.8v-.5c.8-.6 1.5-1.3 2.1-2.1z"/></svg>
+        </a>
+        <a href="#" class="hover:text-[#e39b15]" aria-label="Instagram">
+          <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.5-.5a1.1 1.1 0 100 2.2 1.1 1.1 0 000-2.2z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="bg-gray-800 text-gray-400 text-center py-4 border-t border-gray-700">
+    &copy; 2025 Naeem Electronics. All rights reserved. 
+  </div>
+</footer>
+
+<script>
+  const decQty = document.getElementById('decQty');
+  const incQty = document.getElementById('incQty');
+  const qtyInput = document.getElementById('qtyInput');
+  const qtyDisplay = document.getElementById('qtyDisplay');
+
+  function updateDisplay() {
+    qtyDisplay.textContent = 'Quantity: ' + qtyInput.value;
+  }
+
+  decQty.addEventListener('click', () => {
+    let current = Number(qtyInput.value) || 1;
+    current = Math.max(1, current - 1);
+    qtyInput.value = current;
+    updateDisplay();
+  });
+
+  incQty.addEventListener('click', () => {
+    let current = Number(qtyInput.value) || 1;
+    current = current + 1;
+    qtyInput.value = current;
+    updateDisplay();
+  });
+
+  qtyInput.addEventListener('input', () => {
+    let current = Number(qtyInput.value) || 1;
+    current = Math.max(1, current);
+    qtyInput.value = current;
+    updateDisplay();
+  });
+
+  updateDisplay();
+
+  // Placeholder cart function
+  function addToCart(name, price) {
+    alert(`${name} added to cart. Total Rs. ${price}`);
+  }
+</script>
+</body>
+</html>
