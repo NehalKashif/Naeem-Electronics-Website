@@ -3,190 +3,595 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Naeem Electronics – Appliances & Services</title>
+  <title>Naeem Electronics – Premium Appliances & Services</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="cart.js"></script>
   <style>
-    .bg-gradient-electric-full{   
-      background: linear-gradient(90deg, #0b318392, #214c906f);
+    * {
+      font-family: 'Inter', sans-serif;
     }
-    .bg-gradient-electric{
-        background: linear-gradient(90deg, #0b3183fd, #214c90);
+    .bg-gradient-electric-full {   
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #1d4ed8 100%);
+    }
+    .bg-gradient-electric {
+      background: linear-gradient(135deg, #1e40af, #3b82f6);
+    }
+    .bg-gradient-gold {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
     }
     .hover\:shadow-electric:hover {
-      box-shadow: 0 8px 20px rgba(37,99,235,0.4);
-      background: linear-gradient(90deg, #0b3183fd, #214c90);
+      box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
+      transform: translateY(-2px);
+      transition: all 0.3s ease;
+    }
+    .hover\:shadow-gold:hover {
+      box-shadow: 0 20px 40px rgba(245, 158, 11, 0.3);
+      transform: translateY(-2px);
+      transition: all 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .service-card:hover {
+      transform: scale(1.05);
+      transition: all 0.3s ease;
+    }
+    .pulse-slow {
+      animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slide-up {
+      animation: slideInUp 0.6s ease-out;
+    }
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    /* Loading Animation */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #1e40af, #3b82f6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .page-fade-in {
+      animation: fadeIn 0.6s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Enhanced Hero Animations */
+    .hero-bg {
+      background: linear-gradient(-45deg, #1e40af, #3b82f6, #1d4ed8, #2563eb, #1e3a8a);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .floating-shapes {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .shape {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 50%;
+      animation: float 20s infinite linear;
+    }
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(0deg); }
+      100% { transform: translateY(-100px) rotate(360deg); }
+    }
+    .shape:nth-child(1) {
+      left: 10%;
+      width: 80px;
+      height: 80px;
+      animation-delay: 0s;
+    }
+    .shape:nth-child(2) {
+      left: 20%;
+      width: 20px;
+      height: 20px;
+      animation-delay: 2s;
+    }
+    .shape:nth-child(3) {
+      left: 30%;
+      width: 60px;
+      height: 60px;
+      animation-delay: 4s;
+    }
+    .shape:nth-child(4) {
+      left: 70%;
+      width: 40px;
+      height: 40px;
+      animation-delay: 6s;
+    }
+    .shape:nth-child(5) {
+      left: 90%;
+      width: 100px;
+      height: 100px;
+      animation-delay: 8s;
+    }
+    .delivery-badge {
+      position: relative;
+      overflow: hidden;
+    }
+    .delivery-badge::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+      animation: shine 3s infinite;
+    }
+    @keyframes shine {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+      100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    }
+    .hero-content {
+      position: relative;
+      z-index: 10;
+    }
+    .bounce-slow {
+      animation: bounce-slow 2s infinite;
+    }
+    @keyframes bounce-slow {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+    .glow-text {
+      text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
     }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-<!-- HEADER -->
-<header class="bg-white shadow sticky top-0 z-50">
-  <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
-    <!-- Logo -->
-     <!-- Hamburger (only on mobile) -->
-    <button id="menu-btn" class="md:hidden text-3xl text-[#0b3183fd] focus:outline-none">
-      ☰
-    </button>
-    <h1 class="text-2xl font-bold text-[#0b3183fd]">Naeem Electronics</h1>
+<!-- Loading Screen -->
+<div id="loadingScreen" class="loading-screen">
+  <div class="text-center">
+    <div class="loading-spinner mx-auto mb-4"></div>
+    <h2 class="text-white text-xl font-semibold">Loading Naeem Electronics...</h2>
+  </div>
+</div>
 
+<div id="mainContent" class="page-fade-in" style="display: none;">
+
+<!-- HEADER -->
+<header class="bg-white/95 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b border-blue-100">
+  <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
+    <!-- Mobile Hamburger -->
+    <button id="menu-btn" class="md:hidden text-3xl text-blue-600 focus:outline-none hover:text-amber-500 transition-colors duration-300">
+      <span class="block w-6 h-0.5 bg-current mb-1 transition-transform duration-300"></span>
+      <span class="block w-6 h-0.5 bg-current mb-1 transition-transform duration-300"></span>
+      <span class="block w-6 h-0.5 bg-current transition-transform duration-300"></span>
+    </button>
     
+    <!-- Brand Name -->
+    <h1 class="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+      Naeem Electronics
+    </h1>
 
     <!-- Nav links -->
-     <nav id="menu" class="hidden md:flex pace-y-2 md:space-x-6 md:space-y-0 items-start text-[#0b3183fd] flex-col md:flex-row absolute md:static top-16 left-0 w-full md:w-auto bg-white md:bg-transparent shadow-md md:shadow-none">
-      <a href="#products" class="hover:text-[#e39b15] p-2">Products</a>
-      <a href="#services" class="hover:text-[#e39b15] p-2">Services</a>
-      <a href="#contact" class="hover:text-[#e39b15] p-2">Contact</a>
-      <a href="admin-Orders.html" class="hover:text-[#e39b15] p-2">Admin Login</a>
+    <nav id="menu" class="hidden md:flex space-y-2 md:space-x-8 md:space-y-0 items-start text-blue-700 font-medium flex-col md:flex-row absolute md:static top-16 left-0 w-full md:w-auto bg-white/95 md:bg-transparent shadow-lg md:shadow-none backdrop-blur-md md:backdrop-blur-none">
+      <a href="index.html" class="px-4 py-2 rounded-lg hover:text-amber-500 hover:bg-amber-50 transition-all duration-300 relative group">
+        Home
+        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300"></span>
+      </a>
+      <a href="#products" class="px-4 py-2 rounded-lg hover:text-amber-500 hover:bg-amber-50 transition-all duration-300 relative group">
+        Products
+        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300"></span>
+      </a>
+      <a href="#services" class="px-4 py-2 rounded-lg hover:text-amber-500 hover:bg-amber-50 transition-all duration-300 relative group">
+        Services
+        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300"></span>
+      </a>
+      <a href="#contact" class="px-4 py-2 rounded-lg hover:text-amber-500 hover:bg-amber-50 transition-all duration-300 relative group">
+        Contact
+        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300"></span>
+      </a>
+      <a href="admin-Orders.html" class="px-4 py-2 rounded-lg hover:text-amber-500 hover:bg-amber-50 transition-all duration-300 relative group">
+        Admin
+        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300"></span>
+      </a>
     </nav>
 
     <!-- Cart Button -->
-    <button id="cartButton" class="relative bg-gradient-electric text-white px-5 py-2 rounded-lg hover:shadow-electric transition-all">
-      Cart
-      <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-xs rounded-full px-2 py-0.5">0</span>
+    <button id="cartButton" class="relative bg-gradient-electric text-white px-6 py-3 rounded-xl hover:shadow-electric transition-all duration-300 flex items-center space-x-2 group">
+      <svg class="w-5 h-5 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/>
+      </svg>
+      <span class="font-medium">Cart</span>
+      <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-xs rounded-full px-2 py-1 font-bold pulse-slow">0</span>
     </button>
   </div>
 </header>
 
 <!-- HERO -->
-<section id="home" class=" text-white text-center bg-cover" style="background-image: url('Images/heroBg.jpg');">
-  <div class="bg-gradient-electric-full text-center py-56 bg-cover h-full w-full">
-    <h2 class="text-4xl md:text-6xl font-bold mb-4">Premium Electronics for Modern Living</h2>
-    <p class="max-w-2xl mx-auto mb-6 text-lg">
-      Shop high-quality appliances and get professional installation & maintenance services.
+<section id="home" class="relative text-white text-center hero-bg min-h-screen lg:min-h-[80vh] flex items-center">
+  <!-- Floating Background Shapes -->
+  <div class="floating-shapes">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+  
+  <!-- Geometric Pattern Overlay -->
+  <div class="absolute inset-0 opacity-15" style="background-image: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.12) 2px, transparent 2px), radial-gradient(circle at 75% 75%, rgba(255,255,255,0.08) 1px, transparent 1px); background-size: 50px 50px;"></div>
+  
+  <!-- Electric Circuit Pattern -->
+  <div class="absolute inset-0 opacity-10">
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="circuit" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+          <g stroke="rgba(255,255,255,0.1)" stroke-width="1" fill="none">
+            <circle cx="10" cy="10" r="2"/>
+            <circle cx="90" cy="90" r="2"/>
+            <line x1="10" y1="10" x2="50" y2="10"/>
+            <line x1="50" y1="10" x2="50" y2="50"/>
+            <line x1="50" y1="50" x2="90" y2="50"/>
+            <line x1="90" y1="50" x2="90" y2="90"/>
+          </g>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#circuit)"/>
+    </svg>
+  </div>
+  
+  <div class="hero-content text-center py-8 md:py-16 lg:py-20 px-4 max-w-6xl mx-auto animate-slide-up">
+    <div class="mb-4 md:mb-8">
+      <span class="delivery-badge inline-block px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-amber-400 to-orange-500 text-white rounded-full text-xs md:text-sm font-bold mb-4 md:mb-6 shadow-2xl bounce-slow">
+        🚚 Free Delivery on Orders Above Rs. 2,000
+      </span>
+    </div>
+    <h2 class="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-4 md:mb-8 leading-tight glow-text">
+      Premium Electronics for 
+      <span class="bg-gradient-to-r from-amber-300 via-yellow-400 to-orange-400 bg-clip-text text-transparent animate-pulse">
+        Modern Living
+      </span>
+    </h2>
+    <p class="max-w-4xl mx-auto mb-6 md:mb-12 text-base md:text-xl lg:text-2xl text-white font-light leading-relaxed backdrop-blur-sm bg-white/10 p-4 md:p-6 rounded-2xl border border-white/20">
+      Discover cutting-edge appliances with professional installation & maintenance services. 
+      <span class="font-semibold text-amber-300">Transform your home with smart technology today.</span>
     </p>
-    <a href="#products" class="bg-[#e39b15] text-white px-6 py-3 rounded font-semibold hover:bg-[#d89a14]">Shop Now</a>
+    <div class="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center mb-8 md:mb-16">
+      <a href="#products" class="group bg-gradient-to-r from-amber-500 to-orange-600 text-white px-8 py-4 md:px-10 md:py-5 rounded-2xl font-bold text-base md:text-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-110 hover:rotate-2 flex items-center space-x-3 shadow-xl">
+        <span>Shop Now</span>
+        <svg class="w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+      <a href="#services" class="group bg-white/15 backdrop-blur-md text-white px-8 py-4 md:px-10 md:py-5 rounded-2xl font-bold text-base md:text-lg hover:bg-white/25 transition-all duration-500 border-2 border-white/40 hover:border-white/60 flex items-center space-x-3 hover:scale-105 shadow-xl">
+        <span>Our Services</span>
+        <svg class="w-6 h-6 group-hover:rotate-180 transition-transform duration-500" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 text-center">
+      <div class="bg-white/10 backdrop-blur-lg p-4 md:p-8 rounded-3xl border border-white/30 hover:bg-white/20 transition-all duration-500 hover:scale-105 hover:rotate-1 group">
+        <div class="text-3xl md:text-4xl font-black text-amber-300 mb-2 group-hover:scale-110 transition-transform duration-300">500+</div>
+        <div class="text-white font-medium text-base md:text-lg">Happy Customers</div>
+        <div class="w-12 md:w-16 h-1 bg-gradient-to-r from-amber-400 to-orange-500 mx-auto mt-3 rounded-full"></div>
+      </div>
+      <div class="bg-white/10 backdrop-blur-lg p-4 md:p-8 rounded-3xl border border-white/30 hover:bg-white/20 transition-all duration-500 hover:scale-105 hover:-rotate-1 group">
+        <div class="text-3xl md:text-4xl font-black text-amber-300 mb-2 group-hover:scale-110 transition-transform duration-300">50+</div>
+        <div class="text-white font-medium text-base md:text-lg">Premium Products</div>
+        <div class="w-12 md:w-16 h-1 bg-gradient-to-r from-amber-400 to-orange-500 mx-auto mt-3 rounded-full"></div>
+      </div>
+      <div class="bg-white/10 backdrop-blur-lg p-4 md:p-8 rounded-3xl border border-white/30 hover:bg-white/20 transition-all duration-500 hover:scale-105 hover:rotate-1 group">
+        <div class="text-3xl md:text-4xl font-black text-amber-300 mb-2 group-hover:scale-110 transition-transform duration-300">24/7</div>
+        <div class="text-white font-medium text-base md:text-lg">Customer Support</div>
+        <div class="w-12 md:w-16 h-1 bg-gradient-to-r from-amber-400 to-orange-500 mx-auto mt-3 rounded-full"></div>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- PRODUCTS -->
-<section id="products" class="py-16 max-w-7xl mx-auto px-4">
-  <h3 class="text-3xl font-bold text-center mb-12">Featured Products</h3>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<section id="products" class="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center mb-16">
+      <span class="inline-block px-4 py-2 bg-blue-100 text-blue-600 rounded-full text-sm font-medium mb-4">
+        Our Products
+      </span>
+      <h3 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6">Featured Products</h3>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Discover our premium collection of smart appliances designed to enhance your modern lifestyle
+      </p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
    
-    <div class="bg-white shadow rounded p-4 hover:cursor-pointer">
-  <img src="Images/Ceiling-fan.png" alt="Ceiling Fan" class="mx-auto mb-20 rounded">
-  <h4 class="font-semibold mb-2">Ceiling Fan with LED</h4>
-  <p class="text-sm text-gray-600 mb-2">
-    Energy-efficient ceiling fan with integrated LED lighting, three speed settings, and silent motor for a comfortable environment.
-  </p>
-  <p class="font-bold text-blue-800 mb-2">Rs. 4,999</p>
-  <button onclick="addToCart('Ceiling Fan with LED',4999, 'Images/Ceiling-fan.png')" class="bg-[#e39b15] text-white px-4 py-2 rounded hover:shadow-electric">Add to Cart</button>
-</div>
+      <div class="bg-white shadow-lg rounded-2xl p-6 card-hover cursor-pointer group border border-gray-100 flex flex-col h-full">
+        <div class="relative overflow-hidden rounded-xl mb-6 flex-shrink-0">
+          <img src="Images/Ceiling-fan.png" alt="Ceiling Fan" class="w-full h-48 object-cover object-center group-hover:scale-110 transition-transform duration-500">
+          <div class="absolute top-3 right-3 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+            New
+          </div>
+        </div>
+        <div class="space-y-3 flex-grow flex flex-col">
+          <h4 class="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors">Ceiling Fan with LED</h4>
+          <p class="text-sm text-gray-600 leading-relaxed flex-grow">
+            Energy-efficient ceiling fan with integrated LED lighting, three speed settings, and silent motor for a comfortable environment.
+          </p>
+          <div class="flex items-center justify-between mt-auto">
+            <div class="flex items-baseline space-x-2">
+              <span class="text-2xl font-bold text-blue-600">Rs. 4,999</span>
+              <span class="text-lg line-through text-gray-400">Rs. 6,499</span>
+            </div>
+            <span class="bg-red-100 text-red-600 text-xs font-semibold px-2 py-1 rounded-full">23% OFF</span>
+          </div>
+          <button onclick="addToCart('Ceiling Fan with LED',4999, 'Images/Ceiling-fan.png')" class="w-full bg-gradient-gold text-white px-6 py-3 rounded-xl hover:shadow-gold transition-all duration-300 font-medium group-hover:transform group-hover:scale-105 mt-4">
+            Add to Cart
+          </button>
+        </div>
+      </div>
 
-<div class="bg-white shadow rounded p-4 hover:cursor-pointer" onclick="location.href='product.html'">
-  <img src="Images/smart-led-bulb.png" alt="LED Bulb" class="mx-auto mb-4 rounded">
-  <h4 class="font-semibold mb-2">Smart LED Bulb 12W</h4>
-  <p class="text-sm text-gray-600 mb-2">
-    Wi-Fi enabled 12W smart bulb with adjustable brightness and color tones, controllable via mobile app or voice assistant.
-  </p>
-  <p class="font-bold text-blue-800 mb-2">Rs. 299</p>
-  <button onclick="addToCart('Smart LED Bulb',299, 'Images/smart-led-bulb.png')" class="bg-[#e39b15] text-white px-4 py-2 rounded hover:shadow-electric">Add to Cart</button>
-</div>
+      <div class="bg-white shadow-lg rounded-2xl p-6 card-hover cursor-pointer group border border-gray-100 flex flex-col h-full" onclick="location.href='product.html'">
+        <div class="relative overflow-hidden rounded-xl mb-6 flex-shrink-0">
+          <img src="Images/smart-led-bulb.png" alt="LED Bulb" class="w-full h-48 object-cover object-center group-hover:scale-110 transition-transform duration-500">
+          <div class="absolute top-3 right-3 bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+            Smart
+          </div>
+        </div>
+        <div class="space-y-3 flex-grow flex flex-col">
+          <h4 class="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors">Smart LED Bulb 12W</h4>
+          <p class="text-sm text-gray-600 leading-relaxed flex-grow">
+            Wi-Fi enabled 12W smart bulb with adjustable brightness and color tones, controllable via mobile app or voice assistant.
+          </p>
+          <div class="flex items-center justify-between mt-auto">
+            <div class="flex items-baseline space-x-2">
+              <span class="text-2xl font-bold text-blue-600">Rs. 299</span>
+              <span class="text-lg line-through text-gray-400">Rs. 399</span>
+            </div>
+            <span class="bg-red-100 text-red-600 text-xs font-semibold px-2 py-1 rounded-full">25% OFF</span>
+          </div>
+          <button onclick="event.stopPropagation(); addToCart('Smart LED Bulb',299, 'Images/smart-led-bulb.png')" class="w-full bg-gradient-gold text-white px-6 py-3 rounded-xl hover:shadow-gold transition-all duration-300 font-medium group-hover:transform group-hover:scale-105 mt-4">
+            Add to Cart
+          </button>
+        </div>
+      </div>
 
-<div class="bg-white shadow rounded p-4 hover:cursor-pointer">
-  <img src="Images/juicer.png" alt="Juicer Machine" class="mx-auto rounded mb-20">
-  <h4 class="font-semibold mb-2">Professional Juicer</h4>
-  <p class="text-sm text-gray-600 mb-2">
-    High-power stainless steel juicer designed for fast and efficient juice extraction, ideal for home or commercial use.
-  </p>
-  <p class="font-bold text-blue-800 mb-2">Rs. 8,999</p>
-  <button onclick="addToCart('Professional Juicer',8999, 'Images/juicer.png')" class="bg-[#e39b15] text-white px-4 py-2 rounded hover:shadow-electric">Add to Cart</button>
-</div>
+      <div class="bg-white shadow-lg rounded-2xl p-6 card-hover cursor-pointer group border border-gray-100 flex flex-col h-full">
+        <div class="relative overflow-hidden rounded-xl mb-6 flex-shrink-0">
+          <img src="Images/juicer.png" alt="Juicer Machine" class="w-full h-48 object-cover object-center group-hover:scale-110 transition-transform duration-500">
+          <div class="absolute top-3 right-3 bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+            Pro
+          </div>
+        </div>
+        <div class="space-y-3 flex-grow flex flex-col">
+          <h4 class="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors">Professional Juicer</h4>
+          <p class="text-sm text-gray-600 leading-relaxed flex-grow">
+            High-power stainless steel juicer designed for fast and efficient juice extraction, ideal for home or commercial use.
+          </p>
+          <div class="flex items-center justify-between mt-auto">
+            <div class="flex items-baseline space-x-2">
+              <span class="text-2xl font-bold text-blue-600">Rs. 8,999</span>
+              <span class="text-lg line-through text-gray-400">Rs. 11,999</span>
+            </div>
+            <span class="bg-red-100 text-red-600 text-xs font-semibold px-2 py-1 rounded-full">25% OFF</span>
+          </div>
+          <button onclick="addToCart('Professional Juicer',8999, 'Images/juicer.png')" class="w-full bg-gradient-gold text-white px-6 py-3 rounded-xl hover:shadow-gold transition-all duration-300 font-medium group-hover:transform group-hover:scale-105 mt-4">
+            Add to Cart
+          </button>
+        </div>
+      </div>
 
-<div class="bg-white shadow rounded p-4 hover:cursor-pointer">
-  <img src="Images/stand-fan.png" alt="Stand Fan" class="mx-auto mb-4 rounded">
-  <h4 class="font-semibold mb-2">Adjustable Stand Fan</h4>
-  <p class="text-sm text-gray-600 mb-2">
-    Powerful 3-speed stand fan with adjustable height and oscillation, ideal for cooling larger rooms or offices.
-  </p>
-  <p class="font-bold text-blue-800 mb-2">Rs. 3,499</p>
-  <button onclick="addToCart('Adjustable Stand Fan',3499, 'Images/stand-fan.png')" class="bg-[#e39b15] text-white px-4 py-2 rounded hover:shadow-electric">Add to Cart</button>
-</div>
+      <div class="bg-white shadow-lg rounded-2xl p-6 card-hover cursor-pointer group border border-gray-100 flex flex-col h-full">
+        <div class="relative overflow-hidden rounded-xl mb-6 flex-shrink-0">
+          <img src="Images/stand-fan.png" alt="Stand Fan" class="w-full h-48 object-cover object-center group-hover:scale-110 transition-transform duration-500">
+          <div class="absolute top-3 right-3 bg-teal-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+            Eco
+          </div>
+        </div>
+        <div class="space-y-3 flex-grow flex flex-col">
+          <h4 class="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors">Adjustable Stand Fan</h4>
+          <p class="text-sm text-gray-600 leading-relaxed flex-grow">
+            Powerful 3-speed stand fan with adjustable height and oscillation, ideal for cooling larger rooms or offices.
+          </p>
+          <div class="flex items-center justify-between mt-auto">
+            <div class="flex items-baseline space-x-2">
+              <span class="text-2xl font-bold text-blue-600">Rs. 3,499</span>
+              <span class="text-lg line-through text-gray-400">Rs. 4,299</span>
+            </div>
+            <span class="bg-red-100 text-red-600 text-xs font-semibold px-2 py-1 rounded-full">19% OFF</span>
+          </div>
+          <button onclick="addToCart('Adjustable Stand Fan',3499, 'Images/stand-fan.png')" class="w-full bg-gradient-gold text-white px-6 py-3 rounded-xl hover:shadow-gold transition-all duration-300 font-medium group-hover:transform group-hover:scale-105 mt-4">
+            Add to Cart
+          </button>
+        </div>
+      </div>
 
-
-</div>
+    </div>
+    <!-- View All Products Button -->
+    <div class="text-center mt-12">
+      <a href="#contact" class="inline-flex items-center space-x-2 bg-gradient-electric text-white px-8 py-4 rounded-xl hover:shadow-electric transition-all duration-300 font-medium">
+        <span>View All Products</span>
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+    </div>
+  </div>
 </section>
 
 <!-- SERVICES -->
-<section id="services" class="py-20 bg-gray-100">
-  <div class="max-w-7xl mx-auto px-4">
-    <h3 class="text-4xl font-bold text-center mb-6 text-[#0b3183fd]">Our Services</h3>
-    <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">
-      From installations to repairs, Naeem Electronics provides a complete range of electrical services 
-      to make your life easier and your home or office smarter.
-    </p>
+<section id="services" class="py-24 bg-gradient-to-br from-blue-900 to-blue-800 text-white relative overflow-hidden">
+  <!-- Background Pattern -->
+  <div class="absolute inset-0 opacity-10">
+    <div class="absolute top-10 left-10 w-32 h-32 border border-white rounded-full"></div>
+    <div class="absolute top-40 right-20 w-24 h-24 border border-white rounded-full"></div>
+    <div class="absolute bottom-20 left-1/3 w-16 h-16 border border-white rounded-full"></div>
+  </div>
+  
+  <div class="max-w-7xl mx-auto px-4 relative z-10">
+    <div class="text-center mb-16">
+      <span class="inline-block px-4 py-2 bg-white/20 text-white rounded-full text-sm font-medium mb-4 glass-effect">
+        Our Services
+      </span>
+      <h3 class="text-4xl md:text-5xl font-bold mb-6">Professional Services</h3>
+      <p class="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
+        From installations to repairs, Naeem Electronics provides a complete range of electrical services 
+        to make your life easier and your home or office smarter.
+      </p>
+    </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       
       <!-- Service 1 -->
-      <div class="bg-white p-8 rounded-xl shadow hover:shadow-2xl transition duration-300 border-t-4 border-[#e39b15] hover:border-[#0b3183fd]">
-        <div class="flex justify-center mb-4">
-          <!-- Icon -->
-          <svg class="w-12 h-12 text-[#0b3183fd]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M12 2v20m10-10H2"></path>
-          </svg>
+      <div class="group bg-white/10 backdrop-blur-md p-8 rounded-2xl hover:bg-white/20 transition-all duration-500 border border-white/20 service-card text-center">
+        <div class="flex justify-center mb-6">
+          <div class="w-16 h-16 bg-gradient-gold rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+          </div>
         </div>
-        <h4 class="font-semibold text-xl mb-3 text-[#0b3183fd]">Electrical Installation</h4>
-        <p class="text-gray-600 mb-4">
+        <h4 class="font-bold text-2xl mb-4 text-white group-hover:text-amber-300 transition-colors">Electrical Installation</h4>
+        <p class="text-blue-100 mb-6 leading-relaxed">
           Certified electricians providing expert installation of home and commercial electrical systems, 
           wiring, lighting, and smart devices with safety assurance.
         </p>
-        <ul class="text-left text-gray-500 text-sm space-y-2">
-          <li>✔ New wiring & rewiring</li>
-          <li>✔ Smart home setup</li>
-          <li>✔ Lighting solutions</li>
+        <ul class="text-blue-100 space-y-3 mb-6">
+          <li class="flex items-center justify-center space-x-2">
+            <span class="w-2 h-2 bg-amber-400 rounded-full"></span>
+            <span>New wiring & rewiring</span>
+          </li>
+          <li class="flex items-center justify-center space-x-2">
+            <span class="w-2 h-2 bg-amber-400 rounded-full"></span>
+            <span>Smart home setup</span>
+          </li>
+          <li class="flex items-center justify-center space-x-2">
+            <span class="w-2 h-2 bg-amber-400 rounded-full"></span>
+            <span>Lighting solutions</span>
+          </li>
         </ul>
+        <button class="bg-white/20 text-white px-6 py-3 rounded-xl hover:bg-white hover:text-blue-900 transition-all duration-300 font-medium">
+          Learn More
+        </button>
       </div>
 
       <!-- Service 2 -->
-      <div class="bg-white p-8 rounded-xl shadow hover:shadow-2xl transition duration-300 border-t-4 border-[#e39b15] hover:border-[#0b3183fd]">
-        <div class="flex justify-center mb-4">
-          <!-- Icon -->
-          <svg class="w-12 h-12 text-[#0b3183fd]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M3 3h18v18H3V3z"></path>
-          </svg>
+      <div class="group bg-white/10 backdrop-blur-md p-8 rounded-2xl hover:bg-white/20 transition-all duration-500 border border-white/20 service-card text-center">
+        <div class="flex justify-center mb-6">
+          <div class="w-16 h-16 bg-gradient-gold rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+              <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+          </div>
         </div>
-        <h4 class="font-semibold text-xl mb-3 text-[#0b3183fd]">Repair & Maintenance</h4>
-        <p class="text-gray-600 mb-4">
+        <h4 class="font-bold text-2xl mb-4 text-white group-hover:text-amber-300 transition-colors">Repair & Maintenance</h4>
+        <p class="text-blue-100 mb-6 leading-relaxed">
           Fast and reliable repairs for appliances, fans, lighting systems, and other electronics to keep your 
           home and business running smoothly.
         </p>
-        <ul class="text-left text-gray-500 text-sm space-y-2">
-          <li>✔ Appliance diagnostics</li>
-          <li>✔ Replacement parts</li>
-          <li>✔ Scheduled maintenance</li>
+        <ul class="text-blue-100 space-y-3 mb-6">
+          <li class="flex items-center justify-center space-x-2">
+            <span class="w-2 h-2 bg-amber-400 rounded-full"></span>
+            <span>Appliance diagnostics</span>
+          </li>
+          <li class="flex items-center justify-center space-x-2">
+            <span class="w-2 h-2 bg-amber-400 rounded-full"></span>
+            <span>Replacement parts</span>
+          </li>
+          <li class="flex items-center justify-center space-x-2">
+            <span class="w-2 h-2 bg-amber-400 rounded-full"></span>
+            <span>Scheduled maintenance</span>
+          </li>
         </ul>
+        <button class="bg-white/20 text-white px-6 py-3 rounded-xl hover:bg-white hover:text-blue-900 transition-all duration-300 font-medium">
+          Learn More
+        </button>
       </div>
 
       <!-- Service 3 -->
-      <div class="bg-white p-8 rounded-xl shadow hover:shadow-2xl transition duration-300 border-t-4 border-[#e39b15] hover:border-[#0b3183fd]">
-        <div class="flex justify-center mb-4">
-          <!-- Icon -->
-          <svg class="w-12 h-12 text-[#0b3183fd]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M12 20h9"></path>
-            <path d="M12 4h9"></path>
-            <path d="M3 12h18"></path>
-          </svg>
+      <div class="group bg-white/10 backdrop-blur-md p-8 rounded-2xl hover:bg-white/20 transition-all duration-500 border border-white/20 service-card text-center">
+        <div class="flex justify-center mb-6">
+          <div class="w-16 h-16 bg-gradient-gold rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+            </svg>
+          </div>
         </div>
-        <h4 class="font-semibold text-xl mb-3 text-[#0b3183fd]">Consultation</h4>
-        <p class="text-gray-600 mb-4">
+        <h4 class="font-bold text-2xl mb-4 text-white group-hover:text-amber-300 transition-colors">Expert Consultation</h4>
+        <p class="text-blue-100 mb-6 leading-relaxed">
           Get expert advice on energy efficiency, product selection, and customized electrical solutions 
-          for your home or business.
+          for your home or business with our certified professionals.
         </p>
-        <ul class="text-left text-gray-500 text-sm space-y-2">
-          <li>✔ Energy-saving tips</li>
-          <li>✔ Safety inspections</li>
-          <li>✔ Project cost estimates</li>
+        <ul class="text-blue-100 space-y-3 mb-6">
+          <li class="flex items-center justify-center space-x-2">
+            <span class="w-2 h-2 bg-amber-400 rounded-full"></span>
+            <span>Energy-saving tips</span>
+          </li>
+          <li class="flex items-center justify-center space-x-2">
+            <span class="w-2 h-2 bg-amber-400 rounded-full"></span>
+            <span>Safety inspections</span>
+          </li>
+          <li class="flex items-center justify-center space-x-2">
+            <span class="w-2 h-2 bg-amber-400 rounded-full"></span>
+            <span>Project cost estimates</span>
+          </li>
         </ul>
+        <button class="bg-white/20 text-white px-6 py-3 rounded-xl hover:bg-white hover:text-blue-900 transition-all duration-300 font-medium">
+          Learn More
+        </button>
       </div>
 
     </div>
 
     <!-- CTA -->
-    <div class="text-center mt-12">
-      <a href="#contact" class="inline-block bg-gradient-to-r from-[#0b3183fd] to-[#214c90] text-white px-8 py-3 rounded-lg shadow hover:shadow-xl transition">
-        Get a Free Consultation
+    <div class="text-center mt-16">
+      <a href="#contact" class="group inline-flex items-center space-x-3 bg-gradient-gold text-white px-10 py-4 rounded-2xl shadow-2xl hover:shadow-gold transition-all duration-300 font-medium text-lg">
+        <span>Get a Free Consultation</span>
+        <svg class="w-6 h-6 group-hover:rotate-45 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/>
+        </svg>
       </a>
     </div>
   </div>
@@ -248,11 +653,16 @@
 
 
 
-<div id="cartSidebar" class="fixed top-0 right-0 w-96 bg-white shadow-2xl h-full transform translate-x-full transition-transform duration-300 z-50 flex flex-col">
+<div id="cartSidebar" class="fixed top-0 right-0 w-96 bg-white/95 backdrop-blur-md shadow-2xl h-full transform translate-x-full transition-transform duration-300 z-50 flex flex-col border-l border-gray-200">
   <!-- Header -->
-  <div class="flex justify-between items-center p-4 border-b">
-    <h4 class="text-xl font-bold">Shopping Cart</h4>
-    <button id="closeCart" class="text-gray-500 hover:text-red-500 text-2xl">&times;</button>
+  <div class="flex justify-between items-center p-6 border-b border-gray-200 bg-gradient-electric text-white">
+    <h4 class="text-xl font-bold flex items-center space-x-2">
+      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/>
+      </svg>
+      <span>Shopping Cart</span>
+    </h4>
+    <button id="closeCart" class="text-white hover:text-amber-300 text-2xl font-bold transition-colors">&times;</button>
   </div>
 
   <!-- Cart Items -->
@@ -335,92 +745,77 @@
     &copy; 2025 Naeem Electronics. All rights reserved. 
   </div>
 </footer>
+</div>
 
 
 <script>
-  const cartButton = document.getElementById('cartButton');
-  const cartSidebar = document.getElementById('cartSidebar');
-  const cartItemsEl = document.getElementById('cartItems');
-  const cartTotalEl = document.getElementById('cartTotal');
-  const cartCountEl = document.getElementById('cartCount');
-  const closeCartBtn = document.getElementById('closeCart');
-
-  let cart = [];
-
-  cartButton.addEventListener('click', () => {
-    cartSidebar.classList.toggle('translate-x-full');
+  // Cart is now handled by cart.js
+  // Loading screen functionality
+  window.addEventListener('load', () => {
+    const loadingScreen = document.getElementById('loadingScreen');
+    const mainContent = document.getElementById('mainContent');
+    
+    setTimeout(() => {
+      loadingScreen.style.opacity = '0';
+      setTimeout(() => {
+        loadingScreen.style.display = 'none';
+        mainContent.style.display = 'block';
+      }, 500);
+    }, 800);
   });
 
-  closeCartBtn.addEventListener('click', () => {
-    cartSidebar.classList.add('translate-x-full');
-  });
+  // Enhanced mobile menu functionality
+  document.addEventListener("DOMContentLoaded", () => {
+    const menuBtn = document.getElementById("menu-btn");
+    const navMenu = document.getElementById("menu");
 
-  function addToCart(name, price, img) {
-    // Check if already in cart
-    const existing = cart.find(item => item.name === name);
-    if (existing) {
-      existing.qty += 1;
-    } else {
-      cart.push({name, price, qty: 1, img});
-    }
-    updateCart();
-  }
-
-  function updateCart() {
-    cartItemsEl.innerHTML = '';
-    let total = 0;
-
-    cart.forEach((item, index) => {
-      total += item.price * item.qty;
-
-      const li = document.createElement('li');
-      li.className = 'flex items-center p-4';
-      li.innerHTML = `
-        <img src="${item.img}" alt="${item.name}" class="w-16 h-16 object-cover rounded mr-4">
-        <div class="flex-1">
-          <h5 class="font-medium">${item.name}</h5>
-          <p class="text-sm text-gray-500">Rs. ${item.price}</p>
-          <div class="flex items-center mt-1">
-            <button onclick="changeQty(${index},-1)" class="px-2 border rounded">-</button>
-            <span class="px-3">${item.qty}</span>
-            <button onclick="changeQty(${index},1)" class="px-2 border rounded">+</button>
-          </div>
-        </div>
-        <button class="text-red-500 ml-2" onclick="removeFromCart(${index})">&times;</button>
-      `;
-      cartItemsEl.appendChild(li);
+    menuBtn.addEventListener("click", () => {
+      navMenu.classList.toggle("hidden");
+      navMenu.classList.toggle("flex");
+      
+      // Animate hamburger icon
+      const spans = menuBtn.querySelectorAll("span");
+      if (!navMenu.classList.contains("hidden")) {
+        spans[0].style.transform = "rotate(45deg) translate(5px, 5px)";
+        spans[1].style.opacity = "0";
+        spans[2].style.transform = "rotate(-45deg) translate(7px, -6px)";
+      } else {
+        spans[0].style.transform = "rotate(0) translate(0, 0)";
+        spans[1].style.opacity = "1";
+        spans[2].style.transform = "rotate(0) translate(0, 0)";
+      }
     });
 
-    cartTotalEl.textContent = total;
-    cartCountEl.textContent = cart.reduce((sum, item) => sum + item.qty, 0);
-  }
-
-  function changeQty(index, delta) {
-    cart[index].qty += delta;
-    if (cart[index].qty <= 0) cart.splice(index, 1);
-    updateCart();
-  }
-
-  function removeFromCart(index) {
-    cart.splice(index, 1);
-    updateCart();
-  }
-
-  function checkout() {
-    alert('Thank you for your purchase!');
-    cart = [];
-    updateCart();
-    cartSidebar.classList.add('translate-x-full');
-  }
-  document.addEventListener("DOMContentLoaded", () => {
-      const menuBtn = document.getElementById("menu-btn");
-      const navMenu = document.getElementById("menu");
-
-      menuBtn.addEventListener("click", () => {
-        navMenu.classList.toggle("hidden");   // hide/show
-        navMenu.classList.toggle("flex");     // force flex layout when shown
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth'
+          });
+          // Close mobile menu if open
+          if (!navMenu.classList.contains("hidden")) {
+            navMenu.classList.add("hidden");
+            navMenu.classList.remove("flex");
+          }
+        }
       });
     });
+
+    // Add scroll effect to header
+    let lastScrollY = window.scrollY;
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('header');
+      if (window.scrollY > lastScrollY) {
+        header.style.transform = 'translateY(-100%)';
+      } else {
+        header.style.transform = 'translateY(0)';
+      }
+      lastScrollY = window.scrollY;
+    });
+  });
 </script>
 </body>
 </html>

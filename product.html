@@ -3,125 +3,402 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Naeem Electronics – Appliances & Services</title>
+  <title>Smart LED Bulb 12W – Naeem Electronics</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="cart.js"></script>
   <style>
+    * {
+      font-family: 'Inter', sans-serif;
+    }
     .bg-gradient-electric-full {   
-      background: linear-gradient(90deg, #0b318392, #214c906f);
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #1d4ed8 100%);
     }
     .bg-gradient-electric {
-      background: linear-gradient(90deg, #0b3183fd, #214c90);
+      background: linear-gradient(135deg, #1e40af, #3b82f6);
+    }
+    .bg-gradient-gold {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
     }
     .hover\:shadow-electric:hover {
-      box-shadow: 0 8px 20px rgba(37,99,235,0.4);
-      background: linear-gradient(90deg, #0b3183fd, #214c90);
+      box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
+      transform: translateY(-2px);
+      transition: all 0.3s ease;
+    }
+    .hover\:shadow-gold:hover {
+      box-shadow: 0 20px 40px rgba(245, 158, 11, 0.3);
+      transform: translateY(-2px);
+      transition: all 0.3s ease;
+    }
+    .product-image:hover {
+      transform: scale(1.05);
+      transition: all 0.3s ease;
+    }
+    .pulse-slow {
+      animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
 <!-- Header -->
-<header class="bg-white shadow sticky top-0 z-50">
+<header class="bg-white/95 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b border-blue-100">
   <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
-    <h1 class="text-xl sm:text-2xl font-bold text-[#0b3183fd]">Naeem Electronics</h1>
-    <nav class="space-x-4 sm:space-x-6 hidden md:block text-[#0b3183fd]">
-      <a href="index.html" class="hover:text-[#e39b15]">Home</a>
-      <a href="#products" class="hover:text-[#e39b15]">Products</a>
-      <a href="#services" class="hover:text-[#e39b15]">Services</a>
-      <a href="#contact" class="hover:text-[#e39b15]">Contact</a>
-      <a href="admin.html" class="hover:text-[#e39b15]">Admin Login</a>
+    <!-- Mobile Hamburger -->
+    <button id="menu-btn" class="md:hidden text-3xl text-blue-600 focus:outline-none hover:text-amber-500 transition-colors duration-300">
+      <span class="block w-6 h-0.5 bg-current mb-1 transition-transform duration-300"></span>
+      <span class="block w-6 h-0.5 bg-current mb-1 transition-transform duration-300"></span>
+      <span class="block w-6 h-0.5 bg-current transition-transform duration-300"></span>
+    </button>
+    
+    <!-- Brand Name -->
+    <h1 class="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+      Naeem Electronics
+    </h1>
+    <!-- Desktop Navigation -->
+    <nav id="menu" class="hidden md:flex space-x-6 text-blue-700 font-medium absolute md:static top-16 left-0 w-full md:w-auto bg-white/95 md:bg-transparent shadow-lg md:shadow-none backdrop-blur-md md:backdrop-blur-none flex-col md:flex-row p-4 md:p-0">
+      <a href="index.html" class="px-4 py-2 rounded-lg hover:text-amber-500 hover:bg-amber-50 transition-all duration-300 relative group">
+        Home
+        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300"></span>
+      </a>
+      <a href="index.html#products" class="px-4 py-2 rounded-lg hover:text-amber-500 hover:bg-amber-50 transition-all duration-300 relative group">
+        Products
+        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300"></span>
+      </a>
+      <a href="index.html#services" class="px-4 py-2 rounded-lg hover:text-amber-500 hover:bg-amber-50 transition-all duration-300 relative group">
+        Services
+        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300"></span>
+      </a>
+      <a href="index.html#contact" class="px-4 py-2 rounded-lg hover:text-amber-500 hover:bg-amber-50 transition-all duration-300 relative group">
+        Contact
+        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300"></span>
+      </a>
     </nav>
-    <button id="cartButton" class="relative bg-[#0b3183fd] text-white px-3 sm:px-4 py-2 rounded hover:bg-[#e39b15]">
-      Cart
-      <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-xs rounded-full px-2 py-0.5">0</span>
+    <button id="cartButton" class="relative bg-gradient-electric text-white px-4 py-3 rounded-xl hover:shadow-electric transition-all duration-300 flex items-center space-x-2 group">
+      <svg class="w-5 h-5 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/>
+      </svg>
+      <span class="font-medium hidden sm:block">Cart</span>
+      <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-xs rounded-full px-2 py-1 font-bold pulse-slow">0</span>
     </button>
   </div>
 </header>
 
-<!-- Product Section -->
-<section class="ledBulb p-4 flex flex-col md:flex-row gap-6 max-w-7xl ">
-  <!-- Image -->
-  <div class="flex-1 flex justify-center md:justify-end">
-    <img src="Images/smart-led-bulb.png" class="rounded-xl w-full max-w-xs sm:max-w-sm md:max-w-md" alt="led-bulb">
+<!-- Breadcrumb -->
+<section class="bg-gray-50 py-4">
+  <div class="max-w-7xl mx-auto px-4">
+    <nav class="flex items-center space-x-2 text-sm text-gray-600">
+      <a href="index.html" class="hover:text-blue-600 transition-colors">Home</a>
+      <span>/</span>
+      <a href="index.html#products" class="hover:text-blue-600 transition-colors">Products</a>
+      <span>/</span>
+      <span class="text-blue-600 font-medium">Smart LED Bulb 12W</span>
+    </nav>
   </div>
+</section>
 
-  <!-- Info -->
-  <div class="flex-1 space-y-4">
-    <h2 class="text-xl sm:text-2xl font-bold text-[#0b3183fd]">Smart LED Bulb 12W</h2>
-    <p class="text-gray-600 text-sm sm:text-base">Transform any room with vibrant lighting – control brightness, color, and scheduling straight from your smartphone or voice assistant.</p>
-    
-    <div class="description border-y-2 border-gray-200 p-2 space-y-3">
-      <h3 class="font-bold">Description</h3>
-      <p class="text-sm sm:text-base">The Smart LED Bulb 12W brings cutting-edge lighting technology into your home. Combining powerful 12-watt LED efficiency with full smart-home connectivity, it allows you to customize ambiance, save energy, and automate your lighting like never before. Simply screw it into any standard bulb socket, connect to your Wi-Fi network, and enjoy instant control through your phone or voice assistant.</p>
-    </div>
-
-    <div class="flex flex-wrap items-baseline gap-3">
-      <span class="text-2xl sm:text-3xl font-extrabold text-[#0b3183fd]">Rs. 299</span>
-      <span class="text-lg line-through text-gray-400">Rs. 399</span>
-      <span class="bg-green-100 text-green-700 text-xs sm:text-sm font-semibold px-2 py-1 rounded-full">25% OFF</span>
-    </div>
-    <p class="text-xs sm:text-sm text-gray-500">Inclusive of all taxes • Free delivery above Rs. 2,000</p>
-
-    <!-- Quantity Selector -->
-    <div class="mt-6">
-      <h3 class="text-sm font-medium text-gray-700 mb-2">Select Quantity</h3>
-      <div class="flex items-center w-40 border rounded-lg overflow-hidden shadow-sm">
-        <button id="decQty" class="px-4 py-2 text-lg font-bold text-gray-700 hover:bg-gray-100" aria-label="Decrease quantity">−</button>
-        <input id="qtyInput" type="number" min="1" value="1" class="w-16 text-center py-2 outline-none border-x text-gray-700" />
-        <button id="incQty" class="px-4 py-2 text-lg font-bold text-gray-700 hover:bg-gray-100" aria-label="Increase quantity">+</button>
+<!-- Product Section -->
+<section class="py-12 bg-gradient-to-br from-gray-50 to-blue-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+      <!-- Image -->
+      <div class="flex justify-center">
+        <div class="bg-white rounded-2xl shadow-xl p-8 product-image">
+          <img src="Images/smart-led-bulb.png" class="w-full max-w-md mx-auto" alt="Smart LED Bulb 12W">
+        </div>
       </div>
-      <p id="qtyDisplay" class="text-sm text-gray-500 mt-1">Quantity: 1</p>
-    </div>
 
-    <!-- Buttons -->
-    <div class="mt-6 flex flex-col sm:flex-row gap-4">
-      <button onclick="addToCart('Smart LED Bulb 12W', 299 * parseInt(qtyInput.value))" class="flex-1 bg-[#0b3183fd] text-white px-6 py-3 rounded hover:bg-[#e39b15]">Add to Cart</button>
-      <button class="flex-1 bg-gray-200 text-gray-700 px-6 py-3 rounded hover:bg-gray-300">Buy Now</button>
+      <!-- Info -->
+      <div class="space-y-6">
+        <div class="space-y-2">
+          <span class="inline-block px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm font-medium">
+            Smart Home
+          </span>
+          <h1 class="text-3xl md:text-4xl font-bold text-gray-800">Smart LED Bulb 12W</h1>
+          <div class="flex items-center space-x-2">
+            <div class="flex text-yellow-400">
+              ★★★★☆
+            </div>
+            <span class="text-gray-600">(124 reviews)</span>
+          </div>
+        </div>
+
+        <p class="text-lg text-gray-700 leading-relaxed">Transform any room with vibrant lighting – control brightness, color, and scheduling straight from your smartphone or voice assistant.</p>
+        
+        <!-- Key Features -->
+        <div class="bg-white rounded-xl p-6 shadow-lg border">
+          <h3 class="text-xl font-bold text-gray-800 mb-4">Key Features</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="flex items-center space-x-3">
+              <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+              <span class="text-gray-700">Wi-Fi Enabled</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+              <span class="text-gray-700">Voice Control</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+              <span class="text-gray-700">Energy Efficient</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+              <span class="text-gray-700">Color Changing</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-r from-blue-50 to-amber-50 rounded-xl p-6 border">
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-baseline space-x-3">
+              <span class="text-3xl md:text-4xl font-bold text-blue-600">Rs. 299</span>
+              <span class="text-xl line-through text-gray-400">Rs. 399</span>
+              <span class="bg-red-100 text-red-600 text-sm font-semibold px-3 py-1 rounded-full">25% OFF</span>
+            </div>
+            <div class="text-right">
+              <p class="text-sm text-gray-600">✓ Free delivery above Rs. 2,000</p>
+              <p class="text-sm text-gray-600">✓ 1 Year Warranty</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quantity Selector -->
+        <div class="bg-white rounded-xl p-6 shadow-lg border">
+          <h3 class="text-lg font-semibold text-gray-800 mb-4">Select Quantity</h3>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center border-2 border-gray-200 rounded-xl overflow-hidden">
+              <button id="decQty" class="px-4 py-3 text-lg font-bold text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" aria-label="Decrease quantity">−</button>
+              <input id="qtyInput" type="number" min="1" value="1" class="w-16 text-center py-3 outline-none text-gray-700 font-semibold" />
+              <button id="incQty" class="px-4 py-3 text-lg font-bold text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors" aria-label="Increase quantity">+</button>
+            </div>
+            <p id="qtyDisplay" class="text-lg font-medium text-gray-700">Qty: 1</p>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <button onclick="addToCartWithQuantity()" class="group bg-gradient-gold text-white px-8 py-4 rounded-xl hover:shadow-gold transition-all duration-300 font-semibold text-lg flex items-center justify-center space-x-2">
+            <svg class="w-5 h-5 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/>
+            </svg>
+            <span>Add to Cart</span>
+          </button>
+          <button class="group bg-gradient-electric text-white px-8 py-4 rounded-xl hover:shadow-electric transition-all duration-300 font-semibold text-lg flex items-center justify-center space-x-2">
+            <span>Buy Now</span>
+            <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
+  </div>
   </div>
 </section>
 
 <!-- Customer Reviews Section -->
-<div class="mt-10 w-full p-4 max-w-7xl mx-auto border-y-2 border-gray-200 p-2">
-  <h3 class="text-xl sm:text-2xl font-bold text-[#0b3183fd] mb-4">Customer Reviews</h3>
-
-  <!-- Review 1 -->
-  <div class="bg-white border rounded-lg p-4 mb-4 shadow-sm">
-    <div class="flex items-center justify-between mb-2">
-      <h4 class="font-semibold text-gray-800">Ali Khan</h4>
-      <div class="flex text-yellow-400">
-        ★★★★☆
+<section class="py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <h3 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Customer Reviews</h3>
+      <div class="flex items-center justify-center space-x-4">
+        <div class="flex text-yellow-400 text-xl">
+          ★★★★☆
+        </div>
+        <span class="text-lg text-gray-600">4.2 out of 5 (124 reviews)</span>
       </div>
     </div>
-    <p class="text-gray-600 text-sm sm:text-base">
-      Excellent bulb! Bright and energy-saving. I love controlling the colors from my phone.
-    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Review 1 -->
+      <div class="bg-gradient-to-br from-blue-50 to-white border border-blue-100 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 bg-gradient-electric rounded-full flex items-center justify-center">
+              <span class="text-white font-semibold">A</span>
+            </div>
+            <h4 class="font-semibold text-gray-800">Ali Khan</h4>
+          </div>
+          <div class="flex text-yellow-400">
+            ★★★★☆
+          </div>
+        </div>
+        <p class="text-gray-700 leading-relaxed">
+          Excellent bulb! Bright and energy-saving. I love controlling the colors from my phone. Great value for money.
+        </p>
+        <p class="text-sm text-gray-500 mt-3">Verified Purchase • 2 weeks ago</p>
+      </div>
+
+      <!-- Review 2 -->
+      <div class="bg-gradient-to-br from-amber-50 to-white border border-amber-100 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 bg-gradient-gold rounded-full flex items-center justify-center">
+              <span class="text-white font-semibold">S</span>
+            </div>
+            <h4 class="font-semibold text-gray-800">Sara Ahmed</h4>
+          </div>
+          <div class="flex text-yellow-400">
+            ★★★★★
+          </div>
+        </div>
+        <p class="text-gray-700 leading-relaxed">
+          Very easy to install and connects instantly to Wi-Fi. The scheduling feature is a game changer for my daily routine.
+        </p>
+        <p class="text-sm text-gray-500 mt-3">Verified Purchase • 1 month ago</p>
+      </div>
+
+      <!-- Review 3 -->
+      <div class="bg-gradient-to-br from-green-50 to-white border border-green-100 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+              <span class="text-white font-semibold">H</span>
+            </div>
+            <h4 class="font-semibold text-gray-800">Hamza Qureshi</h4>
+          </div>
+          <div class="flex text-yellow-400">
+            ★★★★☆
+          </div>
+        </div>
+        <p class="text-gray-700 leading-relaxed">
+          Good quality and nice brightness. Would recommend to anyone upgrading their home lighting setup.
+        </p>
+        <p class="text-sm text-gray-500 mt-3">Verified Purchase • 3 weeks ago</p>
+      </div>
+    </div>
+
+    <!-- Write Review Button -->
+    <div class="text-center mt-10">
+      <button class="bg-gradient-electric text-white px-8 py-3 rounded-xl hover:shadow-electric transition-all duration-300 font-medium">
+        Write a Review
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Related Products Section -->
+<section class="py-16 bg-gradient-to-br from-gray-50 to-blue-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <h3 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">You Might Also Like</h3>
+      <p class="text-xl text-gray-600">Discover more smart home solutions</p>
+    </div>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Related Product 1 -->
+      <div class="bg-white shadow-lg rounded-2xl p-6 card-hover cursor-pointer group border border-gray-100">
+        <div class="relative overflow-hidden rounded-xl mb-6">
+          <img src="Images/Ceiling-fan.png" alt="Ceiling Fan" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+          <div class="absolute top-3 right-3 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+            Popular
+          </div>
+        </div>
+        <div class="space-y-3">
+          <h4 class="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors">Ceiling Fan with LED</h4>
+          <p class="text-sm text-gray-600 leading-relaxed">
+            Energy-efficient ceiling fan with integrated LED lighting and smart controls.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-2xl font-bold text-blue-600">Rs. 4,999</span>
+            <button onclick="addToCart('Ceiling Fan with LED',4999, 'Images/Ceiling-fan.png')" class="bg-gradient-gold text-white px-4 py-2 rounded-lg hover:shadow-gold transition-all duration-300">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Related Product 2 -->
+      <div class="bg-white shadow-lg rounded-2xl p-6 card-hover cursor-pointer group border border-gray-100">
+        <div class="relative overflow-hidden rounded-xl mb-6">
+          <img src="Images/stand-fan.png" alt="Stand Fan" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+          <div class="absolute top-3 right-3 bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+            Eco
+          </div>
+        </div>
+        <div class="space-y-3">
+          <h4 class="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors">Adjustable Stand Fan</h4>
+          <p class="text-sm text-gray-600 leading-relaxed">
+            Powerful 3-speed stand fan with adjustable height and oscillation feature.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-2xl font-bold text-blue-600">Rs. 3,499</span>
+            <button onclick="addToCart('Adjustable Stand Fan',3499, 'Images/stand-fan.png')" class="bg-gradient-gold text-white px-4 py-2 rounded-lg hover:shadow-gold transition-all duration-300">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Related Product 3 -->
+      <div class="bg-white shadow-lg rounded-2xl p-6 card-hover cursor-pointer group border border-gray-100">
+        <div class="relative overflow-hidden rounded-xl mb-6">
+          <img src="Images/juicer.png" alt="Juicer" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+          <div class="absolute top-3 right-3 bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+            Pro
+          </div>
+        </div>
+        <div class="space-y-3">
+          <h4 class="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors">Professional Juicer</h4>
+          <p class="text-sm text-gray-600 leading-relaxed">
+            High-power stainless steel juicer for fast and efficient juice extraction.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-2xl font-bold text-blue-600">Rs. 8,999</span>
+            <button onclick="addToCart('Professional Juicer',8999, 'Images/juicer.png')" class="bg-gradient-gold text-white px-4 py-2 rounded-lg hover:shadow-gold transition-all duration-300">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Back to Products Button -->
+    <div class="text-center mt-12">
+      <a href="index.html#products" class="group inline-flex items-center space-x-2 bg-gradient-electric text-white px-8 py-4 rounded-xl hover:shadow-electric transition-all duration-300 font-medium">
+        <svg class="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
+        </svg>
+        <span>View All Products</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Cart Sidebar -->
+<div id="cartSidebar" class="fixed top-0 right-0 w-96 bg-white/95 backdrop-blur-md shadow-2xl h-full transform translate-x-full transition-transform duration-300 z-50 flex flex-col border-l border-gray-200">
+  <!-- Header -->
+  <div class="flex justify-between items-center p-6 border-b border-gray-200 bg-gradient-electric text-white">
+    <h4 class="text-xl font-bold flex items-center space-x-2">
+      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/>
+      </svg>
+      <span>Shopping Cart</span>
+    </h4>
+    <button id="closeCart" class="text-white hover:text-amber-300 text-2xl font-bold transition-colors">&times;</button>
   </div>
 
-  <!-- Review 2 -->
-  <div class="bg-white border rounded-lg p-4 mb-4 shadow-sm">
-    <div class="flex items-center justify-between mb-2">
-      <h4 class="font-semibold text-gray-800">Sara Ahmed</h4>
-      <div class="flex text-yellow-400">
-        ★★★★★
-      </div>
-    </div>
-    <p class="text-gray-600 text-sm sm:text-base">
-      Very easy to install and connects instantly to Wi-Fi. The scheduling feature is a game changer.
-    </p>
-  </div>
+  <!-- Cart Items -->
+  <ul id="cartItems" class="flex-1 overflow-y-auto divide-y"></ul>
 
-  <!-- Review 3 -->
-  <div class="bg-white border rounded-lg p-4 mb-4 shadow-sm">
-    <div class="flex items-center justify-between mb-2">
-      <h4 class="font-semibold text-gray-800">Hamza Qureshi</h4>
-      <div class="flex text-yellow-400">
-        ★★★★☆
-      </div>
-    </div>
-    <p class="text-gray-600 text-sm sm:text-base">
-      Good quality and nice brightness. Would recommend to anyone upgrading their home lighting.
+  <!-- Subtotal & Actions -->
+  <div class="p-4 border-t">
+    <p class="flex justify-between font-semibold mb-4">
+      <span>Subtotal:</span>
+      <span>Rs.<span id="cartTotal">0</span> PKR</span>
     </p>
+    <div class="flex flex-col space-y-2">
+      <button class="bg-gradient-electric text-white px-4 py-2 rounded hover:shadow-electric">View Cart</button>
+      <a href="checkout.html" class="bg-[#25D366] text-white px-4 py-2 rounded flex items-center justify-center space-x-2 hover:bg-green-500">
+        <span>Checkout</span>
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.285 6.709a1 1 0 0 0-1.41 0L9 16.584l-3.875-3.875a1 1 0 0 0-1.41 1.414l4.585 4.586a1 1 0 0 0 1.41 0l10.585-10.586a1 1 0 0 0 0-1.414z"/></svg>
+      </a>
+    </div>
   </div>
 </div>
 
@@ -219,10 +496,68 @@
 
   updateDisplay();
 
-  // Placeholder cart function
-  function addToCart(name, price) {
-    alert(`${name} added to cart. Total Rs. ${price}`);
+  // Add to cart with quantity
+  function addToCartWithQuantity() {
+    const qty = parseInt(document.getElementById('qtyInput').value) || 1;
+    const name = 'Smart LED Bulb 12W';
+    const price = 299;
+    const img = 'Images/smart-led-bulb.png';
+    
+    // Add multiple items based on quantity
+    for (let i = 0; i < qty; i++) {
+      cart.addToCart(name, price, img);
+    }
   }
+
+  // Mobile menu and navigation enhancements
+  document.addEventListener("DOMContentLoaded", () => {
+    // Mobile menu functionality
+    const menuBtn = document.getElementById("menu-btn");
+    const navMenu = document.getElementById("menu");
+
+    if (menuBtn && navMenu) {
+      menuBtn.addEventListener("click", () => {
+        navMenu.classList.toggle("hidden");
+        navMenu.classList.toggle("flex");
+        
+        // Animate hamburger icon
+        const spans = menuBtn.querySelectorAll("span");
+        if (!navMenu.classList.contains("hidden")) {
+          spans[0].style.transform = "rotate(45deg) translate(5px, 5px)";
+          spans[1].style.opacity = "0";
+          spans[2].style.transform = "rotate(-45deg) translate(7px, -6px)";
+        } else {
+          spans[0].style.transform = "rotate(0) translate(0, 0)";
+          spans[1].style.opacity = "1";
+          spans[2].style.transform = "rotate(0) translate(0, 0)";
+        }
+      });
+    }
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Image zoom effect
+    const productImage = document.querySelector('.product-image img');
+    if (productImage) {
+      productImage.addEventListener('click', () => {
+        if (productImage.classList.contains('scale-150')) {
+          productImage.classList.remove('scale-150');
+        } else {
+          productImage.classList.add('scale-150');
+        }
+      });
+    }
+  });
 </script>
 </body>
 </html>
