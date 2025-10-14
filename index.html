@@ -7,6 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="cart.js"></script>
+  <script src="products-data.js"></script>
   <style>
     * {
       font-family: 'Inter', sans-serif;
@@ -216,12 +217,12 @@
     </h1>
 
     <!-- Nav links -->
-    <nav id="menu" class="hidden md:flex space-y-2 md:space-x-8 md:space-y-0 items-start text-blue-700 font-medium flex-col md:flex-row absolute md:static top-16 left-0 w-full md:w-auto bg-white/95 md:bg-transparent shadow-lg md:shadow-none backdrop-blur-md md:backdrop-blur-none ">
+    <nav id="menu" class="hidden md:flex space-y-2 md:space-x-8 md:space-y-0 items-start text-blue-700 font-medium flex-col md:flex-row absolute md:static top-16 left-0 w-full md:w-auto bg-white/95 md:bg-transparent shadow-lg md:shadow-none backdrop-blur-md md:backdrop-blur-none">
       <a href="index.html" class="px-4 py-2 rounded-lg hover:text-amber-500 hover:bg-amber-50 transition-all duration-300 relative group">
         Home
         <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300"></span>
       </a>
-      <a href="#products" class="px-4 py-2 rounded-lg hover:text-amber-500 hover:bg-amber-50 transition-all duration-300 relative group">
+      <a href="products.html" class="px-4 py-2 rounded-lg hover:text-amber-500 hover:bg-amber-50 transition-all duration-300 relative group">
         Products
         <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300"></span>
       </a>
@@ -289,17 +290,38 @@
         🚚 Free Delivery on Orders Above Rs. 2,000
       </span>
     </div>
-   <h2 class="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold mb-4 md:mb-8 leading-tight">
-  Premium Electronics for 
-  <span class="bg-gradient-to-r from-yellow-200  to-yellow-300 bg-clip-text text-transparent drop-shadow-sm hover:drop-shadow-lg transition duration-500">
-    Modern Living
-  </span>
-</h2>
-
-    <p class="max-w-4xl mx-auto mb-6 md:mb-12 text-base md:text-xl lg:text-2xl text-white font-light leading-relaxed backdrop-blur-sm bg-white/10 p-4 md:p-6 rounded-2xl border border-white/20">
+    <h2 class="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-4 md:mb-8 leading-tight glow-text">
+      Premium Electronics for 
+      <span class="bg-gradient-to-r from-amber-300 via-yellow-400 to-orange-400 bg-clip-text text-transparent animate-pulse">
+        Modern Living
+      </span>
+    </h2>
+    <p class="max-w-4xl mx-auto mb-6 md:mb-8 text-base md:text-xl lg:text-2xl text-white font-light leading-relaxed backdrop-blur-sm bg-white/10 p-4 md:p-6 rounded-2xl border border-white/20">
       Discover cutting-edge appliances with professional installation & maintenance services. 
       <span class="font-semibold text-amber-300">Transform your home with smart technology today.</span>
     </p>
+    
+    <!-- Search Bar -->
+    <div class="max-w-2xl mx-auto mb-8 md:mb-12">
+      <div class="relative">
+        <input 
+          type="text" 
+          id="heroSearch" 
+          placeholder="Search products... (e.g., LED, Fan, Juicer)" 
+          class="w-full px-4 py-3 md:px-8 md:py-5 pr-20 md:pr-32 rounded-2xl text-gray-800 font-medium text-sm md:text-lg focus:outline-none focus:ring-4 focus:ring-amber-400 shadow-2xl backdrop-blur-xl bg-white/95 placeholder-gray-500"
+        />
+        <button 
+          onclick="searchFromHero()"
+          class="absolute right-2 top-1/2 -translate-y-1/2 bg-gradient-electric text-white px-3 py-2 md:px-8 md:py-3.5 rounded-xl font-bold hover:shadow-electric transition-all duration-300 flex items-center space-x-1 md:space-x-2">
+          <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <span class="hidden sm:inline">Search</span>
+        </button>
+      </div>
+      <div id="heroSearchResults" class="mt-3 bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl max-h-96 overflow-y-auto hidden"></div>
+    </div>
+    
     <div class="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center mb-8 md:mb-16">
       <a href="#products" class="group bg-gradient-to-r from-amber-500 to-orange-600 text-white px-8 py-4 md:px-10 md:py-5 rounded-2xl font-bold text-base md:text-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-110 hover:rotate-2 flex items-center space-x-3 shadow-xl">
         <span>Shop Now</span>
@@ -348,7 +370,7 @@
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
    
-      <div class="bg-white shadow-lg rounded-2xl p-6 card-hover cursor-pointer group border border-gray-100 flex flex-col h-full">
+      <div class="bg-white shadow-lg rounded-2xl p-6 card-hover cursor-pointer group border border-gray-100 flex flex-col h-full" onclick="location.href='product-detail.html?id=ceiling-fan'">
         <div class="relative overflow-hidden rounded-xl mb-6 flex-shrink-0">
           <img src="Images/Ceiling-fan.png" alt="Ceiling Fan" class="w-full h-48 object-cover object-center group-hover:scale-110 transition-transform duration-500">
           <div class="absolute top-3 right-3 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium">
@@ -367,13 +389,13 @@
             </div>
             <span class="bg-red-100 text-red-600 text-xs font-semibold px-2 py-1 rounded-full">23% OFF</span>
           </div>
-          <button onclick="addToCart('Ceiling Fan with LED',4999, 'Images/Ceiling-fan.png')" class="w-full bg-gradient-gold text-white px-6 py-3 rounded-xl hover:shadow-gold transition-all duration-300 font-medium group-hover:transform group-hover:scale-105 mt-4">
+          <button onclick="event.stopPropagation(); addToCart('Ceiling Fan with LED',4999, 'Images/Ceiling-fan.png')" class="w-full bg-gradient-gold text-white px-6 py-3 rounded-xl hover:shadow-gold transition-all duration-300 font-medium group-hover:transform group-hover:scale-105 mt-4">
             Add to Cart
           </button>
         </div>
       </div>
 
-      <div class="bg-white shadow-lg rounded-2xl p-6 card-hover cursor-pointer group border border-gray-100 flex flex-col h-full" onclick="location.href='product.html'">
+      <div class="bg-white shadow-lg rounded-2xl p-6 card-hover cursor-pointer group border border-gray-100 flex flex-col h-full" onclick="location.href='product-detail.html?id=smart-led-bulb'">
         <div class="relative overflow-hidden rounded-xl mb-6 flex-shrink-0">
           <img src="Images/smart-led-bulb.png" alt="LED Bulb" class="w-full h-48 object-cover object-center group-hover:scale-110 transition-transform duration-500">
           <div class="absolute top-3 right-3 bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">
@@ -398,7 +420,7 @@
         </div>
       </div>
 
-      <div class="bg-white shadow-lg rounded-2xl p-6 card-hover cursor-pointer group border border-gray-100 flex flex-col h-full">
+      <div class="bg-white shadow-lg rounded-2xl p-6 card-hover cursor-pointer group border border-gray-100 flex flex-col h-full" onclick="location.href='product-detail.html?id=juicer-machine'">
         <div class="relative overflow-hidden rounded-xl mb-6 flex-shrink-0">
           <img src="Images/juicer.png" alt="Juicer Machine" class="w-full h-48 object-cover object-center group-hover:scale-110 transition-transform duration-500">
           <div class="absolute top-3 right-3 bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-medium">
@@ -417,13 +439,13 @@
             </div>
             <span class="bg-red-100 text-red-600 text-xs font-semibold px-2 py-1 rounded-full">25% OFF</span>
           </div>
-          <button onclick="addToCart('Professional Juicer',8999, 'Images/juicer.png')" class="w-full bg-gradient-gold text-white px-6 py-3 rounded-xl hover:shadow-gold transition-all duration-300 font-medium group-hover:transform group-hover:scale-105 mt-4">
+          <button onclick="event.stopPropagation(); addToCart('Professional Juicer',8999, 'Images/juicer.png')" class="w-full bg-gradient-gold text-white px-6 py-3 rounded-xl hover:shadow-gold transition-all duration-300 font-medium group-hover:transform group-hover:scale-105 mt-4">
             Add to Cart
           </button>
         </div>
       </div>
 
-      <div class="bg-white shadow-lg rounded-2xl p-6 card-hover cursor-pointer group border border-gray-100 flex flex-col h-full">
+      <div class="bg-white shadow-lg rounded-2xl p-6 card-hover cursor-pointer group border border-gray-100 flex flex-col h-full" onclick="location.href='product-detail.html?id=stand-fan'">
         <div class="relative overflow-hidden rounded-xl mb-6 flex-shrink-0">
           <img src="Images/stand-fan.png" alt="Stand Fan" class="w-full h-48 object-cover object-center group-hover:scale-110 transition-transform duration-500">
           <div class="absolute top-3 right-3 bg-teal-500 text-white px-3 py-1 rounded-full text-sm font-medium">
@@ -442,7 +464,7 @@
             </div>
             <span class="bg-red-100 text-red-600 text-xs font-semibold px-2 py-1 rounded-full">19% OFF</span>
           </div>
-          <button onclick="addToCart('Adjustable Stand Fan',3499, 'Images/stand-fan.png')" class="w-full bg-gradient-gold text-white px-6 py-3 rounded-xl hover:shadow-gold transition-all duration-300 font-medium group-hover:transform group-hover:scale-105 mt-4">
+          <button onclick="event.stopPropagation(); addToCart('Adjustable Stand Fan',3499, 'Images/stand-fan.png')" class="w-full bg-gradient-gold text-white px-6 py-3 rounded-xl hover:shadow-gold transition-all duration-300 font-medium group-hover:transform group-hover:scale-105 mt-4">
             Add to Cart
           </button>
         </div>
@@ -451,7 +473,7 @@
     </div>
     <!-- View All Products Button -->
     <div class="text-center mt-12">
-      <a href="#contact" class="inline-flex items-center space-x-2 bg-gradient-electric text-white px-8 py-4 rounded-xl hover:shadow-electric transition-all duration-300 font-medium">
+      <a href="products.html" class="inline-flex items-center space-x-2 bg-gradient-electric text-white px-8 py-4 rounded-xl hover:shadow-electric transition-all duration-300 font-medium">
         <span>View All Products</span>
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
           <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
@@ -786,6 +808,9 @@
         spans[2].style.transform = "rotate(0) translate(0, 0)";
       }
     });
+    
+    // Setup hero search
+    setupHeroSearch();
 
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -816,6 +841,108 @@
       }
       lastScrollY = window.scrollY;
     });
+  });
+  
+  // Search functionality for hero section
+  function setupHeroSearch() {
+    const searchInput = document.getElementById('heroSearch');
+    const resultsContainer = document.getElementById('heroSearchResults');
+    
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.trim().toLowerCase();
+        
+        if (query.length < 2) {
+          resultsContainer.classList.add('hidden');
+          return;
+        }
+        
+        performSearch(query, resultsContainer);
+      });
+      
+      searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          searchFromHero();
+        }
+      });
+    }
+  }
+  
+  function performSearch(query, resultsContainer) {
+    if (!window.allProducts) return;
+    
+    const results = window.allProducts.filter(product => {
+      return product.name.toLowerCase().includes(query) ||
+             product.shortDescription.toLowerCase().includes(query) ||
+             product.category.toLowerCase().includes(query) ||
+             (product.features && product.features.some(f => f.toLowerCase().includes(query)));
+    });
+    
+    if (results.length === 0) {
+      resultsContainer.innerHTML = `
+        <div class="p-6 text-center text-gray-600">
+          <svg class="w-16 h-16 mx-auto mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <p class="font-medium">No products found</p>
+          <p class="text-sm">Try different keywords</p>
+        </div>
+      `;
+      resultsContainer.classList.remove('hidden');
+      return;
+    }
+    
+    resultsContainer.innerHTML = results.slice(0, 5).map(product => `
+      <div class="p-4 hover:bg-gray-100 cursor-pointer transition-colors border-b last:border-b-0" onclick="window.location.href='product-detail.html?id=${product.id}'">
+        <div class="flex items-center space-x-4">
+          <img src="${product.image}" alt="${product.name}" class="w-16 h-16 object-cover rounded-lg">
+          <div class="flex-1">
+            <h4 class="font-bold text-gray-800">${product.name}</h4>
+            <p class="text-sm text-gray-600">${product.shortDescription.substring(0, 60)}...</p>
+            <div class="flex items-center space-x-2 mt-1">
+              <span class="text-lg font-bold text-blue-600">Rs. ${product.price.toLocaleString()}</span>
+              ${product.originalPrice ? `<span class="text-sm line-through text-gray-400">Rs. ${product.originalPrice.toLocaleString()}</span>` : ''}
+            </div>
+          </div>
+          <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+      </div>
+    `).join('');
+    
+    if (results.length > 5) {
+      resultsContainer.innerHTML += `
+        <div class="p-4 text-center bg-blue-50">
+          <a href="products.html" class="text-blue-600 font-medium hover:text-blue-800">
+            View all ${results.length} results →
+          </a>
+        </div>
+      `;
+    }
+    
+    resultsContainer.classList.remove('hidden');
+  }
+  
+  function searchFromHero() {
+    const searchInput = document.getElementById('heroSearch');
+    const query = searchInput ? searchInput.value.trim() : '';
+    
+    if (query) {
+      window.location.href = `products.html?search=${encodeURIComponent(query)}`;
+    }
+  }
+  
+  // Close search results when clicking outside
+  document.addEventListener('click', (e) => {
+    const searchInput = document.getElementById('heroSearch');
+    const resultsContainer = document.getElementById('heroSearchResults');
+    
+    if (searchInput && resultsContainer && 
+        !searchInput.contains(e.target) && 
+        !resultsContainer.contains(e.target)) {
+      resultsContainer.classList.add('hidden');
+    }
   });
 </script>
 </body>
