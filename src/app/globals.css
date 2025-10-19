@@ -5,13 +5,6 @@
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -22,5 +15,50 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
 }
+
+/* Custom animations for Next.js app */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Custom utility classes using Tailwind v4 syntax */
+@layer components {
+  .bg-gradient-electric {
+    background: linear-gradient(135deg, #1e40af, #3b82f6);
+  }
+  
+  .bg-gradient-gold {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+  }
+  
+  .hover\:shadow-electric:hover {
+    box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+  }
+  
+  .hover\:shadow-gold:hover {
+    box-shadow: 0 20px 40px rgba(245, 158, 11, 0.3);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+  }
+}
+
