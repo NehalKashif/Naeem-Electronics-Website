@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Products – Naeem Electronics</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="cart.js"></script>
+  <script src="products-data.js"></script>
+  <style>
+    * {
+      font-family: 'Inter', sans-serif;
+    }
+    .bg-gradient-electric-full {   
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #1d4ed8 100%);
+    }
+    .bg-gradient-electric {
+      background: linear-gradient(135deg, #1e40af, #3b82f6);
+    }
+    .bg-gradient-gold {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+    }
+    .hover\:shadow-electric:hover {
+      box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
+      transform: translateY(-2px);
+      transition: all 0.3s ease;
+    }
+    .hover\:shadow-gold:hover {
+      box-shadow: 0 20px 40px rgba(245, 158, 11, 0.3);
+      transform: translateY(-2px);
+      transition: all 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .pulse-slow {
+      animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    .filter-btn.active {
+      background: linear-gradient(135deg, #1e40af, #3b82f6);
+      color: white;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+<!-- Header -->
+<header class="bg-white/95 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b border-blue-100">
+  <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
+    <!-- Mobile Hamburger -->
+    <button id="menu-btn" class="md:hidden text-3xl text-blue-600 focus:outline-none hover:text-amber-500 transition-colors duration-300">
+      <span class="block w-6 h-0.5 bg-current mb-1 transition-transform duration-300"></span>
+      <span class="block w-6 h-0.5 bg-current mb-1 transition-transform duration-300"></span>
+      <span class="block w-6 h-0.5 bg-current transition-transform duration-300"></span>
+    </button>
+    
+    <!-- Brand Name -->
+    <h1 class="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+      Naeem Electronics
+    </h1>
+
+    <!-- Nav links -->
+    <nav id="menu" class="hidden md:flex space-y-2 md:space-y-0 md:space-x-8 items-start md:items-center text-blue-700 font-medium text-lg md:text-base flex-col md:flex-row absolute md:static top-16 left-0 w-full md:w-auto bg-white/95 md:bg-transparent shadow-lg md:shadow-none backdrop-blur-md md:backdrop-blur-none p-6 md:p-0 z-40">
+      <a href="index.html" class="px-4 py-2 rounded-lg hover:text-amber-500 hover:bg-amber-50 transition-all duration-300 relative group">
+        Home
+        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300"></span>
+      </a>
+      <a href="products.html" class="px-4 py-2 rounded-lg text-amber-500 bg-amber-50 transition-all duration-300 relative group">
+        Products
+        <span class="absolute bottom-0 left-0 w-full h-0.5 bg-amber-500 transition-all duration-300"></span>
+      </a>
+      <a href="index.html#services" class="px-4 py-2 rounded-lg hover:text-amber-500 hover:bg-amber-50 transition-all duration-300 relative group">
+        Services
+        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300"></span>
+      </a>
+      <a href="index.html#contact" class="px-4 py-2 rounded-lg hover:text-amber-500 hover:bg-amber-50 transition-all duration-300 relative group">
+        Contact
+        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300"></span>
+      </a>
+      <a href="admin-Orders.html" class="px-4 py-2 rounded-lg hover:text-amber-500 hover:bg-amber-50 transition-all duration-300 relative group">
+        Admin
+        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300"></span>
+      </a>
+    </nav>
+
+    <!-- Cart Button -->
+    <button id="cartButton" class="relative bg-gradient-electric text-white px-6 py-3 rounded-xl hover:shadow-electric transition-all duration-300 flex items-center space-x-2 group">
+      <svg class="w-5 h-5 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/>
+      </svg>
+      <span class="font-medium">Cart</span>
+      <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-xs rounded-full px-2 py-1 font-bold pulse-slow">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- Breadcrumb -->
+<section class="bg-gray-50 py-4">
+  <div class="max-w-7xl mx-auto px-4">
+    <nav class="flex items-center space-x-2 text-sm text-gray-600">
+      <a href="index.html" class="hover:text-blue-600 transition-colors">Home</a>
+      <span>/</span>
+      <span class="text-blue-600 font-medium">All Products</span>
+    </nav>
+  </div>
+</section>
+
+<!-- Products Section -->
+<section class="py-12 bg-gradient-to-br from-gray-50 to-blue-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-5xl font-bold text-gray-800 mb-3 md:mb-4">Our Products</h2>
+      <p class="text-base md:text-xl text-gray-600 max-w-2xl mx-auto mb-6 px-4">Explore our complete range of premium electronics and appliances</p>
+      
+      <!-- Search Bar -->
+      <div class="max-w-2xl mx-auto">
+        <div class="relative">
+          <input 
+            type="text" 
+            id="productSearch" 
+            placeholder="Search products... (e.g., LED, Fan, Juicer)" 
+            class="w-full px-4 py-3 md:px-6 md:py-4 pr-20 md:pr-32 rounded-xl text-gray-800 font-medium text-sm md:text-base border-2 border-gray-300 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:border-blue-500 shadow-lg placeholder-gray-500"
+          />
+          <button 
+            class="absolute right-2 top-1/2 -translate-y-1/2 bg-gradient-electric text-white px-3 py-2 md:px-6 md:py-2.5 rounded-lg font-medium hover:shadow-electric transition-all duration-300 flex items-center space-x-1 md:space-x-2">
+            <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <span class="hidden sm:inline">Search</span>
+          </button>
+        </div>
+        <div id="searchResultCount" class="mt-2 text-sm text-gray-600 hidden"></div>
+      </div>
+    </div>
+
+    <!-- Category Filters -->
+    <div class="flex flex-wrap justify-center gap-2 md:gap-3 mb-12 px-4">
+      <button onclick="filterProducts('all')" class="filter-btn active px-4 py-2 md:px-6 md:py-3 rounded-xl border-2 border-blue-600 text-blue-600 font-medium hover:bg-blue-50 transition-all duration-300 text-sm md:text-base">
+        All Products
+      </button>
+      <button onclick="filterProducts('lighting')" class="filter-btn px-4 py-2 md:px-6 md:py-3 rounded-xl border-2 border-blue-600 text-blue-600 font-medium hover:bg-blue-50 transition-all duration-300 text-sm md:text-base">
+        Lighting
+      </button>
+      <button onclick="filterProducts('cooling')" class="filter-btn px-4 py-2 md:px-6 md:py-3 rounded-xl border-2 border-blue-600 text-blue-600 font-medium hover:bg-blue-50 transition-all duration-300 text-sm md:text-base">
+        Cooling
+      </button>
+      <button onclick="filterProducts('kitchen')" class="filter-btn px-4 py-2 md:px-6 md:py-3 rounded-xl border-2 border-blue-600 text-blue-600 font-medium hover:bg-blue-50 transition-all duration-300 text-sm md:text-base">
+        Kitchen
+      </button>
+      <button onclick="filterProducts('personal-care')" class="filter-btn px-4 py-2 md:px-6 md:py-3 rounded-xl border-2 border-blue-600 text-blue-600 font-medium hover:bg-blue-50 transition-all duration-300 text-sm md:text-base">
+        Personal Care
+      </button>
+      <button onclick="filterProducts('home-appliances')" class="filter-btn px-4 py-2 md:px-6 md:py-3 rounded-xl border-2 border-blue-600 text-blue-600 font-medium hover:bg-blue-50 transition-all duration-300 text-sm md:text-base">
+        Home Appliances
+      </button>
+    </div>
+
+    <!-- Products Grid -->
+    <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+      <!-- Products will be loaded dynamically -->
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="hidden text-center py-16">
+      <svg class="w-24 h-24 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
+      </svg>
+      <h3 class="text-2xl font-bold text-gray-800 mb-2">No products found</h3>
+      <p class="text-gray-600">Try selecting a different category</p>
+    </div>
+  </div>
+</section>
+
+<!-- Cart Sidebar -->
+<div id="cartSidebar" class="fixed top-0 right-0 w-96 bg-white/95 backdrop-blur-md shadow-2xl h-full transform translate-x-full transition-transform duration-300 z-50 flex flex-col border-l border-gray-200">
+  <!-- Header -->
+  <div class="flex justify-between items-center p-6 border-b border-gray-200 bg-gradient-electric text-white">
+    <h4 class="text-xl font-bold flex items-center space-x-2">
+      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/>
+      </svg>
+      <span>Shopping Cart</span>
+    </h4>
+    <button id="closeCart" class="text-white hover:text-amber-300 text-2xl font-bold transition-colors">&times;</button>
+  </div>
+
+  <!-- Cart Items -->
+  <ul id="cartItems" class="flex-1 overflow-y-auto divide-y"></ul>
+
+  <!-- Subtotal & Actions -->
+  <div class="p-4 border-t">
+    <p class="flex justify-between font-semibold mb-4">
+      <span>Subtotal:</span>
+      <span>Rs.<span id="cartTotal">0</span> PKR</span>
+    </p>
+    <div class="flex flex-col space-y-2">
+      <button class="bg-gradient-electric text-white px-4 py-2 rounded hover:shadow-electric">View Cart</button>
+      <a href="checkout.html" class="bg-[#25D366] text-white px-4 py-2 rounded flex items-center justify-center space-x-2 hover:bg-green-500">
+        <span>Checkout</span>
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.285 6.709a1 1 0 0 0-1.41 0L9 16.584l-3.875-3.875a1 1 0 0 0-1.41 1.414l4.585 4.586a1 1 0 0 0 1.41 0l10.585-10.586a1 1 0 0 0 0-1.414z"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-gray-300 mt-10">
+  <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <!-- About Us -->
+    <div>
+      <h4 class="text-white text-lg font-semibold mb-4">About Naeem Electronics</h4>
+      <p class="text-gray-400 text-sm leading-relaxed">
+        We are your trusted partner for premium home appliances, smart electronics, and professional installation services. 
+        Our goal is to deliver quality products and exceptional customer care.
+      </p>
+    </div>
+
+    <!-- Quick Links -->
+    <div>
+      <h4 class="text-white text-lg font-semibold mb-4">Quick Links</h4>
+      <ul class="space-y-2 text-gray-400">
+        <li><a href="index.html" class="hover:text-[#e39b15]">Home</a></li>
+        <li><a href="products.html" class="hover:text-[#e39b15]">Products</a></li>
+        <li><a href="index.html#services" class="hover:text-[#e39b15]">Services</a></li>
+        <li><a href="index.html#contact" class="hover:text-[#e39b15]">Contact</a></li>
+        <li><a href="admin-Orders.html" class="hover:text-[#e39b15]">Admin Login</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact Info -->
+    <div>
+      <h4 class="text-white text-lg font-semibold mb-4">Contact Us</h4>
+      <ul class="space-y-2 text-gray-400 text-sm">
+        <li><span class="font-semibold">Phone:</span> <a href="tel:+923224768011" class="hover:text-[#e39b15]">+92 300 1234567</a></li>
+        <li><span class="font-semibold">Email:</span> <a href="mailto:info@naeemelectronics.com" class="hover:text-[#e39b15]">info@naeemelectronics.com</a></li>
+        <li><span class="font-semibold">Address:</span>Rachna town ,Ferozwala, Sheikhupura, Pakistan</li>
+        <li><span class="font-semibold">Hours:</span> Mon – Thurs, Sat: 9:00 AM – 9:00 PM</li>
+      </ul>
+    </div>
+
+    <!-- Social Media -->
+    <div>
+      <h4 class="text-white text-lg font-semibold mb-4">Follow Us</h4>
+      <p class="text-gray-400 text-sm mb-3">Stay connected through our social channels:</p>
+      <div class="flex space-x-4">
+        <a href="#" class="hover:text-[#e39b15]" aria-label="Facebook">
+          <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M22 12a10 10 0 10-11.5 9.9v-7h-2v-3h2v-2c0-2 1.2-3.1 3-3.1.9 0 1.8.1 1.8.1v2h-1c-1 0-1.3.6-1.3 1.2v1.8h2.6l-.4 3h-2.2v7A10 10 0 0022 12z"/></svg>
+        </a>
+        <a href="#" class="hover:text-[#e39b15]" aria-label="Twitter">
+          <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.5.6-2.33.7a4.1 4.1 0 001.8-2.27 8.4 8.4 0 01-2.6 1 4.16 4.16 0 00-7.1 3.8A11.8 11.8 0 013 4.7a4.1 4.1 0 001.3 5.5 4.06 4.06 0 01-1.9-.5v.1a4.15 4.15 0 003.3 4 4.1 4.1 0 01-1.9.1 4.15 4.15 0 003.9 2.9 8.36 8.36 0 01-5.2 1.8A8.53 8.53 0 012 19a11.78 11.78 0 006.3 1.8c7.6 0 11.8-6.3 11.8-11.8v-.5c.8-.6 1.5-1.3 2.1-2.1z"/></svg>
+        </a>
+        <a href="#" class="hover:text-[#e39b15]" aria-label="Instagram">
+          <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.5-.5a1.1 1.1 0 100 2.2 1.1 1.1 0 000-2.2z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="bg-gray-800 text-gray-400 text-center py-4 border-t border-gray-700">
+    &copy; 2025 Naeem Electronics. All rights reserved. 
+  </div>
+</footer>
+
+<script>
+  // Enhanced mobile menu functionality
+  const menuBtn = document.getElementById("menu-btn");
+  const navMenu = document.getElementById("menu");
+
+  if (menuBtn && navMenu) {
+    menuBtn.addEventListener("click", () => {
+      navMenu.classList.toggle("hidden");
+      navMenu.classList.toggle("flex");
+      
+      // Animate hamburger icon to X
+      const spans = menuBtn.querySelectorAll("span");
+      if (!navMenu.classList.contains("hidden")) {
+        spans[0].style.transform = "rotate(45deg) translate(5px, 5px)";
+        spans[1].style.opacity = "0";
+        spans[2].style.transform = "rotate(-45deg) translate(7px, -6px)";
+      } else {
+        spans[0].style.transform = "rotate(0) translate(0, 0)";
+        spans[1].style.opacity = "1";
+        spans[2].style.transform = "rotate(0) translate(0, 0)";
+      }
+    });
+  }
+
+  // Filter functionality
+  function filterProducts(category) {
+    const products = window.allProducts || [];
+    const grid = document.getElementById('productsGrid');
+    const emptyState = document.getElementById('emptyState');
+    
+    // Update active button
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+    
+    // Filter products
+    let filtered = category === 'all' 
+      ? products 
+      : products.filter(p => p.category === category);
+    
+    // Display products
+    if (filtered.length === 0) {
+      grid.innerHTML = '';
+      emptyState.classList.remove('hidden');
+    } else {
+      emptyState.classList.add('hidden');
+      displayProducts(filtered);
+    }
+  }
+
+  // Display products
+  function displayProducts(products) {
+    const grid = document.getElementById('productsGrid');
+    grid.innerHTML = products.map(product => `
+      <div class="bg-white shadow-lg rounded-2xl p-6 card-hover cursor-pointer group border border-gray-100 flex flex-col h-full" onclick="viewProduct('${product.id}')">
+        <div class="relative overflow-hidden rounded-xl mb-6 flex-shrink-0">
+          <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover object-center group-hover:scale-110 transition-transform duration-500">
+          ${product.badge ? `
+          <div class="absolute top-3 right-3 bg-${product.badgeColor}-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+            ${product.badge}
+          </div>` : ''}
+        </div>
+        <div class="space-y-3 flex-grow flex flex-col">
+          <h4 class="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors">${product.name}</h4>
+          <p class="text-sm text-gray-600 leading-relaxed flex-grow">
+            ${product.shortDescription}
+          </p>
+          <div class="flex items-center justify-between mt-auto">
+            <div class="flex items-baseline space-x-2">
+              <span class="text-2xl font-bold text-blue-600">Rs. ${product.price.toLocaleString()}</span>
+              ${product.originalPrice ? `<span class="text-lg line-through text-gray-400">Rs. ${product.originalPrice.toLocaleString()}</span>` : ''}
+            </div>
+            ${product.discount ? `<span class="bg-red-100 text-red-600 text-xs font-semibold px-2 py-1 rounded-full">${product.discount}% OFF</span>` : ''}
+          </div>
+          <button onclick="event.stopPropagation(); addToCart('${product.name}', ${product.price}, '${product.image}')" class="w-full bg-gradient-gold text-white px-6 py-3 rounded-xl hover:shadow-gold transition-all duration-300 font-medium group-hover:transform group-hover:scale-105 mt-4">
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // View product detail
+  function viewProduct(productId) {
+    window.location.href = `product-detail.html?id=${productId}`;
+  }
+
+  // Load all products on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    if (window.allProducts) {
+      // Check for search query in URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const searchQuery = urlParams.get('search');
+      
+      if (searchQuery) {
+        document.getElementById('productSearch').value = searchQuery;
+        performProductSearch(searchQuery);
+      } else {
+        displayProducts(window.allProducts);
+      }
+      
+      // Setup search functionality
+      setupProductSearch();
+    }
+  });
+  
+  // Setup product search
+  function setupProductSearch() {
+    const searchInput = document.getElementById('productSearch');
+    const resultCount = document.getElementById('searchResultCount');
+    
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.trim().toLowerCase();
+        performProductSearch(query);
+      });
+      
+      searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          const query = e.target.value.trim().toLowerCase();
+          performProductSearch(query);
+        }
+      });
+    }
+  }
+  
+  // Perform product search
+  function performProductSearch(query) {
+    const products = window.allProducts || [];
+    const grid = document.getElementById('productsGrid');
+    const emptyState = document.getElementById('emptyState');
+    const resultCount = document.getElementById('searchResultCount');
+    
+    // Reset filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.classList.remove('active');
+    });
+    
+    if (!query || query.length < 2) {
+      displayProducts(products);
+      resultCount.classList.add('hidden');
+      document.querySelector('.filter-btn').classList.add('active'); // Activate "All" button
+      return;
+    }
+    
+    // Search in name, description, category, and features
+    const results = products.filter(product => {
+      return product.name.toLowerCase().includes(query) ||
+             product.shortDescription.toLowerCase().includes(query) ||
+             product.fullDescription.toLowerCase().includes(query) ||
+             product.category.toLowerCase().includes(query) ||
+             (product.features && product.features.some(f => f.toLowerCase().includes(query)));
+    });
+    
+    // Show result count
+    resultCount.textContent = `Found ${results.length} product${results.length !== 1 ? 's' : ''} matching "${query}"`;
+    resultCount.classList.remove('hidden');
+    
+    if (results.length === 0) {
+      grid.innerHTML = '';
+      emptyState.classList.remove('hidden');
+    } else {
+      emptyState.classList.add('hidden');
+      displayProducts(results);
+    }
+  }
+</script>
+</body>
+</html>
