@@ -2,6 +2,7 @@
 
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
 import { getProductById, products } from '@/data/products';
 import { useCart } from '@/contexts/CartContext';
 import ProductCard from '@/components/ProductCard';
@@ -20,10 +21,10 @@ export default function ProductDetailPage() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-gray-800 mb-4">Product Not Found</h1>
-          <p className="text-gray-600 mb-6">The product you're looking for doesn't exist.</p>
-          <a href="/products" className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
+          <p className="text-gray-600 mb-6">The product you&apos;re looking for doesn&apos;t exist.</p>
+          <Link href="/products" className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
             Browse All Products
-          </a>
+          </Link>
         </div>
       </div>
     );
@@ -55,9 +56,9 @@ export default function ProductDetailPage() {
       {/* Breadcrumb */}
       <div className="max-w-7xl mx-auto mb-8">
         <nav className="text-sm text-gray-600">
-          <a href="/" className="hover:text-blue-600">Home</a>
+          <Link href="/" className="hover:text-blue-600">Home</Link>
           <span className="mx-2">/</span>
-          <a href="/products" className="hover:text-blue-600">Products</a>
+          <Link href="/products" className="hover:text-blue-600">Products</Link>
           <span className="mx-2">/</span>
           <span className="text-gray-900 font-medium">{product.name}</span>
         </nav>

@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
+import Link from 'next/link';
 import ProductCard from '@/components/ProductCard';
 import ScrollReveal from '@/components/ScrollReveal';
 import { products } from '@/data/products';
 import { CategoryType, CATEGORIES } from '@/types';
-import { motion } from 'framer-motion';
 
 export default function ProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState<CategoryType | 'all'>('all');
@@ -40,9 +40,9 @@ export default function ProductsPage() {
       <div className="bg-gray-50 py-4">
         <div className="max-w-7xl mx-auto px-4">
           <nav className="flex items-center space-x-2 text-sm text-gray-600">
-            <a href="/" className="hover:text-blue-600 transition-colors">
+            <Link href="/" className="hover:text-blue-600 transition-colors">
               Home
-            </a>
+            </Link>
             <span>/</span>
             <span className="text-blue-600 font-medium">All Products</span>
           </nav>

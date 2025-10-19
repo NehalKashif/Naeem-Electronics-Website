@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import ProductCard from '@/components/ProductCard';
 import ScrollReveal from '@/components/ScrollReveal';
 import { products } from '@/data/products';
@@ -240,7 +239,7 @@ export default function HomePage() {
           <ScrollReveal>
             <h3 className="text-4xl font-bold text-center mb-4 text-blue-900">Get in Touch</h3>
             <p className="text-center text-gray-600 mb-12">
-              Have a question or need a quote? Fill out the form below or call us directly — we'd love to hear from you!
+              Have a question or need a quote? Fill out the form below or call us directly — we&apos;d love to hear from you!
             </p>
           </ScrollReveal>
 

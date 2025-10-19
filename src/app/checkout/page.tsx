@@ -2,6 +2,7 @@
 
 import { useCart } from '@/contexts/CartContext';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -81,12 +82,12 @@ export default function CheckoutPage() {
         <div className="text-center">
           <h1 className="text-4xl font-bold text-gray-800 mb-4">Your Cart is Empty</h1>
           <p className="text-gray-600 mb-6">Add some products to your cart before checking out.</p>
-          <a
+          <Link
             href="/products"
             className="inline-block bg-gradient-electric text-white px-8 py-3 rounded-xl font-semibold hover:shadow-electric"
           >
             Browse Products
-          </a>
+          </Link>
         </div>
       </div>
     );
@@ -97,9 +98,9 @@ export default function CheckoutPage() {
       <div className="max-w-7xl mx-auto">
         {/* Breadcrumb */}
         <nav className="text-sm text-gray-600 mb-8">
-          <a href="/" className="hover:text-blue-600">Home</a>
+          <Link href="/" className="hover:text-blue-600">Home</Link>
           <span className="mx-2">/</span>
-          <a href="/products" className="hover:text-blue-600">Products</a>
+          <Link href="/products" className="hover:text-blue-600">Products</Link>
           <span className="mx-2">/</span>
           <span className="text-gray-900 font-medium">Checkout</span>
         </nav>
