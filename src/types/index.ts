@@ -11,6 +11,7 @@ export interface Product {
   badgeColor?: 'blue' | 'green' | 'purple' | 'pink' | 'red' | 'teal' | 'indigo';
   shortDescription: string;
   fullDescription: string;
+  isFeatured?: boolean;
   features: string[];
   specifications: Record<string, string>;
   reviews: Review[];

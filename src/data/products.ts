@@ -14,6 +14,7 @@ export const products: Product[] = [
     badgeColor: 'blue',
     shortDescription: 'Wi-Fi enabled 12W smart bulb with adjustable brightness and color tones, controllable via mobile app or voice assistant.',
     fullDescription: 'Transform any room with vibrant lighting – control brightness, color, and scheduling straight from your smartphone or voice assistant.',
+    isFeatured: true,
     features: [
       '12W Power Consumption',
       '16 Million Colors',
@@ -58,6 +59,7 @@ export const products: Product[] = [
     badgeColor: 'red',
     shortDescription: 'Powerful LED emergency light with 8+ hours backup, perfect for load shedding and outdoor activities.',
     fullDescription: 'Never be left in the dark during power outages. This powerful emergency light provides bright illumination for hours with its long-lasting battery.',
+    isFeatured: true,
     features: [
       '24 High-Power LED Bulbs',
       '8+ Hours Backup Time',
@@ -98,6 +100,7 @@ export const products: Product[] = [
     badgeColor: 'green',
     shortDescription: 'Energy-efficient ceiling fan with integrated LED lighting, three speed settings, and silent motor for a comfortable environment.',
     fullDescription: 'Premium ceiling fan combining efficient air circulation with modern LED lighting. Features a whisper-quiet motor and elegant design.',
+    isFeatured: true,
     features: [
       '1200mm Sweep Size',
       'Integrated LED Light (18W)',
@@ -129,6 +132,7 @@ export const products: Product[] = [
     badgeColor: 'teal',
     shortDescription: 'Powerful 3-speed stand fan with adjustable height and oscillation, ideal for cooling larger rooms or offices.',
     fullDescription: 'High-performance pedestal fan with adjustable height and tilt. Perfect for bedrooms, living rooms, and offices.',
+    isFeatured: true,
     features: [
       '16-inch Fan Blades',
       '3 Speed Settings',
@@ -162,6 +166,7 @@ export const products: Product[] = [
     badgeColor: 'purple',
     shortDescription: 'High-power stainless steel juicer designed for fast and efficient juice extraction, ideal for home or commercial use.',
     fullDescription: 'Professional-grade juicer with powerful motor and stainless steel construction. Extract maximum juice from fruits and vegetables with ease.',
+    isFeatured: true,
     features: [
       '800W Powerful Motor',
       'Stainless Steel Blades & Body',
@@ -202,6 +207,7 @@ export const products: Product[] = [
     badgeColor: 'pink',
     shortDescription: 'Ionic hair dryer with multiple heat settings and cool shot button for professional styling at home.',
     fullDescription: 'Professional salon-grade hair dryer with advanced ionic technology to reduce frizz and enhance shine. Multiple heat and speed settings for all hair types.',
+    isFeatured: true,
     features: [
       '2200W Professional Motor',
       'Ionic Technology',
@@ -242,6 +248,7 @@ export const products: Product[] = [
     badgeColor: 'blue',
     shortDescription: 'Fully automatic front-load washing machine with 8KG capacity, multiple wash programs, and energy-efficient design.',
     fullDescription: 'Advanced washing machine with intelligent sensors and multiple wash programs. Delivers exceptional cleaning performance while being gentle on clothes.',
+    isFeatured: true,
     features: [
       '8KG Load Capacity',
       '12 Wash Programs',

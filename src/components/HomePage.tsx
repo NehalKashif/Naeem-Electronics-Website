@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import Link from 'next/link';
 import ProductCard from '@/components/ProductCard';
 import ScrollReveal from '@/components/ScrollReveal';
@@ -8,7 +8,69 @@ import { products } from '@/data/products';
 import { motion } from 'framer-motion';
 
 export default function HomePage() {
-  const featuredProducts = products.slice(0, 4);
+  const featuredProducts = products.filter(p => p.isFeatured);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  // Check scroll position
+  const checkScroll = () => {
+    if (carouselRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+    }
+  };
+
+  // Auto-scroll functionality
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (carouselRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+        const firstCard = carouselRef.current.querySelector('.product-card-wrapper') as HTMLElement;
+        const cardWidth = firstCard?.offsetWidth || 0;
+        const gap = 24; // 6 * 4 = 24px gap
+        
+        // If at the end, scroll back to start
+        if (scrollLeft >= scrollWidth - clientWidth - 10) {
+          carouselRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          // Scroll by one card width plus gap to show next product
+          carouselRef.current.scrollBy({ left: cardWidth + gap, behavior: 'smooth' });
+        }
+      }
+    }, 5000); // Auto-scroll every 5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Scroll handlers
+  const scrollLeft = () => {
+    if (carouselRef.current) {
+      const firstCard = carouselRef.current.querySelector('.product-card-wrapper') as HTMLElement;
+      const cardWidth = firstCard?.offsetWidth || 0;
+      const gap = 24; // 6 * 4 = 24px gap
+      carouselRef.current.scrollBy({ left: -(cardWidth + gap), behavior: 'smooth' });
+    }
+  };
+
+  const scrollRight = () => {
+    if (carouselRef.current) {
+      const firstCard = carouselRef.current.querySelector('.product-card-wrapper') as HTMLElement;
+      const cardWidth = firstCard?.offsetWidth || 0;
+      const gap = 24; // 6 * 4 = 24px gap
+      carouselRef.current.scrollBy({ left: cardWidth + gap, behavior: 'smooth' });
+    }
+  };
+
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (carousel) {
+      carousel.addEventListener('scroll', checkScroll);
+      checkScroll(); // Initial check
+      return () => carousel.removeEventListener('scroll', checkScroll);
+    }
+  }, []);
 
   return (
     <main>
@@ -129,13 +191,53 @@ export default function HomePage() {
               </p>
             </div>
           </ScrollReveal>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {featuredProducts.map((product, index) => (
-              <ScrollReveal key={product.id} delay={index * 0.1}>
-                <ProductCard product={product} />
-              </ScrollReveal>
-            ))}
+
+          {/* Carousel Container */}
+          <div className="relative px-12">
+            {/* Left Arrow */}
+            <button
+              onClick={scrollLeft}
+              disabled={!canScrollLeft}
+              className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-xl rounded-full p-3 hover:bg-blue-50 transition-all duration-300 ${
+                !canScrollLeft ? 'opacity-0 cursor-not-allowed' : 'hover:scale-110 opacity-100'
+              }`}
+              aria-label="Scroll left"
+            >
+              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+
+            {/* Right Arrow */}
+            <button
+              onClick={scrollRight}
+              disabled={!canScrollRight}
+              className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-xl rounded-full p-3 hover:bg-blue-50 transition-all duration-300 ${
+                !canScrollRight ? 'opacity-0 cursor-not-allowed' : 'hover:scale-110 opacity-100'
+              }`}
+              aria-label="Scroll right"
+            >
+              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+
+            {/* Products Carousel - Flex Layout */}
+            <div
+              ref={carouselRef}
+              className="overflow-x-auto scroll-smooth scrollbar-hide"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              <div className="flex gap-6">
+                {featuredProducts.map((product) => (
+                  <div key={product.id} className="product-card-wrapper flex-none w-[calc(25%-1.125rem)]">
+                    <ProductCard product={product} />
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
+
           <ScrollReveal delay={0.4}>
             <div className="text-center mt-12">
               <Link
