@@ -9,6 +9,10 @@ export default function Header() {
   const { getCartItemCount, toggleCart } = useCart();
   const cartCount = getCartItemCount();
 
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
     <header className="bg-white/95 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b border-blue-100">
       <div className="max-w-7xl mx-auto flex justify-between items-center p-4">
@@ -38,6 +42,7 @@ export default function Header() {
         >
           <Link
             href="/"
+            onClick={closeMenu}
             className="px-4 py-2 rounded-lg hover:text-amber-500 hover:bg-amber-50 transition-all duration-300 relative group"
           >
             Home
@@ -45,6 +50,7 @@ export default function Header() {
           </Link>
           <Link
             href="/products"
+            onClick={closeMenu}
             className="px-4 py-2 rounded-lg hover:text-amber-500 hover:bg-amber-50 transition-all duration-300 relative group"
           >
             Products
@@ -52,6 +58,7 @@ export default function Header() {
           </Link>
           <Link
             href="/#services"
+            onClick={closeMenu}
             className="px-4 py-2 rounded-lg hover:text-amber-500 hover:bg-amber-50 transition-all duration-300 relative group"
           >
             Services
@@ -59,6 +66,7 @@ export default function Header() {
           </Link>
           <Link
             href="/#contact"
+            onClick={closeMenu}
             className="px-4 py-2 rounded-lg hover:text-amber-500 hover:bg-amber-50 transition-all duration-300 relative group"
           >
             Contact

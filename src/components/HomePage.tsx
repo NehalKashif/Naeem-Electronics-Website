@@ -193,17 +193,17 @@ export default function HomePage() {
           </ScrollReveal>
 
           {/* Carousel Container */}
-          <div className="relative px-12">
+          <div className="relative px-4 md:px-12">
             {/* Left Arrow */}
             <button
               onClick={scrollLeft}
               disabled={!canScrollLeft}
-              className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-xl rounded-full p-3 hover:bg-blue-50 transition-all duration-300 ${
+              className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-xl rounded-full p-2 md:p-3 hover:bg-blue-50 transition-all duration-300 ${
                 !canScrollLeft ? 'opacity-0 cursor-not-allowed' : 'hover:scale-110 opacity-100'
               }`}
               aria-label="Scroll left"
             >
-              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 md:w-6 md:h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
@@ -212,12 +212,12 @@ export default function HomePage() {
             <button
               onClick={scrollRight}
               disabled={!canScrollRight}
-              className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-xl rounded-full p-3 hover:bg-blue-50 transition-all duration-300 ${
+              className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-xl rounded-full p-2 md:p-3 hover:bg-blue-50 transition-all duration-300 ${
                 !canScrollRight ? 'opacity-0 cursor-not-allowed' : 'hover:scale-110 opacity-100'
               }`}
               aria-label="Scroll right"
             >
-              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 md:w-6 md:h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </button>
@@ -228,9 +228,9 @@ export default function HomePage() {
               className="overflow-x-auto scroll-smooth scrollbar-hide"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
-              <div className="flex gap-6">
+              <div className="flex gap-4 md:gap-6">
                 {featuredProducts.map((product) => (
-                  <div key={product.id} className="product-card-wrapper flex-none w-[calc(25%-1.125rem)]">
+                  <div key={product.id} className="product-card-wrapper flex-none w-[calc(50%-0.5rem)] md:w-[calc(25%-1.125rem)]">
                     <ProductCard product={product} />
                   </div>
                 ))}
