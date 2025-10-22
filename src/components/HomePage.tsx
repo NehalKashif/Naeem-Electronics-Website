@@ -113,6 +113,8 @@ export default function HomePage() {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   
   // Contact form state
   const [formData, setFormData] = useState({
@@ -127,12 +129,51 @@ export default function HomePage() {
     message: string;
   }>({ type: null, message: '' });
 
+  // Check if mobile on mount and resize
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Calculate current slide based on scroll position
+  const updateCurrentSlide = () => {
+    if (carouselRef.current) {
+      const { scrollLeft } = carouselRef.current;
+      const firstCard = carouselRef.current.querySelector('.product-card-wrapper') as HTMLElement;
+      if (firstCard) {
+        const cardWidth = firstCard.offsetWidth;
+        const gap = isMobile ? 12 : 24;
+        const slideIndex = Math.round(scrollLeft / (cardWidth + gap));
+        setCurrentSlide(slideIndex);
+      }
+    }
+  };
+
   // Check scroll position
   const checkScroll = () => {
     if (carouselRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
-      setCanScrollLeft(scrollLeft > 0);
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+      setCanScrollLeft(scrollLeft > 5);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 5);
+      updateCurrentSlide();
+    }
+  };
+
+  // Scroll to specific slide
+  const scrollToSlide = (index: number) => {
+    if (carouselRef.current) {
+      const firstCard = carouselRef.current.querySelector('.product-card-wrapper') as HTMLElement;
+      if (firstCard) {
+        const cardWidth = firstCard.offsetWidth;
+        const gap = isMobile ? 12 : 24;
+        const scrollPosition = index * (cardWidth + gap);
+        carouselRef.current.scrollTo({ left: scrollPosition, behavior: 'smooth' });
+      }
     }
   };
 
@@ -140,43 +181,30 @@ export default function HomePage() {
   useEffect(() => {
     const interval = setInterval(() => {
       if (carouselRef.current) {
-        const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
-        const firstCard = carouselRef.current.querySelector('.product-card-wrapper') as HTMLElement;
-        const cardWidth = firstCard?.offsetWidth || 0;
-        const gap = 24; // 6 * 4 = 24px gap
-        
-        // If at the end, scroll back to start
-        if (scrollLeft >= scrollWidth - clientWidth - 10) {
-          carouselRef.current.scrollTo({ left: 0, behavior: 'smooth' });
-        } else {
-          // Scroll by one card width plus gap to show next product
-          carouselRef.current.scrollBy({ left: cardWidth + gap, behavior: 'smooth' });
-        }
+        const maxSlide = isMobile ? featuredProducts.length - 2 : featuredProducts.length - 3;
+        const nextSlide = currentSlide >= maxSlide ? 0 : currentSlide + 1;
+        scrollToSlide(nextSlide);
       }
-    }, 5000); // Auto-scroll every 5 seconds
+    }, 4000); // Auto-scroll every 4 seconds
 
     return () => clearInterval(interval);
-  }, []);
+  }, [currentSlide, isMobile, featuredProducts.length]);
 
   // Scroll handlers
   const scrollLeft = () => {
-    if (carouselRef.current) {
-      const firstCard = carouselRef.current.querySelector('.product-card-wrapper') as HTMLElement;
-      const cardWidth = firstCard?.offsetWidth || 0;
-      const gap = 24; // 6 * 4 = 24px gap
-      carouselRef.current.scrollBy({ left: -(cardWidth + gap), behavior: 'smooth' });
+    if (currentSlide > 0) {
+      scrollToSlide(currentSlide - 1);
     }
   };
 
   const scrollRight = () => {
-    if (carouselRef.current) {
-      const firstCard = carouselRef.current.querySelector('.product-card-wrapper') as HTMLElement;
-      const cardWidth = firstCard?.offsetWidth || 0;
-      const gap = 24; // 6 * 4 = 24px gap
-      carouselRef.current.scrollBy({ left: cardWidth + gap, behavior: 'smooth' });
+    const maxSlide = isMobile ? featuredProducts.length - 2 : featuredProducts.length - 3;
+    if (currentSlide < maxSlide) {
+      scrollToSlide(currentSlide + 1);
     }
   };
 
+  // Setup scroll listener
   useEffect(() => {
     const carousel = carouselRef.current;
     if (carousel) {
@@ -184,7 +212,7 @@ export default function HomePage() {
       checkScroll(); // Initial check
       return () => carousel.removeEventListener('scroll', checkScroll);
     }
-  }, []);
+  }, [isMobile]);
 
   // Handle form input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -358,49 +386,76 @@ export default function HomePage() {
           </ScrollReveal>
 
           {/* Carousel Container */}
-          <div className="relative px-4 md:px-12">
-            {/* Left Arrow */}
+          <div className="relative">
+            {/* Desktop Navigation Arrows */}
             <button
               onClick={scrollLeft}
               disabled={!canScrollLeft}
-              className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-xl rounded-full p-2 md:p-3 hover:bg-blue-50 transition-all duration-300 ${
+              className={`hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-xl rounded-full p-3 hover:bg-blue-50 transition-all duration-300 ${
                 !canScrollLeft ? 'opacity-0 cursor-not-allowed' : 'hover:scale-110 opacity-100'
               }`}
               aria-label="Scroll left"
             >
-              <svg className="w-4 h-4 md:w-6 md:h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
 
-            {/* Right Arrow */}
             <button
               onClick={scrollRight}
               disabled={!canScrollRight}
-              className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-xl rounded-full p-2 md:p-3 hover:bg-blue-50 transition-all duration-300 ${
+              className={`hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-xl rounded-full p-3 hover:bg-blue-50 transition-all duration-300 ${
                 !canScrollRight ? 'opacity-0 cursor-not-allowed' : 'hover:scale-110 opacity-100'
               }`}
               aria-label="Scroll right"
             >
-              <svg className="w-4 h-4 md:w-6 md:h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </button>
 
-            {/* Products Carousel - Flex Layout */}
-            <div
-              ref={carouselRef}
-              className="overflow-x-auto scroll-smooth scrollbar-hide"
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-            >
-              <div className="flex gap-4 md:gap-6">
-                {featuredProducts.map((product) => (
-                  <div key={product.id} className="product-card-wrapper flex-none w-[calc(50%-0.5rem)] md:w-[calc(25%-1.125rem)]">
-                    <ProductCard product={product} />
-                  </div>
-                ))}
+            {/* Products Carousel */}
+            <div className="md:px-12">
+              <div
+                ref={carouselRef}
+                className="overflow-x-auto scroll-smooth scrollbar-hide snap-x snap-mandatory touch-pan-x"
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              >
+                <div className="flex gap-3 md:gap-6 px-2 md:px-0">
+                  {featuredProducts.map((product) => (
+                    <div 
+                      key={product.id} 
+                      className="product-card-wrapper flex-none w-[calc(50%-6px)] md:w-[calc(33.333%-1rem)] lg:w-[calc(25%-1.125rem)] snap-start"
+                    >
+                      <ProductCard product={product} />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
+          </div>
+
+          {/* Scroll Indicator Dots */}
+          <div className="flex justify-center mt-8 gap-2">
+            {featuredProducts.map((_, index) => {
+              const maxSlide = isMobile ? featuredProducts.length - 2 : featuredProducts.length - 3;
+              // Show only relevant dots
+              if (index <= maxSlide) {
+                return (
+                  <button
+                    key={index}
+                    onClick={() => scrollToSlide(index)}
+                    className={`h-2 rounded-full transition-all duration-300 ${
+                      index === currentSlide 
+                        ? 'w-8 bg-blue-600' 
+                        : 'w-2 bg-gray-300 hover:bg-gray-400'
+                    }`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                );
+              }
+              return null;
+            })}
           </div>
 
           <ScrollReveal delay={0.4}>

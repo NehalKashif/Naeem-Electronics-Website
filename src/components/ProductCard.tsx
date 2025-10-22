@@ -33,56 +33,72 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <Link href={`/products/${product.id}`}>
       <motion.div 
-        className="bg-white shadow-lg rounded-2xl p-4 md:p-6 hover:transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 cursor-pointer group border border-gray-100 flex flex-col h-full"
+        className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer group border border-gray-200 flex flex-col h-full"
         whileHover={{ scale: 1.02 }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
       >
-        <div className="relative overflow-hidden rounded-xl mb-4 md:mb-6 flex-shrink-0">
+        {/* Image Container */}
+        <div className="relative overflow-hidden bg-gray-50 aspect-square">
           <Image
             src={product.image}
             alt={product.name}
             width={300}
-            height={200}
-            className="w-full h-32 md:h-48 object-cover object-center group-hover:scale-110 transition-transform duration-500"
+            height={300}
+            className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500"
           />
           {product.badge && (
             <div
-              className={`absolute top-2 md:top-3 right-2 md:right-3 ${
+              className={`absolute top-2 right-2 ${
                 badgeColors[product.badgeColor || 'blue']
-              } text-white px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-medium`}
+              } text-white px-2 py-1 rounded text-xs font-semibold shadow-md`}
             >
               {product.badge}
             </div>
           )}
+          {product.discount && (
+            <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
+              {product.discount}% OFF
+            </div>
+          )}
         </div>
-        <div className="space-y-2 md:space-y-3 flex-grow flex flex-col">
-          <h4 className="text-base md:text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors line-clamp-2">
+
+        {/* Content Container */}
+        <div className="p-3 flex flex-col flex-grow">
+          {/* Product Name */}
+          <h4 className="text-sm md:text-base font-semibold text-gray-800 line-clamp-2 mb-2 min-h-[2.5rem] md:min-h-[3rem] group-hover:text-blue-600 transition-colors">
             {product.name}
           </h4>
-          <p className="text-sm text-gray-600 leading-relaxed flex-grow hidden md:block">
+
+          {/* Product Description - Desktop Only */}
+          <p className="hidden md:block text-sm text-gray-600 leading-relaxed mb-3 line-clamp-2">
             {product.shortDescription}
           </p>
-          <div className="flex items-center justify-between mt-auto">
-            <div className="flex items-baseline space-x-1 md:space-x-2">
-              <span className="text-lg md:text-2xl font-bold text-blue-600">Rs. {product.price.toLocaleString()}</span>
+
+          {/* Price Section */}
+          <div className="mt-auto">
+            <div className="flex items-baseline gap-2 mb-3">
+              <span className="text-lg md:text-xl font-bold text-blue-600">
+                Rs. {product.price.toLocaleString()}
+              </span>
               {product.originalPrice && (
-                <span className="text-sm md:text-lg line-through text-gray-400">
+                <span className="text-xs md:text-sm line-through text-gray-400">
                   Rs. {product.originalPrice.toLocaleString()}
                 </span>
               )}
             </div>
-            {product.discount && (
-              <span className="bg-red-100 text-red-600 text-xs font-semibold px-2 py-1 rounded-full">
-                {product.discount}% OFF
-              </span>
-            )}
+
+            {/* Add to Cart Button */}
+            <button
+              onClick={handleAddToCart}
+              className="w-full bg-gradient-to-r from-amber-500 to-orange-600 text-white py-2 md:py-2.5 rounded-lg hover:shadow-lg hover:shadow-amber-500/30 transition-all duration-300 font-medium text-sm md:text-base flex items-center justify-center gap-2"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              <span className="hidden sm:inline">Add to Cart</span>
+              <span className="sm:hidden">Add</span>
+            </button>
           </div>
-          <button
-            onClick={handleAddToCart}
-            className="w-full bg-gradient-to-r from-amber-500 to-orange-600 text-white px-4 md:px-6 py-2 md:py-3 rounded-xl hover:shadow-lg hover:shadow-amber-500/30 transition-all duration-300 font-medium group-hover:transform group-hover:scale-105 mt-3 md:mt-4 text-sm md:text-base"
-          >
-            Add to Cart
-          </button>
         </div>
       </motion.div>
     </Link>
