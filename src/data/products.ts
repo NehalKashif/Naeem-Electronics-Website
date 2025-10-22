@@ -1,11 +1,19 @@
 import { Product } from '@/types';
+import { CATEGORY_VALUES } from '@/data/categories';
+
+// ============================================
+// PRODUCTS DATA
+// ============================================
+// Using CATEGORY_VALUES (like enum) ensures consistency
+// Example: category: CATEGORY_VALUES.LIGHTING
+// This prevents typos and makes categories consistent
 
 export const products: Product[] = [
   // Lighting Products
   {
     id: 'smart-led-bulb',
     name: 'Smart LED Bulb 12W',
-    category: 'lighting',
+    category: CATEGORY_VALUES.LIGHTING, // ✅ Using enum-like constant
     price: 299,
     originalPrice: 399,
     discount: 25,
@@ -50,7 +58,7 @@ export const products: Product[] = [
   {
     id: 'emergency-light',
     name: 'Rechargeable Emergency Light',
-    category: 'lighting',
+    category: CATEGORY_VALUES.LIGHTING, // ✅ Using enum-like constant
     price: 1299,
     originalPrice: 1799,
     discount: 28,
@@ -91,7 +99,7 @@ export const products: Product[] = [
   {
     id: 'ceiling-fan',
     name: 'Ceiling Fan with LED',
-    category: 'cooling',
+    category: CATEGORY_VALUES.COOLING, // ✅ Using enum-like constant
     price: 4999,
     originalPrice: 6499,
     discount: 23,
@@ -123,7 +131,7 @@ export const products: Product[] = [
   {
     id: 'stand-fan',
     name: 'Adjustable Stand Fan',
-    category: 'cooling',
+    category: CATEGORY_VALUES.COOLING, 
     price: 3499,
     originalPrice: 4299,
     discount: 19,
@@ -157,7 +165,7 @@ export const products: Product[] = [
   {
     id: 'juicer-machine',
     name: 'Professional Juicer Machine',
-    category: 'kitchen',
+    category: CATEGORY_VALUES.KITCHEN, 
     price: 8999,
     originalPrice: 11999,
     discount: 25,
@@ -198,7 +206,7 @@ export const products: Product[] = [
   {
     id: 'hair-dryer',
     name: 'Professional Hair Dryer',
-    category: 'personal-care',
+    category: CATEGORY_VALUES.PERSONAL_CARE, // ✅ Using enum-like constant
     price: 2499,
     originalPrice: 3499,
     discount: 29,
@@ -239,7 +247,7 @@ export const products: Product[] = [
   {
     id: 'washing-machine',
     name: 'Automatic Washing Machine 8KG',
-    category: 'home-appliances',
+    category: CATEGORY_VALUES.HOME_APPLIANCES, // ✅ Using enum-like constant
     price: 34999,
     originalPrice: 44999,
     discount: 22,

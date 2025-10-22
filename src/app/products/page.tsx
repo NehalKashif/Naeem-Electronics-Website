@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import ProductCard from '@/components/ProductCard';
 import ScrollReveal from '@/components/ScrollReveal';
@@ -8,8 +9,18 @@ import { products } from '@/data/products';
 import { CategoryType, CATEGORIES } from '@/types';
 
 export default function ProductsPage() {
+  const searchParams = useSearchParams();
+  const categoryFromUrl = searchParams.get('category') as CategoryType | null;
+  
   const [selectedCategory, setSelectedCategory] = useState<CategoryType | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Set category from URL on mount
+  useEffect(() => {
+    if (categoryFromUrl && CATEGORIES[categoryFromUrl]) {
+      setSelectedCategory(categoryFromUrl);
+    }
+  }, [categoryFromUrl]);
 
   const filteredProducts = useMemo(() => {
     let filtered = products;

@@ -1,8 +1,11 @@
+// Import category value type from categories data
+import type { CategoryValue } from '@/data/categories';
+
 // Product Types
 export interface Product {
   id: string;
   name: string;
-  category: 'lighting' | 'cooling' | 'kitchen' | 'personal-care' | 'home-appliances';
+  category: CategoryValue; // ✅ Now uses enum-like category values
   price: number;
   originalPrice?: number;
   discount?: number;
@@ -48,13 +51,18 @@ export interface CartContextType {
   toggleCart: () => void;
 }
 
-// Category Types
-export type CategoryType = Product['category'];
+// Category Types - Now imported from categories.ts for consistency
+export type CategoryType = CategoryValue;
 
-export const CATEGORIES: Record<CategoryType, { label: string; value: CategoryType }> = {
-  'lighting': { label: 'Lighting', value: 'lighting' },
-  'cooling': { label: 'Cooling', value: 'cooling' },
-  'kitchen': { label: 'Kitchen', value: 'kitchen' },
-  'personal-care': { label: 'Personal Care', value: 'personal-care' },
-  'home-appliances': { label: 'Home Appliances', value: 'home-appliances' }
-};
+// Re-export categories and helper functions for backwards compatibility
+export { 
+  categories,
+  CATEGORIES, 
+  CATEGORY_VALUES,
+  getActiveCategories,
+  getCategoryByValue,
+  isValidCategory,
+  getCategoryLabel
+} from '@/data/categories';
+
+export type { Category } from '@/data/categories';
