@@ -213,7 +213,7 @@ export const products: Product[] = [
   // Using HOME_APPLIANCES as the closest existing category to avoid build-time type errors
   // If you'd like a separate "tools-and-machinery" category on production, ensure
   // `CATEGORY_VALUES` in `src/data/categories.ts` is updated and committed first.
-  category: CATEGORY_VALUES.HOME_APPLIANCES,
+  category: CATEGORY_VALUES.TOOLS_AND_MACHINERY,
     originalPrice: 2499, // Estimated price
     // Example: Applying an introductory discount
     discountPercent: 10, 
