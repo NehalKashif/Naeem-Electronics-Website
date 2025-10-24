@@ -64,6 +64,15 @@ export const categories: Category[] = [
     isActive: true,
     order: 5,
   },
+  {
+    id: '6',
+    value: 'tools-and-machinery',
+    label: 'Tools & Machinery',
+    icon: 'tools',
+    description: 'Power tools, hand tools, and machinery',
+    isActive: true,
+    order: 6,
+  }
 ];
 
 // ============================================
@@ -101,6 +110,7 @@ export const CATEGORY_VALUES = {
   KITCHEN: 'kitchen',
   PERSONAL_CARE: 'personal-care',
   HOME_APPLIANCES: 'home-appliances',
+  TOOLS_AND_MACHINERY: 'tools-and-machinery',
 
 } as const;
 
