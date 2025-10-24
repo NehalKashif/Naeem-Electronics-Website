@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getProductById, products } from '@/data/products';
+import { getDiscountedPrice, hasDiscount } from '@/types';
 import { useCart } from '@/contexts/CartContext';
 import ProductCard from '@/components/ProductCard';
 import { useState } from 'react';
@@ -40,9 +41,12 @@ export default function ProductDetailPage() {
     .filter(p => p.category === product.category && p.id !== product.id)
     .slice(0, 4);
 
+  const finalPrice = getDiscountedPrice(product);
+  const showDiscount = hasDiscount(product);
+
   const handleAddToCart = () => {
     for (let i = 0; i < quantity; i++) {
-      addToCart(product.name, product.price, product.image);
+      addToCart(product.name, finalPrice, product.image);
     }
     setAddedToCart(true);
     setTimeout(() => setAddedToCart(false), 2000);
@@ -68,12 +72,13 @@ export default function ProductDetailPage() {
       <div className="max-w-7xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden mb-12">
         <div className="grid md:grid-cols-2 gap-8 p-8">
           {/* Product Image */}
-          <div className="relative h-96 md:h-full bg-gray-100 rounded-xl overflow-hidden">
+          <div className="relative h-96 md:h-full bg-gray-50 rounded-xl overflow-hidden flex items-center justify-center">
             <Image
               src={product.image}
               alt={product.name}
-              fill
-              className="object-contain p-8"
+              width={800}
+              height={800}
+              className="object-contain p-6 max-h-full max-w-full"
               priority
             />
             {product.badge && (
@@ -109,7 +114,21 @@ export default function ProductDetailPage() {
 
               {/* Price */}
               <div className="mb-6">
-                <span className="text-4xl font-bold text-blue-600">Rs. {product.price.toLocaleString()}</span>
+                <div className="flex items-baseline gap-3 flex-wrap">
+                  <span className="text-4xl font-bold text-blue-600">
+                    Rs. {finalPrice.toLocaleString()}
+                  </span>
+                  {showDiscount && (
+                    <>
+                      <span className="text-2xl line-through text-gray-400">
+                        Rs. {product.originalPrice.toLocaleString()}
+                      </span>
+                      <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                        {product.discountPercent}% OFF
+                      </span>
+                    </>
+                  )}
+                </div>
               </div>
 
               {/* Description */}
@@ -204,7 +223,7 @@ export default function ProductDetailPage() {
       {relatedProducts.length > 0 && (
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-gray-900 mb-8">Related Products</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
             {relatedProducts.map(relatedProduct => (
               <ProductCard key={relatedProduct.id} product={relatedProduct} />
             ))}

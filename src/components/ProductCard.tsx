@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Product } from '@/types';
+import { Product, getDiscountedPrice, hasDiscount } from '@/types';
 import { useCart } from '@/contexts/CartContext';
 import { motion } from 'framer-motion';
 
@@ -13,11 +13,13 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart();
+  const finalPrice = getDiscountedPrice(product);
+  const showDiscount = hasDiscount(product);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    addToCart(product.name, product.price, product.image);
+    addToCart(product.name, finalPrice, product.image);
   };
 
   const badgeColors = {
@@ -42,9 +44,9 @@ export default function ProductCard({ product }: ProductCardProps) {
           <Image
             src={product.image}
             alt={product.name}
-            width={300}
-            height={300}
-            className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500"
+            width={800}
+            height={800}
+            className="w-full h-full object-contain object-center group-hover:scale-110 transition-transform duration-500 p-2"
           />
           {product.badge && (
             <div
@@ -55,9 +57,9 @@ export default function ProductCard({ product }: ProductCardProps) {
               {product.badge}
             </div>
           )}
-          {product.discount && (
+          {showDiscount && (
             <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
-              {product.discount}% OFF
+              {product.discountPercent}% OFF
             </div>
           )}
         </div>
@@ -78,9 +80,9 @@ export default function ProductCard({ product }: ProductCardProps) {
           <div className="mt-auto">
             <div className="flex items-baseline gap-2 mb-3">
               <span className="text-lg md:text-xl font-bold text-blue-600">
-                Rs. {product.price.toLocaleString()}
+                Rs. {finalPrice.toLocaleString()}
               </span>
-              {product.originalPrice && (
+              {showDiscount && (
                 <span className="text-xs md:text-sm line-through text-gray-400">
                   Rs. {product.originalPrice.toLocaleString()}
                 </span>

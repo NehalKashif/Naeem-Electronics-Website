@@ -19,7 +19,7 @@ export default function CartSidebar() {
     <div
       className={`fixed top-0 right-0 w-96 max-w-full bg-white/95 backdrop-blur-md shadow-2xl h-full transform ${
         isCartOpen ? 'translate-x-0' : 'translate-x-full'
-      } transition-transform duration-300 z-50 flex flex-col border-l border-gray-200`}
+  } transition-transform duration-300 z-70 flex flex-col border-l border-gray-200`}
     >
       {/* Header */}
       <div className="flex justify-between items-center p-6 border-b border-gray-200 bg-gradient-to-r from-blue-700 to-blue-500 text-white">

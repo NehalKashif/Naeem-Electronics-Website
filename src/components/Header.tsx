@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useCart } from '@/contexts/CartContext';
 import { getActiveCategories } from '@/data/categories';
 
@@ -12,6 +12,7 @@ export default function Header() {
   const { getCartItemCount, toggleCart } = useCart();
   const router = useRouter();
   const cartCount = getCartItemCount();
+  const pathname = usePathname();
 
   // Get categories from single source of truth
   const categories = getActiveCategories();
@@ -21,17 +22,27 @@ export default function Header() {
     setIsDropdownOpen(false);
   };
 
+  // Used to avoid double-toggle when touchstart is followed by a click event on some devices
+  const lastTouchRef = useRef<number>(0);
+
   const handleCategoryClick = (categoryValue: string) => {
     closeMenu();
     router.push(`/products?category=${categoryValue}`);
   };
 
   return (
-    <header className="bg-white/95 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b border-blue-100">
+  <header className="bg-white/95 backdrop-blur-md shadow-lg sticky top-0 z-60 border-b border-blue-100">
       <div className="max-w-7xl mx-auto flex justify-between items-center p-4">
         {/* Mobile Hamburger */}
         <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          onClick={() => {
+            // Toggle mobile menu and ensure dropdown is closed when opening
+            setIsMenuOpen((prev) => {
+              const next = !prev;
+              if (next) setIsDropdownOpen(false);
+              return next;
+            });
+          }}
           className="md:hidden text-3xl text-blue-600 focus:outline-none hover:text-amber-500 transition-colors duration-300"
           aria-label="Toggle menu"
         >
@@ -51,12 +62,12 @@ export default function Header() {
         <nav
           className={`${
             isMenuOpen ? 'flex' : 'hidden'
-          } md:flex space-y-2 md:space-x-8 md:space-y-0 items-start text-blue-700 font-medium flex-col md:flex-row absolute md:static top-16 left-0 w-full md:w-auto bg-white/95 md:bg-transparent shadow-lg md:shadow-none backdrop-blur-md md:backdrop-blur-none p-4 md:p-0 z-40`}
+          } md:flex space-y-2 md:space-x-8 md:space-y-0 items-start text-blue-700 font-medium flex-col md:flex-row absolute md:static top-16 left-0 w-full md:w-auto bg-white/95 md:bg-transparent shadow-lg md:shadow-none backdrop-blur-md md:backdrop-blur-none p-4 md:p-0 z-50`}
         >
           <Link
             href="/"
             onClick={closeMenu}
-            className="px-4 py-2 rounded-lg hover:text-amber-500 hover:bg-amber-50 transition-all duration-300 relative group"
+            className={`px-4 py-2 rounded-lg transition-all duration-300 relative group ${pathname === '/' ? 'bg-amber-50 text-amber-600' : 'hover:text-amber-500 hover:bg-amber-50'}`}
           >
             Home
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300"></span>
@@ -68,28 +79,63 @@ export default function Header() {
             onMouseEnter={() => setIsDropdownOpen(true)}
             onMouseLeave={() => setIsDropdownOpen(false)}
           >
-            <Link
-              href="/products"
-              onClick={closeMenu}
-              className="px-4 py-2 rounded-lg hover:text-amber-500 hover:bg-amber-50 transition-all duration-300 relative group flex items-center gap-1"
-            >
-              Products
-              <svg 
-                className={`w-4 h-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
+            <div className="flex items-center">
+              <Link
+                href="/products"
+                onClick={closeMenu}
+                className={`px-4 py-2 rounded-lg transition-all duration-300 relative group flex items-center gap-1 ${pathname?.startsWith('/products') ? 'bg-amber-50 text-amber-600' : 'hover:text-amber-500 hover:bg-amber-50'}`}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300"></span>
-            </Link>
+                Products
+                <span className="hidden md:inline">
+                  <svg 
+                    className={`w-4 h-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''} group-hover:rotate-180`} 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300"></span>
+              </Link>
+
+              {/* Mobile-only arrow: toggles dropdown without navigating */}
+              <button
+                type="button"
+                className="md:hidden px-2 ml-1 rounded-full text-blue-700 hover:bg-blue-50 transition-colors"
+                aria-label="Toggle categories"
+                aria-expanded={isDropdownOpen}
+                onClick={(e) => {
+                  // If a recent touchstart happened, ignore the click to avoid double-toggle
+                  const now = Date.now();
+                  if (now - lastTouchRef.current < 700) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return;
+                  }
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setIsDropdownOpen((v) => !v);
+                }}
+                onTouchStart={(e) => {
+                  // Mark the time so the following click event can be ignored
+                  lastTouchRef.current = Date.now();
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setIsDropdownOpen((v) => !v);
+                }}
+              >
+                <svg className={`w-5 h-5 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+            </div>
 
             {/* Dropdown Menu */}
             <div 
               className={`${
                 isDropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
-              } absolute md:top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-gray-100 overflow-hidden transition-all duration-300 z-50`}
+              } absolute md:top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-gray-100 overflow-hidden transition-all duration-300 z-60`}
             >
               <div className="py-2">
                 {/* All Products Option */}
@@ -151,7 +197,7 @@ export default function Header() {
           <Link
             href="/#services"
             onClick={closeMenu}
-            className="px-4 py-2 rounded-lg hover:text-amber-500 hover:bg-amber-50 transition-all duration-300 relative group"
+            className={`px-4 py-2 rounded-lg transition-all duration-300 relative group ${pathname === '/#services' ? 'bg-amber-50 text-amber-600' : 'hover:text-amber-500 hover:bg-amber-50'}`}
           >
             Services
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300"></span>
@@ -159,7 +205,7 @@ export default function Header() {
           <Link
             href="/#contact"
             onClick={closeMenu}
-            className="px-4 py-2 rounded-lg hover:text-amber-500 hover:bg-amber-50 transition-all duration-300 relative group"
+            className={`px-4 py-2 rounded-lg transition-all duration-300 relative group ${pathname === '/#contact' ? 'bg-amber-50 text-amber-600' : 'hover:text-amber-500 hover:bg-amber-50'}`}
           >
             Contact
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300"></span>

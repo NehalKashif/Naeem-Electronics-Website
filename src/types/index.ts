@@ -6,9 +6,8 @@ export interface Product {
   id: string;
   name: string;
   category: CategoryValue; // ✅ Now uses enum-like category values
-  price: number;
-  originalPrice?: number;
-  discount?: number;
+  originalPrice: number;        // Base/MRP price (required)
+  discountPercent?: number;     // Discount % (optional: 0-100, null = no discount)
   image: string;
   badge?: string;
   badgeColor?: 'blue' | 'green' | 'purple' | 'pink' | 'red' | 'teal' | 'indigo';
@@ -18,6 +17,21 @@ export interface Product {
   features: string[];
   specifications: Record<string, string>;
   reviews: Review[];
+}
+
+// Helper function to calculate discounted price (rounded to nearest 10)
+export function getDiscountedPrice(product: Product): number {
+  if (!product.discountPercent || product.discountPercent <= 0) {
+    return product.originalPrice;
+  }
+  const discounted = product.originalPrice * (1 - product.discountPercent / 100);
+  // Round to nearest 10
+  return Math.round(discounted / 10) * 10;
+}
+
+// Helper to check if product has active discount
+export function hasDiscount(product: Product): boolean {
+  return !!(product.discountPercent && product.discountPercent > 0);
 }
 
 // Review Types
