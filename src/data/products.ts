@@ -210,7 +210,10 @@ export const products: Product[] = [
   {
     id: 'sewing-motor-domestic',
     name: 'Household Sewing Machine Motor',
-    category: CATEGORY_VALUES.TOOLS_AND_MACHINERY, // Assuming a relevant enum constant
+  // Using HOME_APPLIANCES as the closest existing category to avoid build-time type errors
+  // If you'd like a separate "tools-and-machinery" category on production, ensure
+  // `CATEGORY_VALUES` in `src/data/categories.ts` is updated and committed first.
+  category: CATEGORY_VALUES.HOME_APPLIANCES,
     originalPrice: 2499, // Estimated price
     // Example: Applying an introductory discount
     discountPercent: 10, 
