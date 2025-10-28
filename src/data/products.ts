@@ -322,7 +322,7 @@ export const products: Product[] = [
     name: 'Panasonic Blender Grinder 2-in-1',
     category: CATEGORY_VALUES.KITCHEN, 
     originalPrice: 3500, // Placeholder price, please adjust based on market
-    discountPercent: 15, // Example discount
+    discountPercent:0, // Example discount
     image: '/Images/panasonic-blender-grinder-agt-1393.png', // Assuming this path after image generation
     badge: 'Best Seller',
     badgeColor: 'green',
@@ -360,6 +360,45 @@ export const products: Product[] = [
         date: '1 month ago',
         comment: 'Good value for money. Works well for most tasks, though the jar could be a bit larger.'
       }
+    ]
+  },
+
+  {
+    id: 'anix-electric-kettle-ah428',
+    name: 'ANIX Power 2.0L Stainless Steel Electric Kettle (AH-428)',
+    category: CATEGORY_VALUES.KITCHEN, // Assuming a relevant enum constant
+    originalPrice: 2500, // Estimated market price for a 2.0L stainless steel kettle
+    discountPercent: 20,
+    image: '/Images/anix-electric-kettle-ah428.png', // Placeholder path for the converted image
+    badge: '2.0 Liter',
+    badgeColor: 'blue',
+    shortDescription: 'Large 2.0L stainless steel electric kettle with rapid boil technology, featuring auto shut-off and boil-dry protection for safe, efficient use.',
+    fullDescription: 'Boil water quickly and safely for tea, coffee, or instant meals with the ANIX Power 2.0L Electric Kettle. It features a durable, high-quality stainless steel body and a powerful heating element for **rapid boiling**. Safety is ensured with an integrated **automatic shut-off** and **boil-dry protection**. The 360-degree cordless base offers convenient use for both left and right-handed users.',
+    isFeatured: true,
+    features: [
+        '2.0 Liter Large Capacity',
+        'High-Quality Stainless Steel Body',
+        'Automatic Shut-Off when water boils',
+        'Boil-Dry Protection Safety',
+        '360° Cordless Rotational Base',
+        'Concealed Heating Element for easy cleaning',
+        'On/Off Switch with Indicator Light'
+    ],
+    // Specifications are ESTIMATED based on similar 2.0L stainless steel kettles in the market.
+    specifications: {
+        'Type': 'Electric Kettle',
+        'Capacity': '2.0 Liters',
+        'Body Material': 'Stainless Steel',
+        'Safety': 'Auto Shut-Off, Boil-Dry Protection',
+        'Warranty': '2 Years (As shown on the box)'
+    },
+    reviews: [
+        {
+            name: 'Ayesha Z.',
+            rating: 4,
+            date: '2 months ago',
+            comment: 'Great budget kettle! The 2-liter capacity is perfect for our family. It heats up very fast, but the exterior does get hot to the touch.'
+        }
     ]
   },
 
