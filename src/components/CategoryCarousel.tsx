@@ -32,6 +32,11 @@ const iconMap: Record<string, JSX.Element> = {
       <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
     </svg>
   ),
+  tools: (
+    <svg className="w-8 h-8 md:w-10 md:h-10" fill="currentColor" viewBox="0 0 20 20">
+      <path d="M14.7 5.3a4 4 0 11-5.657 5.657L4 16v4h4l5.043-5.043A4 4 0 0114.7 5.3zM19 10l-5 5" />
+    </svg>
+  ),
 };
 
 export default function CategoryCarousel() {
