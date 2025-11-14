@@ -272,7 +272,7 @@ export default function HomePage() {
   return (
     <main>
       {/* HERO SECTION */}
-      <section className="relative text-white text-center min-h-[85vh] lg:min-h-[75vh] flex items-center bg-gradient-to-br from-blue-900 via-blue-700 to-blue-900 overflow-hidden">
+      <section className="relative text-white text-center min-h-[50vh] flex items-center bg-gradient-to-br from-blue-900 via-blue-700 to-blue-900 overflow-hidden">
         {/* Animated Background */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-10 left-10 w-32 h-32 border border-white rounded-full animate-pulse"></div>
@@ -280,19 +280,19 @@ export default function HomePage() {
           <div className="absolute bottom-20 left-1/3 w-16 h-16 border border-white rounded-full animate-pulse delay-200"></div>
         </div>
 
-        <div className="relative z-10 text-center py-6 md:py-12 lg:py-16 px-4 max-w-6xl mx-auto w-full">
+        <div className="relative z-10 text-center py-8 md:py-10 px-4 max-w-6xl mx-auto w-full">
           <motion.div 
-            className="mb-3 md:mb-6"
+            className="mb-2 md:mb-3"
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span className="inline-block px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-amber-400 to-orange-500 text-white rounded-full text-xs md:text-sm font-bold mb-3 md:mb-4 shadow-2xl animate-bounce">
+            <span className="inline-block px-3 py-1.5 md:px-5 md:py-2 bg-gradient-to-r from-amber-400 to-orange-500 text-white rounded-full text-xs md:text-sm font-bold shadow-2xl animate-bounce">
               {HERO_SECTION.promoBanner}
             </span>
           </motion.div>
           <motion.h2 
-            className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-3 md:mb-6 leading-tight"
+            className="text-3xl md:text-5xl lg:text-6xl font-black mb-3 md:mb-4 leading-tight"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -303,28 +303,27 @@ export default function HomePage() {
             </span>
           </motion.h2>
           <motion.p 
-            className="max-w-4xl mx-auto mb-5 md:mb-6 text-base md:text-xl lg:text-2xl text-white/90 font-light leading-relaxed backdrop-blur-sm bg-white/10 p-3 md:p-5 rounded-2xl border border-white/20"
+            className="max-w-2xl mx-auto mb-5 md:mb-6 text-sm md:text-base lg:text-lg text-white/90 leading-relaxed italic"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            {HERO_SECTION.description}{' '}
-            <span className="font-semibold text-amber-300">{HERO_SECTION.highlightedDescription}</span>
+            The same reliable products, now just a click away.
           </motion.p>
 
           <motion.div 
-            className="flex flex-col sm:flex-row gap-4 md:gap-5 justify-center items-center mb-6 md:mb-12"
+            className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center mb-6 md:mb-8"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
             <Link
               href={HERO_SECTION.primaryButton.link}
-              className="group bg-gradient-to-r from-amber-500 to-orange-600 text-white px-8 py-4 md:px-10 md:py-5 rounded-2xl font-bold text-base md:text-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-110 hover:rotate-2 flex items-center space-x-3 shadow-xl"
+              className="group bg-gradient-to-r from-amber-500 to-orange-600 text-white px-6 py-2.5 md:px-8 md:py-3 rounded-xl font-bold text-sm md:text-base hover:shadow-2xl transition-all duration-500 transform hover:scale-110 hover:rotate-2 flex items-center space-x-2 shadow-xl"
             >
               <span>{HERO_SECTION.primaryButton.text}</span>
               <svg
-                className="w-6 h-6 group-hover:translate-x-2 transition-transform duration-300"
+                className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -337,11 +336,11 @@ export default function HomePage() {
             </Link>
             <Link
               href={HERO_SECTION.secondaryButton.link}
-              className="group bg-white/15 backdrop-blur-md text-white px-8 py-4 md:px-10 md:py-5 rounded-2xl font-bold text-base md:text-lg hover:bg-white/25 transition-all duration-500 border-2 border-white/40 hover:border-white/60 flex items-center space-x-3 hover:scale-105 shadow-xl"
+              className="group bg-white/15 backdrop-blur-md text-white px-6 py-2.5 md:px-8 md:py-3 rounded-xl font-bold text-sm md:text-base hover:bg-white/25 transition-all duration-500 border-2 border-white/40 hover:border-white/60 flex items-center space-x-2 hover:scale-105 shadow-xl"
             >
               <span>{HERO_SECTION.secondaryButton.text}</span>
               <svg
-                className="w-6 h-6 group-hover:rotate-180 transition-transform duration-500"
+                className="w-5 h-5 group-hover:rotate-180 transition-transform duration-500"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -354,16 +353,32 @@ export default function HomePage() {
             </Link>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 text-center">
+          <div className="grid grid-cols-3 gap-4 md:gap-8 max-w-3xl mx-auto">
             {HERO_SECTION.stats.map((stat, index) => (
               <ScrollReveal key={index} delay={index * 0.15}>
-                <div className="bg-white/10 backdrop-blur-lg p-3 md:p-6 rounded-3xl border border-white/30 hover:bg-white/20 transition-all duration-500 hover:scale-105 group">
-                <div className="text-3xl md:text-4xl font-black text-amber-300 mb-2 group-hover:scale-110 transition-transform duration-300">
-                  {stat.number}
+                <div className="flex flex-col items-center gap-2">
+                  <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 flex items-center justify-center shadow-lg mx-auto">
+                    {index === 0 && (
+                      <svg className="w-7 h-7 md:w-8 md:h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                      </svg>
+                    )}
+                    {index === 1 && (
+                      <svg className="w-7 h-7 md:w-8 md:h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                      </svg>
+                    )}
+                    {index === 2 && (
+                      <svg className="w-7 h-7 md:w-8 md:h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-2 0c0 .993-.241 1.929-.668 2.754l-1.524-1.525a3.997 3.997 0 00.078-2.183l1.562-1.562C15.802 8.249 16 9.1 16 10zm-5.165 3.913l1.58 1.58A5.98 5.98 0 0110 16a5.976 5.976 0 01-2.516-.552l1.562-1.562a4.006 4.006 0 001.789.027zm-4.677-2.796a4.002 4.002 0 01-.041-2.08l-.08.08-1.53-1.533A5.98 5.98 0 004 10c0 .954.223 1.856.619 2.657l1.54-1.54zm1.088-6.45A5.974 5.974 0 0110 4c.954 0 1.856.223 2.657.619l-1.54 1.54a4.002 4.002 0 00-2.346.033L7.246 4.668zM12 10a2 2 0 11-4 0 2 2 0 014 0z" clipRule="evenodd"/>
+                      </svg>
+                    )}
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl md:text-3xl font-black text-amber-300">{stat.number}</div>
+                    <div className="text-white text-xs md:text-sm font-medium leading-tight">{stat.label}</div>
+                  </div>
                 </div>
-                <div className="text-white font-medium text-base md:text-lg">{stat.label}</div>
-                <div className="w-12 md:w-16 h-1 bg-gradient-to-r from-amber-400 to-orange-500 mx-auto mt-3 rounded-full"></div>
-              </div>
               </ScrollReveal>
             ))}
           </div>
@@ -371,14 +386,14 @@ export default function HomePage() {
       </section>
 
       {/* FEATURED PRODUCTS */}
-      <section id="products" className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
+      <section id="products" className="py-4 md:py-6 bg-gradient-to-br from-gray-50 to-blue-50">
         <div className="max-w-7xl mx-auto px-4">
           <ScrollReveal>
-            <div className="text-center mb-16">
-              <span className="inline-block px-4 py-2 bg-blue-100 text-blue-600 rounded-full text-sm font-medium mb-4">
+            <div className="text-center mb-6 md:mb-8">
+              <span className="inline-block px-4 py-2 bg-blue-100 text-blue-600 rounded-full text-sm font-medium mb-2">
                 {PRODUCTS_SECTION.badge}
               </span>
-              <h3 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">{PRODUCTS_SECTION.heading}</h3>
+              <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">{PRODUCTS_SECTION.heading}</h3>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
                 {PRODUCTS_SECTION.description}
               </p>
