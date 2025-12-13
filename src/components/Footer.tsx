@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { WHATSAPP_CONFIG } from '@/config/whatsapp';
 
 export default function Footer() {
   return (
@@ -47,8 +48,8 @@ export default function Footer() {
           <ul className="space-y-2 text-gray-400 text-sm">
             <li>
               <span className="font-semibold">Phone:</span>{' '}
-              <a href="tel:+923224768011" className="hover:text-amber-500 transition-colors">
-                +92 3224768011
+              <a href={`tel:+${WHATSAPP_CONFIG.ADMIN_NUMBER}`} className="hover:text-amber-500 transition-colors">
+                +{WHATSAPP_CONFIG.ADMIN_NUMBER}
               </a>
             </li>
             <li>

@@ -34,7 +34,7 @@ export function CartProvider({ children }: CartProviderProps) {
     }
   }, [cart, isClient]);
 
-  const addToCart = (name: string, price: number, img: string) => {
+  const addToCart = (name: string, price: number, img: string, productId: string) => {
     setCart(prevCart => {
       const existingItem = prevCart.find(item => item.name === name);
       
@@ -46,7 +46,7 @@ export function CartProvider({ children }: CartProviderProps) {
         );
       }
       
-      return [...prevCart, { name, price, qty: 1, img }];
+      return [...prevCart, { name, price, qty: 1, img, productId }];
     });
   };
 
