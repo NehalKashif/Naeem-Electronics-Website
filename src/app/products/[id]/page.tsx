@@ -8,6 +8,8 @@ import { getDiscountedPrice, hasDiscount } from '@/types';
 import { useCart } from '@/contexts/CartContext';
 import ProductCard from '@/components/ProductCard';
 import { useState } from 'react';
+import { openWhatsApp } from '@/config/whatsapp';
+import { formatBuyNowMessage } from '@/lib/whatsappMessages';
 
 export default function ProductDetailPage() {
   const params = useParams();
@@ -46,10 +48,15 @@ export default function ProductDetailPage() {
 
   const handleAddToCart = () => {
     for (let i = 0; i < quantity; i++) {
-      addToCart(product.name, finalPrice, product.image);
+      addToCart(product.name, finalPrice, product.image, product.id);
     }
     setAddedToCart(true);
     setTimeout(() => setAddedToCart(false), 2000);
+  };
+
+  const handleBuyNow = () => {
+    const message = formatBuyNowMessage(product.name, product.id);
+    openWhatsApp(message);
   };
 
   const incrementQuantity = () => setQuantity(prev => prev + 1);
@@ -169,16 +176,30 @@ export default function ProductDetailPage() {
                 </div>
               </div>
 
-              <button
-                onClick={handleAddToCart}
-                className={`w-full py-4 rounded-xl font-semibold text-lg transition-all ${
-                  addedToCart
-                    ? 'bg-green-600 text-white'
-                    : 'bg-gradient-electric text-white hover:shadow-electric'
-                }`}
-              >
-                {addedToCart ? '✓ Added to Cart' : 'Add to Cart'}
-              </button>
+              <div className="grid grid-cols-2 gap-3">
+                {/* Buy Now Button - Primary WhatsApp Green */}
+                <button
+                  onClick={handleBuyNow}
+                  className="py-4 rounded-xl font-semibold text-lg bg-gradient-to-r from-green-600 to-green-700 text-white hover:shadow-lg hover:shadow-green-600/40 transition-all duration-300 flex items-center justify-center gap-2 hover:from-green-700 hover:to-green-800"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  </svg>
+                  Buy Now
+                </button>
+
+                {/* Add to Cart Button - Secondary Blue */}
+                <button
+                  onClick={handleAddToCart}
+                  className={`py-4 rounded-xl font-semibold text-lg transition-all ${
+                    addedToCart
+                      ? 'bg-green-600 text-white'
+                      : 'bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:shadow-lg hover:shadow-blue-500/40 hover:from-blue-700 hover:to-blue-800'
+                  }`}
+                >
+                  {addedToCart ? '✓ Added to Cart' : 'Add to Cart'}
+                </button>
+              </div>
             </div>
           </div>
         </div>

@@ -48,11 +48,12 @@ export interface CartItem {
   price: number;
   qty: number;
   img: string;
+  productId: string; // Added for WhatsApp product links
 }
 
 export interface CartContextType {
   cart: CartItem[];
-  addToCart: (name: string, price: number, img: string) => void;
+  addToCart: (name: string, price: number, img: string, productId: string) => void;
   removeFromCart: (index: number) => void;
   updateQuantity: (index: number, newQty: number) => void;
   changeQuantity: (index: number, delta: number) => void;

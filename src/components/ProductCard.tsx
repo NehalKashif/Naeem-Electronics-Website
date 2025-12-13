@@ -1,11 +1,13 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Product, getDiscountedPrice, hasDiscount } from '@/types';
 import { useCart } from '@/contexts/CartContext';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { openWhatsApp } from '@/config/whatsapp';
+import { formatBuyNowMessage } from '@/lib/whatsappMessages';
 
 interface ProductCardProps {
   product: Product;
@@ -15,11 +17,23 @@ export default function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart();
   const finalPrice = getDiscountedPrice(product);
   const showDiscount = hasDiscount(product);
+  const [showAddedMessage, setShowAddedMessage] = useState(false);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    addToCart(product.name, finalPrice, product.image);
+    addToCart(product.name, finalPrice, product.image, product.id);
+    
+    // Show success message
+    setShowAddedMessage(true);
+    setTimeout(() => setShowAddedMessage(false), 2000);
+  };
+
+  const handleBuyNow = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const message = formatBuyNowMessage(product.name, product.id);
+    openWhatsApp(message);
   };
 
   const badgeColors = {
@@ -33,12 +47,23 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-    <Link href={`/products/${product.id}`}>
-      <motion.div 
-        className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer group border border-gray-200 flex flex-col h-full"
-        whileHover={{ scale: 1.02 }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      >
+    <>
+      {/* Success Message Notification - Fixed at top */}
+      {showAddedMessage && (
+        <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-[9999] bg-green-600 text-white px-6 py-3 rounded-lg shadow-2xl flex items-center gap-2 animate-bounce">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+          <span className="font-medium">✓ Added to cart!</span>
+        </div>
+      )}
+
+      <Link href={`/products/${product.id}`} className="h-full">
+        <motion.div 
+          className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer group border border-gray-200 flex flex-col h-full"
+          whileHover={{ scale: 1.02 }}
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        >
         {/* Image Container */}
         <div className="relative overflow-hidden bg-gray-50 aspect-square">
           <Image
@@ -89,20 +114,35 @@ export default function ProductCard({ product }: ProductCardProps) {
               )}
             </div>
 
-            {/* Add to Cart Button */}
-            <button
-              onClick={handleAddToCart}
-              className="w-full bg-gradient-to-r from-amber-500 to-orange-600 text-white py-2 md:py-2.5 rounded-lg hover:shadow-lg hover:shadow-amber-500/30 transition-all duration-300 font-medium text-sm md:text-base flex items-center justify-center gap-2"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-              </svg>
-              <span className="hidden sm:inline">Add to Cart</span>
-              <span className="sm:hidden">Add</span>
-            </button>
+            {/* Action Buttons */}
+            <div className="grid grid-cols-2 gap-2">
+              {/* Buy Now Button - Primary WhatsApp Green */}
+              <button
+                onClick={handleBuyNow}
+                className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-2 md:py-2.5 rounded-lg hover:shadow-lg hover:shadow-green-600/40 transition-all duration-300 font-medium text-xs md:text-sm flex items-center justify-center gap-1 hover:from-green-700 hover:to-green-800"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+                <span>Buy Now</span>
+              </button>
+
+              {/* Add to Cart Button - Secondary Blue */}
+              <button
+                onClick={handleAddToCart}
+                className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-2 md:py-2.5 rounded-lg hover:shadow-lg hover:shadow-blue-500/40 transition-all duration-300 font-medium text-xs md:text-sm flex items-center justify-center gap-1 hover:from-blue-700 hover:to-blue-800 hover:scale-105"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                <span className="hidden sm:inline">Add</span>
+                <span className="sm:hidden">Cart</span>
+              </button>
+            </div>
           </div>
         </div>
       </motion.div>
     </Link>
+    </>
   );
 }
