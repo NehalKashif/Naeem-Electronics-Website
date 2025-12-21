@@ -36,7 +36,7 @@ Create a `.env.local` file in the root directory:
 
 ```env
 # Backend API Configuration
-NEXT_PUBLIC_API_URL=https://naeem-electric-backend-production.up.railway.app/api
+NEXT_PUBLIC_API_URL=https://your-backend-url.railway.app/api
 
 # Application Configuration (Optional)
 NEXT_PUBLIC_SITE_NAME="Naeem Electric"
@@ -96,7 +96,7 @@ PORT=5000
 NODE_ENV=production
 
 # Database
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/NaeemElectric?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://your-username:your-password@your-cluster.mongodb.net/YourDatabase?retryWrites=true&w=majority
 
 # Cloudinary Configuration (for image uploads)
 CLOUDINARY_CLOUD_NAME=your_cloud_name
@@ -104,7 +104,7 @@ CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 
 # JWT Authentication
-JWT_SECRET=your-super-secret-jwt-key-change-this-to-random-string
+JWT_SECRET=generate-random-32-character-string-here
 JWT_EXPIRE=12h
 ```
 
