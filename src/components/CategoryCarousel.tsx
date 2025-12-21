@@ -1,8 +1,9 @@
 'use client';
 
-import React, { JSX } from 'react';
+import React, { JSX, useState, useEffect } from 'react';
 import Link from 'next/link';
-import { getActiveCategories } from '@/data/categories';
+import type { Category } from '@/data/categories';
+import { categoryService } from '@/services/categoryService';
 import { motion } from 'framer-motion';
 
 // Icon mapping for categories
@@ -40,15 +41,37 @@ const iconMap: Record<string, JSX.Element> = {
 };
 
 export default function CategoryCarousel() {
-  const categories = getActiveCategories();
-  
-  // Duplicate categories for seamless infinite scroll
-  const duplicatedCategories = [...categories, ...categories, ...categories];
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadCategories();
+  }, []);
+
+  const loadCategories = async () => {
+    try {
+      setLoading(true);
+      const response = await categoryService.getAll(); // Only gets active categories by default
+      setCategories(response.data || []);
+    } catch (error) {
+      console.error('Failed to load categories:', error);
+      setCategories([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading || categories.length === 0) {
+    return null; // Or show a loading skeleton
+  }
+
+  // Duplicate categories for infinite scroll effect
+  const duplicatedCategories = [...categories, ...categories];
 
   return (
-    <div className="relative overflow-hidden py-6">
+    <div className="relative overflow-hidden py-6 md:py-8">
       <motion.div
-        className="flex gap-8 md:gap-10"
+        className="flex gap-6 md:gap-8"
         animate={{
           x: [0, -100 * categories.length],
         }}

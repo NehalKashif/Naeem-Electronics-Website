@@ -2,13 +2,15 @@
 // This acts like an enum - all categories must come from here
 
 export interface Category {
-  id: string;
+  _id?: string;
+  id?: string; // Kept for backward compatibility
   value: string;
   label: string;
   icon: string;
   description?: string;
   isActive: boolean;
   createdAt?: string;
+  updatedAt?: string;
   order?: number;
 }
 

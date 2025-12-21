@@ -3,21 +3,59 @@
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { getProductById, products } from '@/data/products';
-import { getDiscountedPrice, hasDiscount } from '@/types';
+import { Product, getDiscountedPrice, hasDiscount } from '@/types';
 import { useCart } from '@/contexts/CartContext';
 import ProductCard from '@/components/ProductCard';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { openWhatsApp } from '@/config/whatsapp';
 import { formatBuyNowMessage } from '@/lib/whatsappMessages';
+import { productService } from '@/services/productService';
 
 export default function ProductDetailPage() {
   const params = useParams();
   const id = params.id as string;
-  const product = getProductById(id);
+  const [product, setProduct] = useState<Product | null>(null);
+  const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const { addToCart } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [addedToCart, setAddedToCart] = useState(false);
+
+  useEffect(() => {
+    loadProduct();
+  }, [id]);
+
+  const loadProduct = async () => {
+    try {
+      setLoading(true);
+      const response = await productService.getById(id);
+      const data = response.data;
+      if (!data) {
+        setProduct(null);
+        setLoading(false);
+        return;
+      }
+      setProduct(data);
+      
+      // Load related products
+      const allProductsResponse = await productService.getAll({ category: data.category });
+      const allProducts = allProductsResponse.data || [];
+      setRelatedProducts(allProducts.filter(p => p.id !== id).slice(0, 4));
+    } catch (error) {
+      console.error('Failed to load product:', error);
+      setProduct(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-gray-500">Loading product...</div>
+      </div>
+    );
+  }
 
   if (!product) {
     return (
@@ -37,11 +75,6 @@ export default function ProductDetailPage() {
   const averageRating = product.reviews.length > 0
     ? product.reviews.reduce((sum, review) => sum + review.rating, 0) / product.reviews.length
     : 0;
-
-  // Get related products (same category, different product)
-  const relatedProducts = products
-    .filter(p => p.category === product.category && p.id !== product.id)
-    .slice(0, 4);
 
   const finalPrice = getDiscountedPrice(product);
   const showDiscount = hasDiscount(product);

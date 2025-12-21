@@ -3,6 +3,7 @@ import type { CategoryValue } from '@/data/categories';
 
 // Product Types
 export interface Product {
+  _id?: string; // MongoDB ID
   id: string;
   name: string;
   category: CategoryValue; // ✅ Now uses enum-like category values
@@ -17,6 +18,10 @@ export interface Product {
   features: string[];
   specifications: Record<string, string>;
   reviews: Review[];
+  stock?: number;
+  sku?: string;
+  brand?: string;
+  isActive?: boolean;
 }
 
 // Helper function to calculate discounted price (rounded to nearest 10)
