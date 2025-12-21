@@ -64,14 +64,14 @@ export default function CategoryCarousel() {
   if (loading || categories.length === 0) {
     return null; // Or show a loading skeleton
   }
-  _id}-${index}`}
-            href={`/products?category=${category.value}`}
-            className="group flex-shrink-0"
-          >
-            <div className="flex flex-col items-center space-y-3 cursor-pointer">
-              {/* Circle with Icon */}
-              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white/20 backdrop-blur-sm border-2 border-white/40 flex items-center justify-center text-white transition-all duration-300 group-hover:bg-white group-hover:text-blue-600 group-hover:scale-105 group-hover:border-white shadow-lg">
-                <span className="text-3xl md:text-4xl">{category.icon}</span>
+
+  // Duplicate categories for infinite scroll effect
+  const duplicatedCategories = [...categories, ...categories];
+
+  return (
+    <div className="relative overflow-hidden py-6 md:py-8">
+      <motion.div
+        className="flex gap-6 md:gap-8"
         animate={{
           x: [0, -100 * categories.length],
         }}
