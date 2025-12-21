@@ -1,8 +1,9 @@
 'use client';
 
-import React, { JSX } from 'react';
+import React, { JSX, useState, useEffect } from 'react';
 import Link from 'next/link';
-import { getActiveCategories } from '@/data/categories';
+import type { Category } from '@/data/categories';
+import { categoryService } from '@/services/categoryService';
 import { motion } from 'framer-motion';
 
 // Icon mapping for categories
@@ -40,15 +41,37 @@ const iconMap: Record<string, JSX.Element> = {
 };
 
 export default function CategoryCarousel() {
-  const categories = getActiveCategories();
-  
-  // Duplicate categories for seamless infinite scroll
-  const duplicatedCategories = [...categories, ...categories, ...categories];
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  return (
-    <div className="relative overflow-hidden py-6">
-      <motion.div
-        className="flex gap-8 md:gap-10"
+  useEffect(() => {
+    loadCategories();
+  }, []);
+
+  const loadCategories = async () => {
+    try {
+      setLoading(true);
+      const response = await categoryService.getAll(); // Only gets active categories by default
+      setCategories(response.data || []);
+    } catch (error) {
+      console.error('Failed to load categories:', error);
+      setCategories([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading || categories.length === 0) {
+    return null; // Or show a loading skeleton
+  }
+  _id}-${index}`}
+            href={`/products?category=${category.value}`}
+            className="group flex-shrink-0"
+          >
+            <div className="flex flex-col items-center space-y-3 cursor-pointer">
+              {/* Circle with Icon */}
+              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white/20 backdrop-blur-sm border-2 border-white/40 flex items-center justify-center text-white transition-all duration-300 group-hover:bg-white group-hover:text-blue-600 group-hover:scale-105 group-hover:border-white shadow-lg">
+                <span className="text-3xl md:text-4xl">{category.icon}</span>
         animate={{
           x: [0, -100 * categories.length],
         }}

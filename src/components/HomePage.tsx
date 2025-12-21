@@ -4,7 +4,8 @@ import React, { useRef, useEffect, useState } from 'react';
 import Link from 'next/link';
 import ProductCard from '@/components/ProductCard';
 import ScrollReveal from '@/components/ScrollReveal';
-import { products } from '@/data/products';
+import { Product } from '@/types';
+import { productService } from '@/services/productService';
 import { motion } from 'framer-motion';
 
 // ============================================
@@ -109,7 +110,8 @@ const CONTACT_SECTION = {
 // ============================================
 
 export default function HomePage() {
-  const featuredProducts = products.filter(p => p.isFeatured);
+  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const carouselRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -128,6 +130,25 @@ export default function HomePage() {
     type: 'success' | 'error' | null;
     message: string;
   }>({ type: null, message: '' });
+
+  // Load featured products from API
+  useEffect(() => {
+    loadProducts();
+  }, []);
+
+  const loadProducts = async () => {
+    try {
+      setLoading(true);
+      const response = await productService.getAll({ isFeatured: true });
+      setFeaturedProducts(response.data || []);
+    } catch (error) {
+      console.error('Failed to load products:', error);
+      // Fallback to empty array if API fails
+      setFeaturedProducts([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Check if mobile on mount and resize
   useEffect(() => {
@@ -179,6 +200,8 @@ export default function HomePage() {
 
   // Auto-scroll functionality
   useEffect(() => {
+    if (!featuredProducts || featuredProducts.length === 0) return;
+    
     const interval = setInterval(() => {
       if (carouselRef.current) {
         const maxSlide = isMobile ? featuredProducts.length - 2 : featuredProducts.length - 3;
@@ -437,41 +460,53 @@ export default function HomePage() {
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               >
                 <div className="flex gap-3 md:gap-6 px-2 md:px-0">
-                  {featuredProducts.map((product) => (
-                    <div 
-                      key={product.id} 
-                      className="product-card-wrapper flex-none w-[calc(50%-6px)] md:w-[calc(33.333%-1rem)] lg:w-[calc(25%-1.125rem)] snap-start"
-                    >
-                      <ProductCard product={product} />
+                  {loading ? (
+                    <div className="w-full text-center py-12 text-gray-500">
+                      Loading products...
                     </div>
-                  ))}
+                  ) : featuredProducts && featuredProducts.length > 0 ? (
+                    featuredProducts.map((product) => (
+                      <div 
+                        key={product.id} 
+                        className="product-card-wrapper flex-none w-[calc(50%-6px)] md:w-[calc(33.333%-1rem)] lg:w-[calc(25%-1.125rem)] snap-start"
+                      >
+                        <ProductCard product={product} />
+                      </div>
+                    ))
+                  ) : (
+                    <div className="w-full text-center py-12 text-gray-500">
+                      No featured products available
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
           </div>
 
           {/* Scroll Indicator Dots */}
-          <div className="flex justify-center mt-8 gap-2">
-            {featuredProducts.map((_, index) => {
-              const maxSlide = isMobile ? featuredProducts.length - 2 : featuredProducts.length - 3;
-              // Show only relevant dots
-              if (index <= maxSlide) {
-                return (
-                  <button
-                    key={index}
-                    onClick={() => scrollToSlide(index)}
-                    className={`h-2 rounded-full transition-all duration-300 ${
-                      index === currentSlide 
-                        ? 'w-8 bg-blue-600' 
-                        : 'w-2 bg-gray-300 hover:bg-gray-400'
-                    }`}
+          {!loading && featuredProducts && featuredProducts.length > 0 && (
+            <div className="flex justify-center mt-8 gap-2">
+              {featuredProducts.map((_, index) => {
+                const maxSlide = isMobile ? featuredProducts.length - 2 : featuredProducts.length - 3;
+                // Show only relevant dots
+                if (index <= maxSlide) {
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => scrollToSlide(index)}
+                      className={`h-2 rounded-full transition-all duration-300 ${
+                        index === currentSlide 
+                          ? 'w-8 bg-blue-600' 
+                          : 'w-2 bg-gray-300 hover:bg-gray-400'
+                      }`}
                     aria-label={`Go to slide ${index + 1}`}
                   />
                 );
               }
               return null;
             })}
-          </div>
+            </div>
+          )}
 
           <ScrollReveal delay={0.4}>
             <div className="text-center mt-12">

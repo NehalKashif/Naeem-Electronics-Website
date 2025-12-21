@@ -5,22 +5,48 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import ProductCard from '@/components/ProductCard';
 import ScrollReveal from '@/components/ScrollReveal';
-import { products } from '@/data/products';
-import { CategoryType, CATEGORIES } from '@/types';
+import { Product } from '@/types';
+import type { Category } from '@/data/categories';
+import { productService } from '@/services/productService';
+import { categoryService } from '@/services/categoryService';
 
 function ProductsContent() {
   const searchParams = useSearchParams();
-  const categoryFromUrl = searchParams.get('category') as CategoryType | null;
+  const categoryFromUrl = searchParams.get('category');
   
-  const [selectedCategory, setSelectedCategory] = useState<CategoryType | 'all'>('all');
+  const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Load products and categories
+  useEffect(() => {
+    loadData();
+  }, []);
 
   // Set category from URL on mount
   useEffect(() => {
-    if (categoryFromUrl && CATEGORIES[categoryFromUrl]) {
+    if (categoryFromUrl) {
       setSelectedCategory(categoryFromUrl);
     }
   }, [categoryFromUrl]);
+
+  const loadData = async () => {
+    try {
+      setLoading(true);
+      const [productsResponse, categoriesResponse] = await Promise.all([
+        productService.getAll(),
+        categoryService.getAll()
+      ]);
+      setProducts(productsResponse.data || []);
+      setCategories(categoriesResponse.data || []);
+    } catch (error) {
+      console.error('Failed to load data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filteredProducts = useMemo(() => {
     let filtered = products;
@@ -43,7 +69,7 @@ function ProductsContent() {
     }
 
     return filtered;
-  }, [selectedCategory, searchQuery]);
+  }, [products, selectedCategory, searchQuery]);
 
   return (
     <section className="py-12 bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
@@ -113,7 +139,7 @@ function ProductsContent() {
           >
             All Products
           </button>
-          {Object.values(CATEGORIES).map((cat) => (
+          {categories && categories.length > 0 && categories.map((cat) => (
             <button
               key={cat.value}
               onClick={() => setSelectedCategory(cat.value)}
@@ -130,7 +156,11 @@ function ProductsContent() {
         </ScrollReveal>
 
         {/* Products Grid */}
-        {filteredProducts.length > 0 ? (
+        {loading ? (
+          <div className="flex justify-center items-center py-20">
+            <div className="text-gray-500">Loading products...</div>
+          </div>
+        ) : filteredProducts.length > 0 ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
             {filteredProducts.map((product, index) => (
               <ScrollReveal key={product.id} delay={index * 0.05}>
