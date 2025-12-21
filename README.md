@@ -127,10 +127,7 @@ npm run dev
 - Admin Panel: http://localhost:3000/admin/login
 - Backend API: http://localhost:5000
 
-### Default Admin Credentials
-- **Email**: admin@naeemelectric.com
-- **Password**: admin123
-- ⚠️ **Change this immediately after first login!**
+
 
 ## 📖 Documentation
 
