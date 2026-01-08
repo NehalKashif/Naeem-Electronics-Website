@@ -47,7 +47,7 @@ export default function AdminDashboard() {
         <div>
           <div className="mb-8">
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Dashboard</h1>
-            <p className="text-gray-600 mt-1">Welcome back! Here's an overview of your store.</p>
+            <p className="text-gray-600 mt-1">Welcome back! Here&apos;s an overview of your store.</p>
           </div>
 
           {/* Stats Grid */}
