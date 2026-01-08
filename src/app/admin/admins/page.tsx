@@ -3,8 +3,10 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import ProtectedRoute from '@/components/admin/ProtectedRoute';
+import AdminLayout from '@/components/admin/AdminLayout';
 import { adminService } from '@/services/adminService';
 import { useAuth } from '@/contexts/AuthContext';
+import { Users, Plus, Edit2, Trash2, Shield, ShieldAlert } from 'lucide-react';
 
 interface Admin {
   _id: string;
@@ -55,14 +57,17 @@ export default function AdminsPage() {
   if (!isSuperAdmin) {
     return (
       <ProtectedRoute>
-        <div className="p-8">
+        <AdminLayout>
           <div className="max-w-2xl mx-auto">
-            <div className="p-8 bg-yellow-50 border border-yellow-200 rounded-lg text-yellow-800">
-              <h2 className="text-xl font-bold mb-2">Access Denied</h2>
+            <div className="p-8 bg-yellow-50 border border-yellow-200 rounded-xl text-yellow-800">
+              <div className="flex items-center space-x-3 mb-3">
+                <ShieldAlert className="w-8 h-8" />
+                <h2 className="text-xl font-bold">Access Denied</h2>
+              </div>
               <p>Only superadmins can manage admin users.</p>
             </div>
           </div>
-        </div>
+        </AdminLayout>
       </ProtectedRoute>
     );
   }
@@ -70,28 +75,32 @@ export default function AdminsPage() {
   if (loading) {
     return (
       <ProtectedRoute>
-        <div className="p-8">
+        <AdminLayout>
           <div className="flex justify-center items-center h-64">
-            <div className="text-gray-500">Loading admins...</div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
           </div>
-        </div>
+        </AdminLayout>
       </ProtectedRoute>
     );
   }
 
   return (
     <ProtectedRoute>
-      <div className="p-8">
-        <div className="flex justify-between items-center mb-6">
+      <AdminLayout>
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Admin Users</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 flex items-center">
+              <Users className="w-7 h-7 mr-2 text-indigo-600" />
+              Admin Users
+            </h1>
             <p className="text-gray-600 mt-1">Manage administrator accounts</p>
           </div>
           <Link
             href="/admin/admins/new"
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="flex items-center space-x-2 px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-indigo-700 text-white rounded-lg hover:from-indigo-700 hover:to-indigo-800 transition-all shadow-sm hover:shadow-md font-medium"
           >
-            + Add Admin
+            <Plus className="w-4 h-4" />
+            <span>Add Admin</span>
           </Link>
         </div>
 
@@ -101,8 +110,9 @@ export default function AdminsPage() {
           </div>
         )}
 
-        <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-          <table className="min-w-full divide-y divide-gray-200">
+        <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -136,13 +146,18 @@ export default function AdminsPage() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span
-                      className={`px-3 py-1 rounded-full text-xs font-medium ${
+                      className={`inline-flex items-center space-x-1 px-3 py-1 rounded-full text-xs font-medium ${
                         admin.role === 'superadmin'
                           ? 'bg-purple-100 text-purple-800'
                           : 'bg-blue-100 text-blue-800'
                       }`}
                     >
-                      {admin.role}
+                      {admin.role === 'superadmin' ? (
+                        <Shield className="w-3 h-3" />
+                      ) : (
+                        <Users className="w-3 h-3" />
+                      )}
+                      <span>{admin.role}</span>
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -162,23 +177,26 @@ export default function AdminsPage() {
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <div className="flex gap-3">
+                    <div className="flex items-center gap-2">
                       <Link
                         href={`/admin/admins/${admin._id}`}
-                        className="text-blue-600 hover:text-blue-900"
+                        className="inline-flex items-center space-x-1 px-3 py-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition"
                       >
-                        Edit
+                        <Edit2 className="w-4 h-4" />
+                        <span>Edit</span>
                       </Link>
                       {admin._id !== user?._id ? (
                         <button
                           onClick={() => handleDelete(admin._id, admin.username)}
-                          className="text-red-600 hover:text-red-900"
+                          className="inline-flex items-center space-x-1 px-3 py-1.5 text-red-600 hover:bg-red-50 rounded-lg transition"
                         >
-                          Delete
+                          <Trash2 className="w-4 h-4" />
+                          <span>Delete</span>
                         </button>
                       ) : (
-                        <span className="text-gray-400 cursor-not-allowed" title="Cannot delete your own account">
-                          Delete
+                        <span className="inline-flex items-center space-x-1 px-3 py-1.5 text-gray-400 cursor-not-allowed" title="Cannot delete your own account">
+                          <Trash2 className="w-4 h-4" />
+                          <span>Delete</span>
                         </span>
                       )}
                     </div>
@@ -186,15 +204,16 @@ export default function AdminsPage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+            </table>
 
-          {admins.length === 0 && (
-            <div className="text-center py-12 text-gray-500">
-              No admin users found.
-            </div>
-          )}
+            {admins.length === 0 && (
+              <div className="text-center py-12 text-gray-500">
+                No admin users found.
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      </AdminLayout>
     </ProtectedRoute>
   );
 }

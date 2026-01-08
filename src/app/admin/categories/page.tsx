@@ -4,8 +4,10 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import ProtectedRoute from '@/components/admin/ProtectedRoute';
+import AdminLayout from '@/components/admin/AdminLayout';
 import { categoryService } from '@/services/categoryService';
 import type { Category } from '@/data/categories';
+import { FolderTree, Plus, Edit2, Trash2, ToggleLeft, ToggleRight } from 'lucide-react';
 
 export default function CategoriesPage() {
   const router = useRouter();
@@ -55,28 +57,32 @@ export default function CategoriesPage() {
   if (loading) {
     return (
       <ProtectedRoute>
-        <div className="p-8">
+        <AdminLayout>
           <div className="flex justify-center items-center h-64">
-            <div className="text-gray-500">Loading categories...</div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
           </div>
-        </div>
+        </AdminLayout>
       </ProtectedRoute>
     );
   }
 
   return (
     <ProtectedRoute>
-      <div className="p-8">
-        <div className="flex justify-between items-center mb-6">
+      <AdminLayout>
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Categories</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 flex items-center">
+              <FolderTree className="w-7 h-7 mr-2 text-green-600" />
+              Categories
+            </h1>
             <p className="text-gray-600 mt-1">Manage product categories</p>
           </div>
           <Link
             href="/admin/categories/new"
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="flex items-center space-x-2 px-5 py-2.5 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-lg hover:from-green-700 hover:to-green-800 transition-all shadow-sm hover:shadow-md font-medium"
           >
-            + Add Category
+            <Plus className="w-4 h-4" />
+            <span>Add Category</span>
           </Link>
         </div>
 
@@ -86,8 +92,9 @@ export default function CategoriesPage() {
           </div>
         )}
 
-        <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-          <table className="min-w-full divide-y divide-gray-200">
+        <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -138,33 +145,36 @@ export default function CategoriesPage() {
                     </button>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <div className="flex gap-3">
+                    <div className="flex items-center gap-2">
                       <Link
                         href={`/admin/categories/${category._id}`}
-                        className="text-blue-600 hover:text-blue-900"
+                        className="inline-flex items-center space-x-1 px-3 py-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition"
                       >
-                        Edit
+                        <Edit2 className="w-4 h-4" />
+                        <span>Edit</span>
                       </Link>
                       <button
                         onClick={() => handleDelete(category._id!, category.label)}
-                        className="text-red-600 hover:text-red-900"
+                        className="inline-flex items-center space-x-1 px-3 py-1.5 text-red-600 hover:bg-red-50 rounded-lg transition"
                       >
-                        Delete
+                        <Trash2 className="w-4 h-4" />
+                        <span>Delete</span>
                       </button>
                     </div>
                   </td>
                 </tr>
               ))}
             </tbody>
-          </table>
+            </table>
 
-          {categories.length === 0 && (
-            <div className="text-center py-12 text-gray-500">
-              No categories found. Create your first category!
-            </div>
-          )}
+            {categories.length === 0 && (
+              <div className="text-center py-12 text-gray-500">
+                No categories found. Create your first category!
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      </AdminLayout>
     </ProtectedRoute>
   );
 }
