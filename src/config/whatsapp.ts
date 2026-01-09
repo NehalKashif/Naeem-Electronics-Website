@@ -9,7 +9,7 @@ export const WHATSAPP_CONFIG = {
   WEBSITE_URL: 'https://naeemelectric.store',
   
   // Business name
-  BUSINESS_NAME: 'Naeem Electronics',
+  BUSINESS_NAME: 'Naeem Electric',
 };
 
 /**

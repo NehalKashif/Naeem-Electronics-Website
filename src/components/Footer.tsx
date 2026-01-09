@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {/* About Us */}
         <div>
-          <h4 className="text-white text-lg font-semibold mb-4">About Naeem Electronics</h4>
+          <h4 className="text-white text-lg font-semibold mb-4">About Naeem Electric</h4>
           <p className="text-gray-400 text-sm leading-relaxed">
             We are your trusted partner for premium home appliances, smart electronics, and professional
             installation services. Our goal is to deliver quality products and exceptional customer care.
@@ -93,7 +93,7 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="bg-gray-800 text-gray-400 text-center py-4 border-t border-gray-700">
-        &copy; 2025 Naeem Electronics. All rights reserved.
+        &copy; 2025 Naeem Electric. All rights reserved.
       </div>
     </footer>
   );

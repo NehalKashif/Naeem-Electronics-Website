@@ -66,7 +66,7 @@ const PRODUCTS_SECTION = {
 const SERVICES_SECTION = {
   badge: 'Our Services',
   heading: 'Professional Services',
-  description: 'From installations to repairs, Naeem Electronics provides a complete range of electrical services to make your life easier and your home or office smarter.',
+  description: 'From installations to repairs, Naeem Electric provides a complete range of electrical services to make your life easier and your home or office smarter.',
   
   services: [
     {
@@ -75,7 +75,7 @@ const SERVICES_SECTION = {
       description: 'Certified electricians providing expert installation of home and commercial electrical systems, wiring, lighting, and smart devices with safety assurance.',
       features: ['New wiring & rewiring', 'Smart home setup', 'Lighting solutions'],
       serviceType: 'installation',
-      whatsappMessage: `Hello Naeem Electronics! 👋\n\nI'm interested in learning more about your *Electrical Installation Services*. I would like to know about:\n\n• New wiring & rewiring\n• Smart home setup\n• Lighting solutions\n\nCould you please provide more information?`,
+      whatsappMessage: `Hello Naeem Electric! 👋\n\nI'm interested in learning more about your *Electrical Installation Services*. I would like to know about:\n\n• New wiring & rewiring\n• Smart home setup\n• Lighting solutions\n\nCould you please provide more information?`,
     },
     {
       icon: 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z',
@@ -83,7 +83,7 @@ const SERVICES_SECTION = {
       description: 'Fast and reliable repairs for appliances, fans, lighting systems, and other electronics to keep your home and business running smoothly.',
       features: ['Appliance diagnostics', 'Replacement parts', 'Scheduled maintenance'],
       serviceType: 'repair',
-      whatsappMessage: `Hello Naeem Electronics! 👋\n\nI'm interested in your *Repair & Maintenance Services*. I need help with:\n\n• Appliance diagnostics\n• Replacement parts\n• Scheduled maintenance\n\nCan you assist me?`,
+      whatsappMessage: `Hello Naeem Electric! 👋\n\nI'm interested in your *Repair & Maintenance Services*. I need help with:\n\n• Appliance diagnostics\n• Replacement parts\n• Scheduled maintenance\n\nCan you assist me?`,
     },
     {
       icon: 'M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z',
@@ -91,7 +91,7 @@ const SERVICES_SECTION = {
       description: 'Get expert advice on energy efficiency, product selection, and customized electrical solutions for your home or business with our certified professionals.',
       features: ['Energy-saving tips', 'Safety inspections', 'Project cost estimates'],
       serviceType: 'consultation',
-      whatsappMessage: `Hello Naeem Electronics! 👋\n\nI would like to schedule an *Expert Consultation* regarding:\n\n• Energy-saving tips\n• Safety inspections\n• Project cost estimates\n\nWhen would be a good time to discuss?`,
+      whatsappMessage: `Hello Naeem Electric! 👋\n\nI would like to schedule an *Expert Consultation* regarding:\n\n• Energy-saving tips\n• Safety inspections\n• Project cost estimates\n\nWhen would be a good time to discuss?`,
     },
   ],
 };
@@ -295,17 +295,98 @@ export default function HomePage() {
   return (
     <main>
       {/* HERO SECTION */}
-      <section className="relative text-white text-center min-h-[50vh] flex items-center bg-gradient-to-br from-blue-900 via-blue-700 to-blue-900 overflow-hidden">
-        {/* Animated Background */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-32 h-32 border border-white rounded-full animate-pulse"></div>
-          <div className="absolute top-40 right-20 w-24 h-24 border border-white rounded-full animate-pulse delay-100"></div>
-          <div className="absolute bottom-20 left-1/3 w-16 h-16 border border-white rounded-full animate-pulse delay-200"></div>
+      <section className="relative text-white text-center min-h-[50vh] flex items-center overflow-hidden">
+        {/* Animated Mesh Gradient Background - Blue Tones Only */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(135deg, #1e3a8a 0%, #2563eb 25%, #3b82f6 50%, #60a5fa 75%, #1e40af 100%)',
+            animation: 'meshGradient 12s ease infinite'
+          }}
+        />
+        
+        {/* Diagonal Animated Lines */}
+        <div className="absolute inset-0 overflow-hidden opacity-20">
+          {[...Array(5)].map((_, i) => (
+            <div
+              key={`line-${i}`}
+              className="absolute h-px bg-gradient-to-r from-transparent via-white to-transparent"
+              style={{
+                width: '200%',
+                top: `${i * 25}%`,
+                left: '-50%',
+                animation: `diagonalMove ${15 + i * 3}s linear infinite`,
+                animationDelay: `${i * -2}s`,
+                transform: 'rotate(-15deg)'
+              }}
+            />
+          ))}
         </div>
+        
+        {/* Animated Grid Pattern */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)
+            `,
+            backgroundSize: '50px 50px',
+            animation: 'gridPulse 4s ease-in-out infinite'
+          }}
+        />
+        
+        {/* Floating Dots Network */}
+        <div className="absolute inset-0">
+          {[...Array(8)].map((_, i) => (
+            <div
+              key={`dot-${i}`}
+              className="absolute w-2 h-2 bg-white rounded-full"
+              style={{
+                left: `${15 + i * 12}%`,
+                top: `${20 + (i % 3) * 30}%`,
+                animation: `floatDot ${4 + i * 0.5}s ease-in-out infinite`,
+                animationDelay: `${i * 0.3}s`
+              }}
+            />
+          ))}
+        </div>
+        
+        {/* SVG Wave Shape at Bottom */}
+        <div className="absolute bottom-0 left-0 right-0 opacity-30" style={{ animation: 'waveMove 8s ease-in-out infinite' }}>
+          <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
+            <path d="M0,64L48,69.3C96,75,192,85,288,80C384,75,480,53,576,48C672,43,768,53,864,58.7C960,64,1056,64,1152,58.7C1248,53,1344,43,1392,37.3L1440,32L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z" fill="rgba(255,255,255,0.1)"/>
+          </svg>
+        </div>
+        
+        {/* Glowing Spots */}
+        <div className="absolute inset-0">
+          <div 
+            className="absolute w-96 h-96 rounded-full blur-3xl opacity-30"
+            style={{
+              background: 'radial-gradient(circle, rgba(59, 130, 246, 0.8) 0%, transparent 70%)',
+              top: '10%',
+              left: '10%',
+              animation: 'pulse 8s ease-in-out infinite'
+            }}
+          />
+          <div 
+            className="absolute w-96 h-96 rounded-full blur-3xl opacity-30"
+            style={{
+              background: 'radial-gradient(circle, rgba(139, 92, 246, 0.8) 0%, transparent 70%)',
+              bottom: '10%',
+              right: '10%',
+              animation: 'pulse 8s ease-in-out infinite 2s'
+            }}
+          />
+        </div>
+        
+        {/* Subtle Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-950/20 via-transparent to-blue-950/40" />
 
         <div className="relative z-10 text-center py-8 md:py-10 px-4 max-w-6xl mx-auto w-full">
           <motion.div 
-            className="mb-2 md:mb-3"
+            className="mb-2 md:mb-3 hidden"
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -529,12 +610,94 @@ export default function HomePage() {
       </section>
 
       {/* SERVICES SECTION */}
-      <section id="services" className="py-24 bg-gradient-to-br from-blue-900 to-blue-800 text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-32 h-32 border border-white rounded-full"></div>
-          <div className="absolute top-40 right-20 w-24 h-24 border border-white rounded-full"></div>
-          <div className="absolute bottom-20 left-1/3 w-16 h-16 border border-white rounded-full"></div>
+      <section id="services" className="relative py-24 text-white overflow-hidden">
+        {/* Animated Mesh Gradient Background - Blue Tones Only */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(135deg, #1e3a8a 0%, #2563eb 25%, #3b82f6 50%, #60a5fa 75%, #1e40af 100%)',
+            animation: 'meshGradient 12s ease infinite'
+          }}
+        />
+        
+        {/* Diagonal Animated Lines */}
+        <div className="absolute inset-0 overflow-hidden opacity-20">
+          {[...Array(5)].map((_, i) => (
+            <div
+              key={`service-line-${i}`}
+              className="absolute h-px bg-gradient-to-r from-transparent via-white to-transparent"
+              style={{
+                width: '200%',
+                top: `${i * 25}%`,
+                left: '-50%',
+                animation: `diagonalMove ${15 + i * 3}s linear infinite`,
+                animationDelay: `${i * -2}s`,
+                transform: 'rotate(-15deg)'
+              }}
+            />
+          ))}
         </div>
+        
+        {/* Animated Grid Pattern */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)
+            `,
+            backgroundSize: '50px 50px',
+            animation: 'gridPulse 4s ease-in-out infinite'
+          }}
+        />
+        
+        {/* Floating Dots Network */}
+        <div className="absolute inset-0">
+          {[...Array(8)].map((_, i) => (
+            <div
+              key={`service-dot-${i}`}
+              className="absolute w-2 h-2 bg-white rounded-full"
+              style={{
+                left: `${15 + i * 12}%`,
+                top: `${20 + (i % 3) * 30}%`,
+                animation: `floatDot ${4 + i * 0.5}s ease-in-out infinite`,
+                animationDelay: `${i * 0.3}s`
+              }}
+            />
+          ))}
+        </div>
+        
+        {/* SVG Wave Shape at Bottom */}
+        <div className="absolute bottom-0 left-0 right-0 opacity-30" style={{ animation: 'waveMove 8s ease-in-out infinite' }}>
+          <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
+            <path d="M0,64L48,69.3C96,75,192,85,288,80C384,75,480,53,576,48C672,43,768,53,864,58.7C960,64,1056,64,1152,58.7C1248,53,1344,43,1392,37.3L1440,32L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z" fill="rgba(255,255,255,0.1)"/>
+          </svg>
+        </div>
+        
+        {/* Glowing Spots */}
+        <div className="absolute inset-0">
+          <div 
+            className="absolute w-96 h-96 rounded-full blur-3xl opacity-30"
+            style={{
+              background: 'radial-gradient(circle, rgba(59, 130, 246, 0.8) 0%, transparent 70%)',
+              top: '10%',
+              left: '10%',
+              animation: 'pulse 8s ease-in-out infinite'
+            }}
+          />
+          <div 
+            className="absolute w-96 h-96 rounded-full blur-3xl opacity-30"
+            style={{
+              background: 'radial-gradient(circle, rgba(96, 165, 250, 0.8) 0%, transparent 70%)',
+              bottom: '10%',
+              right: '10%',
+              animation: 'pulse 8s ease-in-out infinite 2s'
+            }}
+          />
+        </div>
+        
+        {/* Subtle Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-950/20 via-transparent to-blue-950/40" />
 
         <div className="max-w-7xl mx-auto px-4 relative z-10">
           <ScrollReveal>

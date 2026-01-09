@@ -11,7 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Naeem Electronics – Premium Appliances & Services",
+  title: "Naeem Electric – Premium Appliances & Services",
   description: "Discover cutting-edge appliances with professional installation & maintenance services. Transform your home with smart technology today.",
 };
 

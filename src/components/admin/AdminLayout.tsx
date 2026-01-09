@@ -36,7 +36,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg">
         <div className="flex items-center justify-between p-4">
           <div>
-            <h1 className="text-xl font-bold text-white">Naeem Electronics</h1>
+            <h1 className="text-xl font-bold text-white">Naeem Electric</h1>
             <p className="text-xs text-blue-100">Admin Panel</p>
           </div>
           <button
@@ -75,7 +75,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <Shield className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-lg font-bold text-gray-900">Naeem Electronics</h1>
+                <h1 className="text-lg font-bold text-gray-900">Naeem Electric</h1>
                 <p className="text-xs text-gray-600">Admin Panel</p>
               </div>
             </div>

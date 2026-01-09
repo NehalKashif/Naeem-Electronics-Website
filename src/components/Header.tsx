@@ -68,7 +68,7 @@ export default function Header() {
         {/* Brand Name */}
         <Link href="/" onClick={closeMenu}>
           <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent cursor-pointer">
-            Naeem Electronics
+            Naeem Electric
           </h1>
         </Link>
 
